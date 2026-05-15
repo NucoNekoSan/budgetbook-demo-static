@@ -2,7 +2,7 @@
 
 `budgetbook-demo` の **静的スナップショット** — Cloudflare Pages で 24/7 公開。
 
-- **ライブ URL**: (Cloudflare Pages デプロイ後に追記)
+- **ライブ URL**: https://budgetbook-demo-static.nuconekosan.workers.dev/
 - **本体リポジトリ (動的 Django アプリ)**: https://github.com/NucoNekoSan/budgetbook-demo
 - **構成**: HTML/CSS/JS の静的ファイルのみ。Django ランタイム不要。
 
