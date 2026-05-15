@@ -106,6 +106,9 @@ jobs:
           echo "Mirror output verified clean"
 
       - name: Commit & push if changed
+        env:
+          EVENT: ${{ github.event_name }}
+          RUN_ID: ${{ github.run_id }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -115,8 +118,6 @@ jobs:
             exit 0
           fi
           DEMO_SHA=$(cd source-demo && git rev-parse --short HEAD)
-          git commit -m "chore: refresh static mirror
-
-Source: NucoNekoSan/budgetbook-demo @ ${DEMO_SHA}
-Triggered: ${{ github.event_name }} (run ${{ github.run_id }})"
+          MSG=$(printf 'chore: refresh static mirror\n\nSource: NucoNekoSan/budgetbook-demo @ %s\nTriggered: %s (run %s)' "$DEMO_SHA" "$EVENT" "$RUN_ID")
+          git commit -m "$MSG"
           git push
