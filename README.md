@@ -30,9 +30,20 @@ scripts/
 
 ## 再生成 (mirror)
 
+### 自動 (推奨)
+
+[.github/workflows/refresh-mirror.yml](.github/workflows/refresh-mirror.yml) により以下のタイミングで自動再生成:
+
+- **毎週月曜 00:00 UTC (09:00 JST)** — `schedule` トリガー
+- **手動実行** — GitHub Actions UI または `gh workflow run refresh-mirror.yml`
+
+ワークフローは `budgetbook-demo` を checkout → migrate + seed_demo_data → runserver 起動 → mirror.py → 機微パターン混入チェック → `public/` に差分があれば commit & push。Cloudflare 側は git push をフックして自動再デプロイ。
+
+### 手動 (ローカル)
+
 1. `budgetbook-demo` で runserver を起動 (DEMO_MODE=1, DEMO_AUTO_LOGIN=1)
 2. `python scripts/mirror.py`
-3. `public/` 配下を git commit & push → Cloudflare Pages が自動再デプロイ
+3. `public/` 配下を git commit & push → Cloudflare が自動再デプロイ
 
 ## ライセンス
 
