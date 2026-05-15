@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>BudgetBook | 返済戦略</title>
+<link href="../static/css/style.css" rel="stylesheet"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
+
+<link href="../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" nonce="XvL47rzweqTqTOvkuP6Lgw" src="../static/js/theme_toggle.js"></script>
+<script defer="" nonce="XvL47rzweqTqTOvkuP6Lgw" src="../static/django_htmx/htmx.min.js"></script>
+<script defer="" nonce="XvL47rzweqTqTOvkuP6Lgw" src="../static/js/htmx_config.js"></script>
+<script defer="" nonce="XvL47rzweqTqTOvkuP6Lgw" src="../static/vendor/chart.umd.min.js"></script>
+<script defer="" nonce="XvL47rzweqTqTOvkuP6Lgw" src="../static/js/budget_chart.js"></script>
+<script defer="" nonce="XvL47rzweqTqTOvkuP6Lgw" src="../static/js/progress_bars.js"></script>
+<script defer="" nonce="XvL47rzweqTqTOvkuP6Lgw" src="../static/js/keyboard_shortcuts.js"></script>
+<script defer="" nonce="XvL47rzweqTqTOvkuP6Lgw" src="../static/js/pwa_register.js"></script>
+</head>
+<body data-route="balance_sheet" hx-headers='{"x-csrftoken": "OZVnwh31C7pqIfsLIjywaU1mrmWxXkLryTB4Q5GHmMG34C6dGmSUQwe8y0RXCnsO"}'>
+<div id="static-portfolio-banner" style="background:#0d6efd;color:#fff;padding:8px 16px;font-size:13px;text-align:center;font-family:system-ui,sans-serif;position:relative;z-index:9999;">
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a href="https://github.com/NucoNekoSan/budgetbook-demo" style="color:#fff;text-decoration:underline;">ソースコード (GitHub)</a>
+</div>
+
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../index.html">BudgetBook</a>
+<nav aria-label="主要ナビゲーション" class="site-nav">
+<a class="site-nav__link" data-route-link="dashboard" href="../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../accounting/index.html">締め・照合</a>
+<a class="site-nav__link" data-route-link="settings" href="../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" method="post" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;">
+<input name="csrfmiddlewaretoken" type="hidden" value="OZVnwh31C7pqIfsLIjywaU1mrmWxXkLryTB4Q5GHmMG34C6dGmSUQwe8y0RXCnsO"/>
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
+</form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="annual-layout">
+<div class="toolbar">
+<div>
+<h1 class="page-title">返済戦略シミュレーター</h1>
+<div class="meta">登録済みの負債と利率から、雪崩法／雪だるま法／繰上返済の効果を試算します。</div>
+</div>
+<a class="btn btn--ghost" href="../balance-sheet/index.html">← 資産（B/S）に戻る</a>
+</div>
+<details class="panel">
+<summary class="panel__body section-title">使い方と用語の説明（クリックで開閉）</summary>
+<div class="panel__body">
+<h3 class="section-title">雪崩法 (Avalanche)</h3>
+<p>毎月の<strong>余剰金（繰上返済額）を一番金利の高い負債から優先して投下</strong>する方法。数学的に総利息が最少になる戦略。リボのように高金利が複数ある状況で最も効きます。</p>
+<h3 class="section-title">雪だるま法 (Snowball)</h3>
+<p><strong>残高の小さい負債から完済</strong>させていく方法。総利息は雪崩法より多くなりますが、<strong>「1 件減った」という達成感</strong>が継続のモチベーションになる効果があります。</p>
+<h3 class="section-title">繰上返済額（月次 extra）</h3>
+<p>最低支払額に加えて<strong>毎月追加で投下できる金額</strong>。家計の余剰やボーナスから捻出した分を入れて試算してください。</p>
+<h3 class="section-title">試算の前提・限界</h3>
+<ul>
+<li>残高は現状の口座 opening_balance（登録時残高）を起点とします。日々の取引による残高変動は反映されません</li>
+<li>金利は単利相当の月利＝年利/12 で計算（実際のリボは複利＋日割）</li>
+<li>最低支払額は LoanProfile の「月次返済額（目安）」、未設定なら残高の 3% で代替</li>
+<li>シミュレーション最大期間: 50 年</li>
+<li>本機能は<strong>家計改善のための参考値</strong>です。実際の返済計画は契約書と照合してください</li>
+</ul>
+</div>
+</details>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">現状の返済（最低支払のみ、繰上 0 円）</h2>
+<div class="cards">
+<div class="card">
+<div class="card__label">月次最低支払合計</div>
+<div class="card__value tabular-num">¥130,913</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">完済までの月数（雪崩法）</div>
+<div class="card__value tabular-num">230 ヶ月（19.2 年）</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">支払利息合計（雪崩法）</div>
+<div class="card__value tabular-num">¥3,484,226</div>
+</div>
+</div>
+<div class="table-wrap u-mt-16">
+<table class="data-table">
+<thead>
+<tr><th>戦略</th><th>完済月数</th><th>支払利息合計</th><th>月次合計支払</th></tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="戦略"><strong>雪崩法</strong>（高金利優先）</td>
+<td class="tabular-num" data-label="完済月数">230 ヶ月</td>
+<td class="amount-expense tabular-num" data-label="支払利息合計">¥3,484,226</td>
+<td class="tabular-num" data-label="月次合計支払">¥130,913</td>
+</tr>
+<tr>
+<td data-label="戦略"><strong>雪だるま法</strong>（小残高優先）</td>
+<td class="tabular-num" data-label="完済月数">230 ヶ月</td>
+<td class="amount-expense tabular-num" data-label="支払利息合計">¥3,484,226</td>
+<td class="tabular-num" data-label="月次合計支払">¥130,913</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">繰上返済シミュレーター</h2>
+<form action="#" class="form-grid" method="get" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;">
+<div class="field">
+<label for="id_extra">月次繰上返済額（円）</label>
+<input class="form-input" id="id_extra" min="0" name="extra" placeholder="例: 10000" step="1000" type="number" value="0"/>
+<div class="meta">最低支払に加えて毎月この額を高金利優先で投下する想定。</div>
+</div>
+<div class="button-row">
+<button class="btn btn--primary" type="submit">試算する</button>
+</div>
+</form>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">負債別の優先順位（雪崩法）</h2>
+<div class="meta">高金利の順に優先返済すべき口座。リボ手数料の節約効果が最大化されます。</div>
+<div class="table-wrap u-mt-16">
+<table class="data-table">
+<thead>
+<tr><th>順位</th><th>口座</th><th>残債</th><th>年利</th><th>月次最低支払</th><th>累計支払利息（雪崩法）</th></tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="順位">1</td>
+<td data-label="口座"><strong>クレジットカード</strong></td>
+<td class="tabular-num" data-label="残債">¥363,785</td>
+<td class="tabular-num" data-label="年利">0%</td>
+<td class="tabular-num" data-label="月次最低支払">¥10,913</td>
+<td class="amount-expense tabular-num" data-label="累計支払利息">
+                    ¥0
+                  </td>
+</tr>
+<tr>
+<td data-label="順位">2</td>
+<td data-label="口座"><strong>住宅ローン</strong></td>
+<td class="tabular-num" data-label="残債">¥25,000,000</td>
+<td class="tabular-num" data-label="年利">1.3%</td>
+<td class="tabular-num" data-label="月次最低支払">¥85,000</td>
+<td class="amount-expense tabular-num" data-label="累計支払利息">
+                    ¥3,430,108
+                  </td>
+</tr>
+<tr>
+<td data-label="順位">3</td>
+<td data-label="口座"><strong>自動車ローン</strong></td>
+<td class="tabular-num" data-label="残債">¥1,200,000</td>
+<td class="tabular-num" data-label="年利">2.9%</td>
+<td class="tabular-num" data-label="月次最低支払">¥35,000</td>
+<td class="amount-expense tabular-num" data-label="累計支払利息">
+                    ¥54,118
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>BudgetBook | 2026年 確定申告レポート v2</title>
+<link href="../../../static/css/style.css" rel="stylesheet"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
+
+<link href="../../../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" nonce="xV88Qnb7SX48444s9UM8vQ" src="../../../static/js/theme_toggle.js"></script>
+<script defer="" nonce="xV88Qnb7SX48444s9UM8vQ" src="../../../static/django_htmx/htmx.min.js"></script>
+<script defer="" nonce="xV88Qnb7SX48444s9UM8vQ" src="../../../static/js/htmx_config.js"></script>
+<script defer="" nonce="xV88Qnb7SX48444s9UM8vQ" src="../../../static/vendor/chart.umd.min.js"></script>
+<script defer="" nonce="xV88Qnb7SX48444s9UM8vQ" src="../../../static/js/budget_chart.js"></script>
+<script defer="" nonce="xV88Qnb7SX48444s9UM8vQ" src="../../../static/js/progress_bars.js"></script>
+<script defer="" nonce="xV88Qnb7SX48444s9UM8vQ" src="../../../static/js/keyboard_shortcuts.js"></script>
+<script defer="" nonce="xV88Qnb7SX48444s9UM8vQ" src="../../../static/js/pwa_register.js"></script>
+</head>
+<body data-route="tax_deductions_v2" hx-headers='{"x-csrftoken": "SSPplylPzRrAwC3q1vCiyKK0FSJx6PHXCMv6FmYvjwIdSZHSZyWGemXMMwEXLSok"}'>
+<div id="static-portfolio-banner" style="background:#0d6efd;color:#fff;padding:8px 16px;font-size:13px;text-align:center;font-family:system-ui,sans-serif;position:relative;z-index:9999;">
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a href="https://github.com/NucoNekoSan/budgetbook-demo" style="color:#fff;text-decoration:underline;">ソースコード (GitHub)</a>
+</div>
+
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../../../index.html">BudgetBook</a>
+<nav aria-label="主要ナビゲーション" class="site-nav">
+<a class="site-nav__link" data-route-link="dashboard" href="../../../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../../../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../../../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../../../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../../../accounting/index.html">締め・照合</a>
+<a class="site-nav__link" data-route-link="settings" href="../../../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" method="post" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;">
+<input name="csrfmiddlewaretoken" type="hidden" value="SSPplylPzRrAwC3q1vCiyKK0FSJx6PHXCMv6FmYvjwIdSZHSZyWGemXMMwEXLSok"/>
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
+</form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<div>
+<h1 class="page-title">2026年 確定申告レポート v2</h1>
+<div class="meta">
+            医療費控除 + 生命保険料控除 + 地震保険料控除 + 寄附金（参考）の統合ビューです。
+            各セクションの金額をそのまま確定申告書 第二表に転記できます。
+          </div>
+</div>
+<div class="button-row">
+<a class="btn btn--ghost" href="index.html">← 2025年</a>
+<a class="btn btn--soft" href="#" onclick="alert('このページは静的スナップショットには含まれていません'); return false;" style=";cursor:not-allowed;opacity:0.6;">↓ CSV ダウンロード</a>
+<a class="btn btn--ghost" href="../index.html">v1 レポート</a>
+<a class="btn btn--ghost" href="../../../settings/index.html">設定に戻る</a>
+</div>
+</div>
+<form action="#" class="form-grid" method="get" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;" style="margin-top: 12px;">
+<div class="field">
+<label for="year-input">年</label>
+<input class="form-input" id="year-input" max="2099" min="2000" name="year" type="number" value="2026"/>
+</div>
+<div class="field">
+<label class="form-check__label">
+<input checked="" class="form-check" name="exclude_year_end" type="checkbox" value="1"/>
+            年末調整提出済を除外（確定申告で実際に書く額）
+          </label>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary" type="submit">表示</button>
+</div>
+</form>
+<h2 class="section-title" style="margin-top: 24px;">📊 総括</h2>
+<div class="cards">
+<div class="card">
+<div class="card__label">医療費控除</div>
+<div class="card__value">¥0</div>
+<div class="meta">申告書 第二表 ⑩</div>
+</div>
+<div class="card">
+<div class="card__label">生命保険料控除</div>
+<div class="card__value">¥117,000</div>
+<div class="meta">申告書 第二表 ⑮</div>
+</div>
+<div class="card">
+<div class="card__label">地震保険料控除</div>
+<div class="card__value">¥32,000</div>
+<div class="meta">申告書 第二表 ⑯</div>
+</div>
+<div class="card card--income">
+<div class="card__label">控除合計（⑩+⑮+⑯）</div>
+<div class="card__value">¥149,000</div>
+<div class="meta">寄附金 ⑲ は別計算</div>
+</div>
+</div>
+<h2 class="section-title" style="margin-top: 32px;">💊 医療費控除</h2>
+<div class="cards">
+<div class="card">
+<div class="card__label">支払合計</div>
+<div class="card__value">¥0</div>
+</div>
+<div class="card">
+<div class="card__label">補填合計</div>
+<div class="card__value">¥0</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">差引合計</div>
+<div class="card__value">¥0</div>
+</div>
+<div class="card">
+<div class="card__label">控除基準額</div>
+<div class="card__value">¥100,000</div>
+<div class="meta">
+            
+              総所得 ¥4,500,000 × 5% と 10 万円の小さい方
+            
+          </div>
+</div>
+</div>
+<div class="helper" style="margin-top: 12px;">
+<strong>申告書 第二表 ⑩医療費控除 = ¥0</strong>
+        ・ <a href="../../../medical-expenses/index.html">→ 詳細管理</a>
+</div>
+<h2 class="section-title" style="margin-top: 32px;">🛡️ 生命保険料控除</h2>
+<table class="table">
+<thead>
+<tr>
+<th>枠</th>
+<th class="num">新契約 支払額</th>
+<th class="num">旧契約 支払額</th>
+<th class="num">控除額</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一般生命保険料</td>
+<td class="num">¥96,000</td>
+<td class="num">¥0</td>
+<td class="num">¥40,000</td>
+</tr>
+<tr>
+<td>介護医療保険料</td>
+<td class="num">¥48,000</td>
+<td class="num">¥0</td>
+<td class="num">¥32,000</td>
+</tr>
+<tr>
+<td>個人年金保険料</td>
+<td class="num">¥0</td>
+<td class="num">¥80,000</td>
+<td class="num">¥45,000</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td><strong>3 枠合計（上限前）</strong></td>
+<td class="num">-</td>
+<td class="num">-</td>
+<td class="num"><strong>¥117,000</strong></td>
+</tr>
+<tr>
+<td><strong>生命保険料控除（上限 12 万円 適用後）</strong></td>
+<td class="num">-</td>
+<td class="num">-</td>
+<td class="num"><strong>¥117,000</strong></td>
+</tr>
+</tfoot>
+</table>
+<div class="helper" style="margin-top: 12px;">
+<strong>申告書 第二表 ⑮生命保険料控除 = ¥117,000</strong>
+        （年末調整提出済を除外した額）
+        ・ <a href="../../../insurance-premiums/index.html">→ 詳細管理</a>
+</div>
+<h2 class="section-title" style="margin-top: 32px;">🏠 地震保険料控除</h2>
+<div class="cards">
+<div class="card">
+<div class="card__label">支払合計</div>
+<div class="card__value">¥32,000</div>
+</div>
+<div class="card card--income">
+<div class="card__label">控除額（上限 5 万円）</div>
+<div class="card__value">¥32,000</div>
+</div>
+</div>
+<div class="helper" style="margin-top: 12px;">
+<strong>申告書 第二表 ⑯地震保険料控除 = ¥32,000</strong>
+        ・ <a href="../../../insurance-premiums/index.html">→ 詳細管理</a>
+</div>
+<h2 class="section-title" style="margin-top: 32px;">🎁 寄附金（参考）</h2>
+<div class="helper">
+          2026 年に「寄附金」タグの取引はありません。
+          カテゴリの税控除タグを「寄附金（ふるさと納税等）」に設定すると、ここに集計されます。
+        </div>
+<div class="helper" style="margin-top: 12px;">
+<strong>申告書 第二表 ⑲寄附金控除 = 別途計算が必要</strong>
+        （ふるさと納税ワンストップ特例利用時は申告不要。所得税控除/住民税控除の計算は申告書 B 様式の計算欄を参照）
+        ・ <a href="../index.html">→ 詳細管理</a>
+</div>
+<div class="helper" style="margin-top: 32px; padding: 16px; background: #f6f8fb; border-radius: 8px;">
+<strong>申告書転記の手引き</strong>
+<ul style="margin-top: 8px;">
+<li>第二表 ⑩医療費控除欄 ← ¥0</li>
+<li>第二表 ⑮生命保険料控除欄 ← ¥117,000</li>
+<li>第二表 ⑯地震保険料控除欄 ← ¥32,000</li>
+<li>第二表 ⑲寄附金控除欄 ← 別途計算（このページの寄附金参考値: ¥0）</li>
+</ul>
+<div class="meta" style="margin-top: 8px;">
+          ※ 欄番号は 2026 年現在の申告書様式に基づきます。様式改訂時は申告書原本で欄番号を確認してください。
+        </div>
+</div>
+</div>
+</div>
+</main>
+</body>
+</html>
