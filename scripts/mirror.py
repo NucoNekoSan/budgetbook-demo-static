@@ -114,6 +114,15 @@ def neutralize_html(html: str, html_dir: Path) -> str:
     for inp in soup.find_all("input", attrs={"name": "csrfmiddlewaretoken"}):
         inp.decompose()
 
+    # 2c. PWA / Service Worker 系を除去（静的サイトでは /sw.js が無く 404 を撒く）
+    for s in soup.find_all("script", src=re.compile(r"pwa_register\.js|service.?worker", re.I)):
+        s.decompose()
+
+    # 2d. nonce 属性は CSP nonce (SECRET_KEY 由来) の漏洩。静的化後は無意味。
+    for tag in soup.find_all(True):
+        if tag.has_attr("nonce"):
+            del tag.attrs["nonce"]
+
     # 3. service worker 登録スクリプトを無効化
     for script in soup.find_all("script"):
         if script.string and ("serviceWorker" in script.string or "registerServiceWorker" in script.string):

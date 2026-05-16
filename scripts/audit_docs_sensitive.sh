@@ -32,6 +32,8 @@ PATTERNS=(
   # --- 構造的 PII (shape-based) ---
   'csrfmiddlewaretoken"\s+type|name="csrfmiddlewaretoken"\s+type="hidden"\s+value="[A-Za-z0-9]{32,}'  # 実トークン値を伴う CSRF input のみ flag (除去コード自身は誤検知しない)
   'x-csrftoken"\s*:\s*"[A-Za-z0-9]{32,}'                 # hx-headers JSON 中の CSRF
+  'nonce="[A-Za-z0-9+/=]{16,}"'                          # Django CSP nonce 漏洩
+  'pwa_register\.js'                                      # 静的サイトに不要な SW 登録スクリプト
   '〒\s*[0-9]{3}-?[0-9]{4}'               # 日本郵便番号
   '\b0[0-9]{1,3}-[0-9]{2,4}-[0-9]{4}\b'   # 日本固定電話
   '\b0[789]0-[0-9]{4}-[0-9]{4}\b'         # 日本携帯電話
