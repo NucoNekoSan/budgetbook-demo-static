@@ -17,6 +17,7 @@ for arg in "$@"; do
 done
 
 PATTERNS=(
+  # --- 既知の実値 (denylist) ---
   # 数値系は \b 境界で部分一致 (例: 111636 内の 11163) を防ぐ
   '\b388,?897\b' '\b99,?436\b' '\b298,?171\b' '\b34,?300\b' '\b184,?907\b' '\b1,?005,?711\b'
   '\b11,?161\b' '\b11,?163\b' '\b5,?445\b' '\b1,?243\b' '\b4,?473\b'
@@ -27,7 +28,21 @@ PATTERNS=(
   '北洋銀行' '札幌市'
   'クレカリボ[ABC]'
   'isonohideki@' 'risa19841013'
+
+  # --- 構造的 PII (shape-based) ---
+  'csrfmiddlewaretoken"\s+type|name="csrfmiddlewaretoken"\s+type="hidden"\s+value="[A-Za-z0-9]{32,}'  # 実トークン値を伴う CSRF input のみ flag (除去コード自身は誤検知しない)
+  'x-csrftoken"\s*:\s*"[A-Za-z0-9]{32,}'                 # hx-headers JSON 中の CSRF
+  '〒\s*[0-9]{3}-?[0-9]{4}'               # 日本郵便番号
+  '\b0[0-9]{1,3}-[0-9]{2,4}-[0-9]{4}\b'   # 日本固定電話
+  '\b0[789]0-[0-9]{4}-[0-9]{4}\b'         # 日本携帯電話
+  '\b[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}\b'  # クレカ番号 16 桁
+  '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'       # 任意メールアドレス
 )
+
+# 構造的パターンが許容するホワイトリスト (誤検知抑制)
+# - GitHub の noreply: 41898282+github-actions[bot]@users.noreply.github.com
+# - 内部ライブラリ識別子 など
+EMAIL_WHITELIST_RE='github-actions\[bot\]@users\.noreply\.github\.com'
 
 if [[ "$MODE" == "staged" ]]; then
   mapfile -t TARGETS < <(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(md|py|html|yml|txt|json)$' || true)
@@ -52,6 +67,10 @@ for f in "${TARGETS[@]}"; do
   # mirror workflow 自体は禁止語チェックを書く側のコードなので除外
   if [[ "$f" == *".github/workflows/refresh-mirror.yml" ]]; then continue; fi
   while IFS= read -r line; do
+    # ホワイトリスト一致は誤検知としてスキップ
+    if [[ -n "$EMAIL_WHITELIST_RE" ]] && echo "$line" | grep -qE "$EMAIL_WHITELIST_RE"; then
+      continue
+    fi
     HITS=$((HITS + 1))
     HIT_LINES="${HIT_LINES}${line}"$'\n'
   done < <(grep -EHn "$PATTERN_UNION" "$f" 2>/dev/null || true)

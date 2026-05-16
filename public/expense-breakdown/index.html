@@ -10,7 +10,6 @@
 <meta content="light dark" name="color-scheme"/>
 <meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
-
 <link href="../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
@@ -24,12 +23,11 @@
 <script defer="" nonce="Aw9tqVjzIgpALzA6ytrnzw" src="../static/js/keyboard_shortcuts.js"></script>
 <script defer="" nonce="Aw9tqVjzIgpALzA6ytrnzw" src="../static/js/pwa_register.js"></script>
 <script defer="" nonce="Aw9tqVjzIgpALzA6ytrnzw" src="../static/js/expense_chart.js"></script>
-</head>
-<body data-route="expense_breakdown" hx-headers='{"x-csrftoken": "5bGGZ3je3bTgrlQjH9jCYwZvDVe1wZMeP5mnjRWUNQaTNIuLFcD0E8chKz9rb2tB"}'>
-<div id="static-portfolio-banner" style="background:#0d6efd;color:#fff;padding:8px 16px;font-size:13px;text-align:center;font-family:system-ui,sans-serif;position:relative;z-index:9999;">
-  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a href="https://github.com/NucoNekoSan/budgetbook-demo" style="color:#fff;text-decoration:underline;">ソースコード (GitHub)</a>
+<link href="../static/css/static-banner.css" rel="stylesheet"/></head>
+<body data-route="expense_breakdown">
+<div class="static-banner" id="static-portfolio-banner">
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
-
 <a class="skip-link" href="#main">本文へスキップ</a>
 <div aria-live="polite" class="demo-banner" role="status">
         🧪 これはデモデータです。実在の家計ではありません。
@@ -49,8 +47,8 @@
 <a class="site-nav__link" data-route-link="accounting" href="../accounting/index.html">締め・照合</a>
 <a class="site-nav__link" data-route-link="settings" href="../settings/index.html">設定</a>
 <button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
-<form action="#" class="site-nav__logout" method="post" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;">
-<input name="csrfmiddlewaretoken" type="hidden" value="5bGGZ3je3bTgrlQjH9jCYwZvDVe1wZMeP5mnjRWUNQaTNIuLFcD0E8chKz9rb2tB"/>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
 <button class="site-nav__link site-nav__logout-btn" type="submit">
               demo : ログアウト
             </button>
@@ -503,5 +501,5 @@
 <script id="yearly-pie-data" type="application/json">[{"label": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "category__name": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "category_id": 25, "total": 600000, "kind": "category", "pct": 37.8}, {"label": "\u6559\u80b2\u8cbb", "category__name": "\u6559\u80b2\u8cbb", "category_id": 33, "total": 190000, "kind": "category", "pct": 12.0}, {"label": "\u98df\u8cbb", "category__name": "\u98df\u8cbb", "category_id": 28, "total": 182705, "kind": "category", "pct": 11.5}, {"label": "\u7a0e\u91d1", "category__name": "\u7a0e\u91d1", "category_id": 38, "total": 119500, "kind": "category", "pct": 7.5}, {"label": "\u6c34\u9053\u5149\u71b1\u8cbb", "category__name": "\u6c34\u9053\u5149\u71b1\u8cbb", "category_id": 26, "total": 105188, "kind": "category", "pct": 6.6}, {"label": "\u5916\u98df", "category__name": "\u5916\u98df", "category_id": 30, "total": 69851, "kind": "category", "pct": 4.4}, {"label": "\u901a\u4fe1\u8cbb", "category__name": "\u901a\u4fe1\u8cbb", "category_id": 27, "total": 67500, "kind": "category", "pct": 4.2}, {"label": "\u4fdd\u967a\u6599", "category__name": "\u4fdd\u967a\u6599", "category_id": 37, "total": 60000, "kind": "category", "pct": 3.8}, {"label": "\u4ea4\u901a\u8cbb", "category__name": "\u4ea4\u901a\u8cbb", "category_id": 31, "total": 59232, "kind": "category", "pct": 3.7}, {"label": "\u65e5\u7528\u54c1", "category__name": "\u65e5\u7528\u54c1", "category_id": 29, "total": 34178, "kind": "category", "pct": 2.2}, {"label": "\u8863\u6599\u30fb\u7f8e\u5bb9", "category__name": "\u8863\u6599\u30fb\u7f8e\u5bb9", "category_id": 35, "total": 26181, "kind": "category", "pct": 1.6}, {"label": "\u5a2f\u697d", "category__name": "\u5a2f\u697d", "category_id": 34, "total": 26180, "kind": "category", "pct": 1.6}, {"label": "\u4ea4\u969b\u8cbb", "category__name": "\u4ea4\u969b\u8cbb", "category_id": 36, "total": 19680, "kind": "category", "pct": 1.2}, {"label": "\u533b\u7642\u8cbb", "category__name": "\u533b\u7642\u8cbb", "category_id": 32, "total": 15736, "kind": "category", "pct": 1.0}, {"label": "\u30b5\u30d6\u30b9\u30af", "category__name": "\u30b5\u30d6\u30b9\u30af", "category_id": 40, "total": 12500, "kind": "category", "pct": 0.8}, {"label": "\u91d1\u5229\u30fb\u624b\u6570\u6599", "category__name": "\u91d1\u5229\u30fb\u624b\u6570\u6599", "category_id": 41, "total": 753, "kind": "category", "pct": 0.0}]</script>
 <script id="income-ratio-pie-data" type="application/json">[{"label": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "category__name": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "total": 120000}, {"label": "\u7a0e\u91d1", "category__name": "\u7a0e\u91d1", "total": 119500}, {"label": "\u98df\u8cbb", "category__name": "\u98df\u8cbb", "total": 35078}, {"label": "\u6559\u80b2\u8cbb", "category__name": "\u6559\u80b2\u8cbb", "total": 22000}, {"label": "\u6c34\u9053\u5149\u71b1\u8cbb", "category__name": "\u6c34\u9053\u5149\u71b1\u8cbb", "total": 15127}, {"label": "\u4ea4\u901a\u8cbb", "category__name": "\u4ea4\u901a\u8cbb", "total": 13905}, {"label": "\u901a\u4fe1\u8cbb", "category__name": "\u901a\u4fe1\u8cbb", "total": 13500}, {"label": "\u5916\u98df", "category__name": "\u5916\u98df", "total": 12915}, {"label": "\u4fdd\u967a\u6599", "category__name": "\u4fdd\u967a\u6599", "total": 12000}, {"label": "\u8863\u6599\u30fb\u7f8e\u5bb9", "category__name": "\u8863\u6599\u30fb\u7f8e\u5bb9", "total": 8620}, {"label": "\u65e5\u7528\u54c1", "category__name": "\u65e5\u7528\u54c1", "total": 8040}, {"label": "\u533b\u7642\u8cbb", "category__name": "\u533b\u7642\u8cbb", "total": 5215}, {"label": "\u4ea4\u969b\u8cbb", "category__name": "\u4ea4\u969b\u8cbb", "total": 5066}, {"label": "\u5a2f\u697d", "category__name": "\u5a2f\u697d", "total": 4761}, {"label": "\u30b5\u30d6\u30b9\u30af", "category__name": "\u30b5\u30d6\u30b9\u30af", "total": 2500}]</script>
 </main>
-</body>
+<script defer="" src="../static/js/neutralize.js"></script></body>
 </html>

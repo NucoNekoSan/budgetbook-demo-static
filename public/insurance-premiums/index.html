@@ -10,7 +10,6 @@
 <meta content="light dark" name="color-scheme"/>
 <meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
-
 <link href="../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
@@ -23,12 +22,11 @@
 <script defer="" nonce="3g4llytHFNs5UGxbhNd-GQ" src="../static/js/progress_bars.js"></script>
 <script defer="" nonce="3g4llytHFNs5UGxbhNd-GQ" src="../static/js/keyboard_shortcuts.js"></script>
 <script defer="" nonce="3g4llytHFNs5UGxbhNd-GQ" src="../static/js/pwa_register.js"></script>
-</head>
-<body data-route="insurance_premium_list" hx-headers='{"x-csrftoken": "DVyDyMStBiwixeJzB1G7KOTRKPK4OLTfnPekSAv9lXNVTBn1z40vqq6DRtFutOAC"}'>
-<div id="static-portfolio-banner" style="background:#0d6efd;color:#fff;padding:8px 16px;font-size:13px;text-align:center;font-family:system-ui,sans-serif;position:relative;z-index:9999;">
-  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a href="https://github.com/NucoNekoSan/budgetbook-demo" style="color:#fff;text-decoration:underline;">ソースコード (GitHub)</a>
+<link href="../static/css/static-banner.css" rel="stylesheet"/></head>
+<body data-route="insurance_premium_list">
+<div class="static-banner" id="static-portfolio-banner">
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
-
 <a class="skip-link" href="#main">本文へスキップ</a>
 <div aria-live="polite" class="demo-banner" role="status">
         🧪 これはデモデータです。実在の家計ではありません。
@@ -48,8 +46,8 @@
 <a class="site-nav__link" data-route-link="accounting" href="../accounting/index.html">締め・照合</a>
 <a class="site-nav__link" data-route-link="settings" href="../settings/index.html">設定</a>
 <button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
-<form action="#" class="site-nav__logout" method="post" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;">
-<input name="csrfmiddlewaretoken" type="hidden" value="DVyDyMStBiwixeJzB1G7KOTRKPK4OLTfnPekSAv9lXNVTBn1z40vqq6DRtFutOAC"/>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
 <button class="site-nav__link site-nav__logout-btn" type="submit">
               demo : ログアウト
             </button>
@@ -69,12 +67,12 @@
 </div>
 <div class="button-row">
 <a class="btn btn--ghost" href="index.html">← 2025年</a>
-<a class="btn btn--primary" href="#" onclick="alert('このページは静的スナップショットには含まれていません'); return false;" style=";cursor:not-allowed;opacity:0.6;">+ 保険料を追加</a>
-<a class="btn btn--soft" href="#" onclick="alert('このページは静的スナップショットには含まれていません'); return false;" style=";cursor:not-allowed;opacity:0.6;">↓ CSV ダウンロード</a>
+<a class="btn btn--primary is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">+ 保険料を追加</a>
+<a class="btn btn--soft is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">↓ CSV ダウンロード</a>
 <a class="btn btn--ghost" href="../settings/index.html">設定に戻る</a>
 </div>
 </div>
-<form action="#" class="form-grid" method="get" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;" style="margin-top: 12px;">
+<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="get" style="margin-top: 12px;">
 <div class="field">
 <label for="year-input">年</label>
 <input class="form-input" id="year-input" max="2099" min="2000" name="year" type="number" value="2026"/>
@@ -183,10 +181,10 @@
 <td class="num">¥32,000</td>
 <td>-</td>
 <td>
-<a class="btn btn--ghost btn--sm" href="#" onclick="alert('このページは静的スナップショットには含まれていません'); return false;" style=";cursor:not-allowed;opacity:0.6;">編集</a>
-<form action="#" method="post" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;" style="display:inline">
-<input name="csrfmiddlewaretoken" type="hidden" value="DVyDyMStBiwixeJzB1G7KOTRKPK4OLTfnPekSAv9lXNVTBn1z40vqq6DRtFutOAC"/>
-<button class="btn btn--danger btn--sm" onclick="return confirm('この保険料明細を削除しますか？')" type="submit">削除</button>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" data-neutralize="閲覧専用デモです (静的スナップショット)" type="submit">削除</button>
 </form>
 </td>
 </tr>
@@ -203,10 +201,10 @@
 <td class="num">¥45,000</td>
 <td>-</td>
 <td>
-<a class="btn btn--ghost btn--sm" href="#" onclick="alert('このページは静的スナップショットには含まれていません'); return false;" style=";cursor:not-allowed;opacity:0.6;">編集</a>
-<form action="#" method="post" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;" style="display:inline">
-<input name="csrfmiddlewaretoken" type="hidden" value="DVyDyMStBiwixeJzB1G7KOTRKPK4OLTfnPekSAv9lXNVTBn1z40vqq6DRtFutOAC"/>
-<button class="btn btn--danger btn--sm" onclick="return confirm('この保険料明細を削除しますか？')" type="submit">削除</button>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" data-neutralize="閲覧専用デモです (静的スナップショット)" type="submit">削除</button>
 </form>
 </td>
 </tr>
@@ -223,10 +221,10 @@
 <td class="num">¥32,000</td>
 <td>-</td>
 <td>
-<a class="btn btn--ghost btn--sm" href="#" onclick="alert('このページは静的スナップショットには含まれていません'); return false;" style=";cursor:not-allowed;opacity:0.6;">編集</a>
-<form action="#" method="post" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;" style="display:inline">
-<input name="csrfmiddlewaretoken" type="hidden" value="DVyDyMStBiwixeJzB1G7KOTRKPK4OLTfnPekSAv9lXNVTBn1z40vqq6DRtFutOAC"/>
-<button class="btn btn--danger btn--sm" onclick="return confirm('この保険料明細を削除しますか？')" type="submit">削除</button>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" data-neutralize="閲覧専用デモです (静的スナップショット)" type="submit">削除</button>
 </form>
 </td>
 </tr>
@@ -243,10 +241,10 @@
 <td class="num">¥40,000</td>
 <td>-</td>
 <td>
-<a class="btn btn--ghost btn--sm" href="#" onclick="alert('このページは静的スナップショットには含まれていません'); return false;" style=";cursor:not-allowed;opacity:0.6;">編集</a>
-<form action="#" method="post" onsubmit="alert('閲覧専用デモです (静的スナップショット)'); return false;" style="display:inline">
-<input name="csrfmiddlewaretoken" type="hidden" value="DVyDyMStBiwixeJzB1G7KOTRKPK4OLTfnPekSAv9lXNVTBn1z40vqq6DRtFutOAC"/>
-<button class="btn btn--danger btn--sm" onclick="return confirm('この保険料明細を削除しますか？')" type="submit">削除</button>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" data-neutralize="閲覧専用デモです (静的スナップショット)" type="submit">削除</button>
 </form>
 </td>
 </tr>
@@ -255,5 +253,5 @@
 </div>
 </div>
 </main>
-</body>
+<script defer="" src="../static/js/neutralize.js"></script></body>
 </html>

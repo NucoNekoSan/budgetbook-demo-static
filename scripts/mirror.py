@@ -22,7 +22,7 @@ import requests
 from bs4 import BeautifulSoup
 
 BASE = "http://127.0.0.1:8765"
-OUT = Path(r"C:\dev\budgetbook-demo-static\public")
+OUT = Path(__file__).resolve().parent.parent / "public"
 
 # 静的化する GET ページ (curated)
 PAGES = [
@@ -44,10 +44,14 @@ PAGES = [
 ]
 
 STATIC_BANNER_HTML = """
-<div id="static-portfolio-banner" style="background:#0d6efd;color:#fff;padding:8px 16px;font-size:13px;text-align:center;font-family:system-ui,sans-serif;position:relative;z-index:9999;">
-  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a href="https://github.com/NucoNekoSan/budgetbook-demo" style="color:#fff;text-decoration:underline;">ソースコード (GitHub)</a>
+<div id="static-portfolio-banner" class="static-banner">
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a href="https://github.com/NucoNekoSan/budgetbook-demo" class="static-banner__link">ソースコード (GitHub)</a>
 </div>
 """
+
+MSG_DEMO = "閲覧専用デモです (静的スナップショット)"
+MSG_NOT_MIRRORED = "このページは静的スナップショットには含まれていません"
+MSG_CSV = "CSV ダウンロードは静的版では無効です"
 
 session = requests.Session()
 session.headers.update({"User-Agent": "budgetbook-mirror/1.0"})
@@ -90,20 +94,25 @@ def fetch_asset(asset_url: str, html_dir: Path) -> str | None:
 def neutralize_html(html: str, html_dir: Path) -> str:
     soup = BeautifulSoup(html, "html.parser")
 
-    # 1. 全 form の action を無効化
+    # 1. 全 form の action を無効化（インラインJSは使わず data 属性のみ）
     for form in soup.find_all("form"):
         form["action"] = "#"
-        form["onsubmit"] = "alert('閲覧専用デモです (静的スナップショット)'); return false;"
+        form["data-neutralize"] = MSG_DEMO
+        form.attrs.pop("onsubmit", None)
         form.attrs.pop("hx-post", None)
         form.attrs.pop("hx-put", None)
         form.attrs.pop("hx-patch", None)
         form.attrs.pop("hx-delete", None)
 
-    # 2. mutation 系 hx-* 属性を全削除
+    # 2. mutation 系 hx-* 属性を全削除 + hx-headers (CSRF token 漏洩) を除去
     for tag in soup.find_all(True):
         for attr in list(tag.attrs.keys()):
-            if attr in ("hx-post", "hx-put", "hx-patch", "hx-delete", "hx-confirm"):
+            if attr in ("hx-post", "hx-put", "hx-patch", "hx-delete", "hx-confirm", "hx-headers"):
                 del tag.attrs[attr]
+
+    # 2b. CSRF トークン input を削除（静的サイトでは無効・サーバ側 SECRET_KEY 由来のノイズを除去）
+    for inp in soup.find_all("input", attrs={"name": "csrfmiddlewaretoken"}):
+        inp.decompose()
 
     # 3. service worker 登録スクリプトを無効化
     for script in soup.find_all("script"):
@@ -150,20 +159,32 @@ def neutralize_html(html: str, html_dir: Path) -> str:
         else:
             # 該当ページがミラー外 (例: /transactions/123/edit/) → クリック無効化
             a["href"] = "#"
-            existing_onclick = a.get("onclick", "")
-            a["onclick"] = "alert('このページは静的スナップショットには含まれていません'); return false;"
-            a["style"] = (a.get("style") or "") + ";cursor:not-allowed;opacity:0.6;"
+            a.attrs.pop("onclick", None)
+            a["data-neutralize"] = MSG_NOT_MIRRORED
+            a["class"] = (a.get("class") or []) + ["is-neutralized"]
 
     # 7. CSV download link も無効化 (Django view が動かないので)
     for a in soup.find_all("a", href=re.compile(r"\.csv$|/transactions/export/")):
         a["href"] = "#"
-        a["onclick"] = "alert('CSV ダウンロードは静的版では無効です'); return false;"
+        a.attrs.pop("onclick", None)
+        a["data-neutralize"] = MSG_CSV
 
     # 8. 静的バナーを <body> の直後に挿入
     body = soup.find("body")
     if body:
         banner = BeautifulSoup(STATIC_BANNER_HTML, "html.parser")
         body.insert(0, banner)
+
+    # 9. 中立化ハンドラの外部 JS をページ末尾で読み込む（CSP unsafe-inline 不要に）
+    if body:
+        rel_js = os.path.relpath(OUT / "static" / "js" / "neutralize.js", html_dir).replace("\\", "/")
+        rel_css = os.path.relpath(OUT / "static" / "css" / "static-banner.css", html_dir).replace("\\", "/")
+        head = soup.find("head")
+        if head:
+            css_link = soup.new_tag("link", rel="stylesheet", href=rel_css)
+            head.append(css_link)
+        script_tag = soup.new_tag("script", src=rel_js, defer="")
+        body.append(script_tag)
 
     return str(soup)
 
