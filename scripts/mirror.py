@@ -123,6 +123,14 @@ def neutralize_html(html: str, html_dir: Path) -> str:
         if tag.has_attr("nonce"):
             del tag.attrs["nonce"]
 
+    # 2e. apple-mobile-web-app-capable は deprecated。標準名を併記して警告消去。
+    apple = soup.find("meta", attrs={"name": "apple-mobile-web-app-capable"})
+    if apple and not soup.find("meta", attrs={"name": "mobile-web-app-capable"}):
+        std = soup.new_tag("meta")
+        std["name"] = "mobile-web-app-capable"
+        std["content"] = apple.get("content", "yes")
+        apple.insert_after(std)
+
     # 3. service worker 登録スクリプトを無効化
     for script in soup.find_all("script"):
         if script.string and ("serviceWorker" in script.string or "registerServiceWorker" in script.string):
