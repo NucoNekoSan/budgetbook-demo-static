@@ -22,19 +22,19 @@ jobs:
 
     steps:
       - name: Checkout static repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
       - name: Checkout budgetbook-demo (動的 demo)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: NucoNekoSan/budgetbook-demo
           path: source-demo
           fetch-depth: 1
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.13'
           cache: 'pip'
