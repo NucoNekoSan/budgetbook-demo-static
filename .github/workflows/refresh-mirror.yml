@@ -100,15 +100,14 @@ jobs:
         run: |
           test -f public/index.html
           test -s public/static/css/style.css
-          # 機微パターンが mirror 出力に混入していないか確認 (2026-05-16 強化:
-          # email / 実ドメイン / 実 LAN IP に加え、実残債値・実銀行名・実居住地由来語も検出)
+          # 機微パターンが mirror 出力に混入していないか確認。
+          # 数値リテラル系のチェックは budgetbook-demo の audit_docs_sensitive.sh が
+          # ソースレベルで担う (commit 時に pre-commit hook がブロック)。
+          # ここでは構造的 PII / 識別子 / 実ドメイン・IP に絞る (生成 aggregate
+          # との偽陽性を避けるため)。
           PATTERNS='isonohideki@|risa19841013@|home\.nuconeko-garden|192\.168\.1\.(37|40)'
           PATTERNS="$PATTERNS"'|240d:18:7:4200'                              # 実 IPv6 prefix
           PATTERNS="$PATTERNS"'|北洋銀行|札幌市'                              # 実銀行名 / 実居住地由来
-          PATTERNS="$PATTERNS"'|388,?897|99,?436|298,?171|34,?300|184,?907'   # 実残債額
-          PATTERNS="$PATTERNS"'|1,?005,?711|11,?161|11,?163'                  # 実合計値
-          PATTERNS="$PATTERNS"'|108,?576|497,?473|112,?406|367,?081|12,?970|68,?910'  # 実完済予測
-          PATTERNS="$PATTERNS"'|5,?445|1,?243|4,?473'                         # 実月利息額
           PATTERNS="$PATTERNS"'|クレカリボ[ABC]'                              # 実リボ口座名 (placeholder: クレジットカードA/B/C)
           # 構造的 PII shape: CSRF token 値、郵便番号、電話番号、クレカ番号、任意メール
           PATTERNS="$PATTERNS"'|name="csrfmiddlewaretoken"\s+type="hidden"\s+value="[A-Za-z0-9]{32,}'
