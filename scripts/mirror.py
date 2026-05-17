@@ -68,6 +68,49 @@ session.headers.update({"User-Agent": "budgetbook-mirror/1.0"})
 fetched_assets: dict[str, Path] = {}
 
 
+def login_as_demo() -> None:
+    """demo ユーザーで明示的にログインしてセッション cookie を確立する。
+
+    DEMO_AUTO_LOGIN middleware に頼らずここで確実にログインしておくことで、
+    その後の全 GET が認証済みリクエストとして発行される。
+    middleware が動かないケース (DB タイミング / 設定漏れ / 将来の middleware 変更)
+    でも mirror が壊れない保険として機能する。
+
+    demo ユーザーは `seed_demo_data --reset` で必ず作成される (password='demo')。
+    DEMO_MODE=1 + DEMO_ALLOW_WRITES=0 なので POST/PUT/DELETE は middleware で
+    403 ブロックされ、書き込みは絶対に発生しない。
+    """
+    login_url = BASE + "/accounts/login/"
+    # CSRF token を先に取得
+    r = session.get(login_url, allow_redirects=False)
+    if r.status_code != 200:
+        raise RuntimeError(f"login page fetch failed: HTTP {r.status_code}")
+    m = re.search(r'name="csrfmiddlewaretoken"\s+value="([^"]+)"', r.text)
+    if not m:
+        raise RuntimeError("CSRF token not found on login page")
+    csrf = m.group(1)
+    # ログイン POST (next=/)
+    r2 = session.post(
+        login_url,
+        data={
+            "csrfmiddlewaretoken": csrf,
+            "username": "demo",
+            "password": "demo",
+            "next": "/",
+        },
+        headers={"Referer": login_url},
+        allow_redirects=False,
+    )
+    # 成功時は 302 (next=/) にリダイレクト
+    if r2.status_code not in (200, 302):
+        raise RuntimeError(f"login POST failed: HTTP {r2.status_code}")
+    # セッションが本当に確立できたか確認
+    r3 = session.get(BASE + "/", allow_redirects=False)
+    if r3.status_code == 302 and "/accounts/login" in r3.headers.get("Location", ""):
+        raise RuntimeError("login did not establish session (still redirecting to /accounts/login)")
+    print("[mirror] demo user logged in successfully")
+
+
 def months_back_list(n: int) -> list[tuple[date, str]]:
     today = date.today()
     cur = today.replace(day=1)
@@ -312,6 +355,8 @@ def neutralize_html(html: str, html_dir: Path) -> str:
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    # 全ページ取得前に demo ユーザーで明示的ログイン (中間 middleware に依存しない)
+    login_as_demo()
     print(f"=== mirror to {OUT} ({len(VARIANTS)} variants) ===")
     for v in VARIANTS:
         url_path = v["url"]
