@@ -69,31 +69,40 @@ fetched_assets: dict[str, Path] = {}
 
 
 def login_as_demo() -> None:
-    """demo ユーザーで明示的にログインしてセッション cookie を確立する。
+    """demo ユーザーでセッションを確立する。
 
-    DEMO_AUTO_LOGIN middleware に頼らずここで確実にログインしておくことで、
-    その後の全 GET が認証済みリクエストとして発行される。
-    middleware が動かないケース (DB タイミング / 設定漏れ / 将来の middleware 変更)
-    でも mirror が壊れない保険として機能する。
+    手順:
+    1. まず GET / を発行 → DEMO_AUTO_LOGIN middleware (DEMO_MODE=1 + 設定済時) が
+       未認証訪問を demo ユーザーとして自動ログインする
+    2. その response で sessionid cookie が設定される
+    3. 念のため 200 を確認 (still login redirect なら middleware が動いていない)
 
-    demo ユーザーは `seed_demo_data --reset` で必ず作成される (password='demo')。
-    DEMO_MODE=1 + DEMO_ALLOW_WRITES=0 なので POST/PUT/DELETE は middleware で
-    403 ブロックされ、書き込みは絶対に発生しない。
+    middleware が動かないフォールバックとして explicit POST も試す
+    (旧 demo build / 自己ホスト / DEMO_AUTO_LOGIN=0 等)。
+    demo ユーザーは seed_demo_data --create-demo-users で作成される (password='demo')。
+    DEMO_MODE=1 + DEMO_ALLOW_WRITES=0 で POST/PUT/DELETE は 403 ブロック。
     """
+    # Step 1: DEMO_AUTO_LOGIN middleware に任せる
+    r = session.get(BASE + "/", allow_redirects=False)
+    if r.status_code == 200:
+        print("[mirror] DEMO_AUTO_LOGIN middleware kicked in (session established by GET /)")
+        return
+    if r.status_code != 302 or "/accounts/login" not in r.headers.get("Location", ""):
+        raise RuntimeError(f"unexpected GET / response: HTTP {r.status_code} loc={r.headers.get('Location', '-')}")
+
+    # Step 2: フォールバックとして明示 POST login
+    print("[mirror] middleware did not auto-login. Falling back to explicit POST.")
     login_url = BASE + "/accounts/login/"
-    # CSRF token を先に取得
-    r = session.get(login_url, allow_redirects=False)
-    if r.status_code != 200:
-        raise RuntimeError(f"login page fetch failed: HTTP {r.status_code}")
-    m = re.search(r'name="csrfmiddlewaretoken"\s+value="([^"]+)"', r.text)
+    rp = session.get(login_url, allow_redirects=False)
+    if rp.status_code != 200:
+        raise RuntimeError(f"login page fetch failed: HTTP {rp.status_code}")
+    m = re.search(r'name="csrfmiddlewaretoken"\s+value="([^"]+)"', rp.text)
     if not m:
         raise RuntimeError("CSRF token not found on login page")
-    csrf = m.group(1)
-    # ログイン POST (next=/)
-    r2 = session.post(
+    rp2 = session.post(
         login_url,
         data={
-            "csrfmiddlewaretoken": csrf,
+            "csrfmiddlewaretoken": m.group(1),
             "username": "demo",
             "password": "demo",
             "next": "/",
@@ -101,17 +110,13 @@ def login_as_demo() -> None:
         headers={"Referer": login_url},
         allow_redirects=False,
     )
-    if r2.status_code == 200:
-        # フォーム再表示 = エラー (CSRF / 認証 / axes ロックアウト / demo ユーザー未作成等)
-        errs = re.findall(r'<(?:ul|li|div|p)[^>]*(?:error|alert|warning)[^>]*>(.*?)</(?:ul|li|div|p)>', r2.text, re.IGNORECASE | re.DOTALL)
-        err_text = ' | '.join(re.sub(r'\s+', ' ', e.strip())[:200] for e in errs[:5]) if errs else '(no error markup; check seed_demo_data --create-demo-users)'
-        raise RuntimeError(f"login POST returned 200 (form re-displayed). Errors: {err_text}")
-    if r2.status_code != 302:
-        raise RuntimeError(f"login POST failed: HTTP {r2.status_code}")
-    r3 = session.get(BASE + "/", allow_redirects=False)
-    if r3.status_code == 302 and "/accounts/login" in r3.headers.get("Location", ""):
-        raise RuntimeError("login did not establish session (still redirecting to /accounts/login)")
-    print("[mirror] demo user logged in successfully")
+    if rp2.status_code == 200:
+        errs = re.findall(r'<(?:ul|li|div|p)[^>]*(?:error|alert|warning)[^>]*>(.*?)</(?:ul|li|div|p)>', rp2.text, re.IGNORECASE | re.DOTALL)
+        err_text = ' | '.join(re.sub(r'\s+', ' ', e.strip())[:200] for e in errs[:5]) if errs else '(no error markup; seed_demo_data --create-demo-users 実行漏れの可能性)'
+        raise RuntimeError(f"login POST returned 200. Errors: {err_text}")
+    if rp2.status_code != 302:
+        raise RuntimeError(f"login POST failed: HTTP {rp2.status_code}")
+    print("[mirror] demo user logged in via explicit POST")
 
 
 def months_back_list(n: int) -> list[tuple[date, str]]:
