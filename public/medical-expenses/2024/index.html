@@ -5,42 +5,497 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>BudgetBook | ログイン</title>
+<title>BudgetBook | 2024年 医療費控除明細</title>
 <link href="../../static/css/_01_base.css" rel="stylesheet"/>
 <link href="../../static/css/_02_layout_cards.css" rel="stylesheet"/>
 <link href="../../static/css/_03_components.css" rel="stylesheet"/>
 <link href="../../static/css/_04_pages_responsive.css" rel="stylesheet"/>
 <link href="../../static/css/_05_features_v119.css" rel="stylesheet"/>
 <meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
-<script src="../../static/js/theme_toggle.js"></script>
+
+<link href="../../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../../static/js/theme_toggle.js"></script>
+<script defer="" src="../../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../../static/js/htmx_config.js"></script>
+<script defer="" src="../../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../../static/js/budget_chart.js"></script>
+<script defer="" src="../../static/js/progress_bars.js"></script>
+<script defer="" src="../../static/js/keyboard_shortcuts.js"></script>
+
+<script defer="" src="../../static/js/mobile_nav.js"></script>
 <link href="../../static/css/static-banner.css" rel="stylesheet"/></head>
-<body>
+<body data-route="medical_expense_list">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
 
-<div class="login-wrapper">
-<div class="login-card panel">
-<div class="panel__body">
-<div class="login-brand">BudgetBook</div>
-<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../../index.html">BudgetBook</a>
+<button aria-controls="primary-nav" aria-expanded="false" aria-label="メニューを開く" class="nav-toggle" data-nav-toggle="" type="button">
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+</button>
+<div aria-hidden="true" class="nav-backdrop" data-nav-backdrop=""></div>
+<nav aria-label="主要ナビゲーション" class="site-nav" id="primary-nav">
+<button aria-label="メニューを閉じる" class="nav-close" data-nav-toggle="" type="button">✕ 閉じる</button>
+<a class="site-nav__link" data-route-link="dashboard" href="../../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../../accounting/index.html">締め・照合</a>
+<details class="site-nav__dropdown" data-route-group="reports">
+<summary aria-haspopup="menu" class="site-nav__link site-nav__dropdown-toggle">レポート <span aria-hidden="true">▾</span></summary>
+<div class="site-nav__dropdown-menu" role="menu">
+<a class="site-nav__dropdown-item" href="../../reports/tax-deductions/v2/index.html" role="menuitem">📑 確定申告レポート</a>
+<div class="site-nav__dropdown-sep" role="separator"></div>
+<a class="site-nav__dropdown-item" href="../index.html" role="menuitem">💊 医療費控除明細</a>
+<a class="site-nav__dropdown-item" href="../../insurance-premiums/index.html" role="menuitem">🛡️ 保険料控除</a>
+<a class="site-nav__dropdown-item" href="../../settings/income-snapshots/index.html" role="menuitem">📊 年次所得スナップショット</a>
+</div>
+</details>
+<a class="site-nav__link" data-route-link="settings" href="../../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<input name="next" type="hidden" value="/medical-expenses/?year=2024"/>
-<div class="field">
-<label for="id_username">ユーザー名</label>
-<input autocomplete="username" autofocus="" class="form-input" id="id_username" name="username" required="" type="text"/>
-</div>
-<div class="field">
-<label for="id_password">パスワード</label>
-<input autocomplete="current-password" class="form-input" id="id_password" name="password" required="" type="password"/>
-</div>
-<div class="form-grid__actions">
-<button class="btn btn--primary u-w-full" type="submit">ログイン</button>
-</div>
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
 </form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<div>
+<h1 class="page-title">2024年 医療費控除明細</h1>
+<div class="meta">
+            国税庁「医療費控除の明細書」様式に対応した管理ページです。
+          </div>
+</div>
+<div class="button-row">
+<a class="btn btn--ghost is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">← 2023年</a>
+<a class="btn btn--ghost" href="../2025/index.html">2025年 →</a>
+<a class="btn btn--primary is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">+ 医療費を追加</a>
+<a class="btn btn--soft is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">↓ CSV ダウンロード</a>
+<a class="btn btn--ghost" href="../../settings/index.html">設定に戻る</a>
 </div>
 </div>
+<div class="cards" style="margin-top: 16px;">
+<div class="card">
+<div class="card__label">支払合計</div>
+<div class="card__value">¥222,646</div>
 </div>
+<div class="card">
+<div class="card__label">補填合計</div>
+<div class="card__value">¥79,277</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">差引合計</div>
+<div class="card__value">¥143,369</div>
+</div>
+<div class="card">
+<div class="card__label">控除基準額</div>
+<div class="card__value">¥100,000</div>
+<div class="meta">
+            
+              総所得 ¥4,300,000 × 5% と 10 万円の小さい方
+            
+          </div>
+</div>
+<div class="card card--income">
+<div class="card__label">医療費控除額</div>
+<div class="card__value">¥43,369</div>
+<div class="meta">
+            
+              申告書 第二表 ⑩医療費控除欄に転記
+            
+          </div>
+</div>
+</div>
+<h2 class="section-title" style="margin-top: 24px;">受診者別小計</h2>
+<table class="table">
+<thead>
+<tr>
+<th>受診者</th>
+<th class="num">件数</th>
+<th class="num">支払合計</th>
+<th class="num">補填合計</th>
+<th class="num">差引</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本人</td>
+<td class="num">4</td>
+<td class="num">¥173,474</td>
+<td class="num">¥79,277</td>
+<td class="num">¥94,197</td>
+</tr>
+<tr>
+<td>子A</td>
+<td class="num">3</td>
+<td class="num">¥19,976</td>
+<td class="num">¥0</td>
+<td class="num">¥19,976</td>
+</tr>
+<tr>
+<td>子B</td>
+<td class="num">4</td>
+<td class="num">¥19,818</td>
+<td class="num">¥0</td>
+<td class="num">¥19,818</td>
+</tr>
+<tr>
+<td>配偶者</td>
+<td class="num">1</td>
+<td class="num">¥9,378</td>
+<td class="num">¥0</td>
+<td class="num">¥9,378</td>
+</tr>
+</tbody>
+</table>
+<h2 class="section-title" style="margin-top: 24px;">医療機関別小計</h2>
+<table class="table">
+<thead>
+<tr>
+<th>医療機関・薬局</th>
+<th class="num">件数</th>
+<th class="num">支払合計</th>
+<th class="num">補填合計</th>
+<th class="num">差引</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>〇〇総合病院</td>
+<td class="num">1</td>
+<td class="num">¥158,554</td>
+<td class="num">¥79,277</td>
+<td class="num">¥79,277</td>
+</tr>
+<tr>
+<td>□□小児科</td>
+<td class="num">2</td>
+<td class="num">¥16,065</td>
+<td class="num">¥0</td>
+<td class="num">¥16,065</td>
+</tr>
+<tr>
+<td>〇〇皮膚科</td>
+<td class="num">1</td>
+<td class="num">¥11,690</td>
+<td class="num">¥0</td>
+<td class="num">¥11,690</td>
+</tr>
+<tr>
+<td>☆☆歯科クリニック</td>
+<td class="num">1</td>
+<td class="num">¥9,378</td>
+<td class="num">¥0</td>
+<td class="num">¥9,378</td>
+</tr>
+<tr>
+<td>〇〇薬局</td>
+<td class="num">3</td>
+<td class="num">¥9,189</td>
+<td class="num">¥0</td>
+<td class="num">¥9,189</td>
+</tr>
+<tr>
+<td>◎◎眼科</td>
+<td class="num">1</td>
+<td class="num">¥6,881</td>
+<td class="num">¥0</td>
+<td class="num">¥6,881</td>
+</tr>
+<tr>
+<td>△△内科</td>
+<td class="num">1</td>
+<td class="num">¥5,079</td>
+<td class="num">¥0</td>
+<td class="num">¥5,079</td>
+</tr>
+<tr>
+<td>〇〇クリニック</td>
+<td class="num">1</td>
+<td class="num">¥4,824</td>
+<td class="num">¥0</td>
+<td class="num">¥4,824</td>
+</tr>
+<tr>
+<td>交通費 (通院 △△内科)</td>
+<td class="num">1</td>
+<td class="num">¥986</td>
+<td class="num">¥0</td>
+<td class="num">¥986</td>
+</tr>
+</tbody>
+</table>
+<h2 class="section-title" style="margin-top: 24px;">明細</h2>
+<table class="table">
+<thead>
+<tr>
+<th>支払日</th>
+<th>受診者</th>
+<th>医療機関・薬局</th>
+<th>区分</th>
+<th class="num">支払額</th>
+<th class="num">補填額</th>
+<th class="num">差引</th>
+<th>取引</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024-02-28</td>
+<td>配偶者</td>
+<td>☆☆歯科クリニック</td>
+<td>診療・治療（病院・歯科）</td>
+<td class="num">¥9,378</td>
+<td class="num">¥0</td>
+<td class="num">¥9,378</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-03-09</td>
+<td>子B</td>
+<td>〇〇クリニック</td>
+<td>診療・治療（病院・歯科）</td>
+<td class="num">¥4,824</td>
+<td class="num">¥0</td>
+<td class="num">¥4,824</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-03-13</td>
+<td>子A</td>
+<td>□□小児科</td>
+<td>診療・治療（病院・歯科）</td>
+<td class="num">¥8,251</td>
+<td class="num">¥0</td>
+<td class="num">¥8,251</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-04-05</td>
+<td>本人</td>
+<td>〇〇総合病院</td>
+<td>診療・治療（病院・歯科）</td>
+<td class="num">¥158,554</td>
+<td class="num">¥79,277</td>
+<td class="num">¥79,277</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-04-21</td>
+<td>本人</td>
+<td>〇〇薬局</td>
+<td>医薬品（処方薬・市販薬）</td>
+<td class="num">¥2,960</td>
+<td class="num">¥0</td>
+<td class="num">¥2,960</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-05-26</td>
+<td>子B</td>
+<td>交通費 (通院 △△内科)</td>
+<td>その他（通院交通費 等）</td>
+<td class="num">¥986</td>
+<td class="num">¥0</td>
+<td class="num">¥986</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-06-10</td>
+<td>子A</td>
+<td>□□小児科</td>
+<td>診療・治療（病院・歯科）</td>
+<td class="num">¥7,814</td>
+<td class="num">¥0</td>
+<td class="num">¥7,814</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-07-20</td>
+<td>子B</td>
+<td>〇〇薬局</td>
+<td>医薬品（処方薬・市販薬）</td>
+<td class="num">¥2,318</td>
+<td class="num">¥0</td>
+<td class="num">¥2,318</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-10-07</td>
+<td>本人</td>
+<td>△△内科</td>
+<td>診療・治療（病院・歯科）</td>
+<td class="num">¥5,079</td>
+<td class="num">¥0</td>
+<td class="num">¥5,079</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-10-12</td>
+<td>子B</td>
+<td>〇〇皮膚科</td>
+<td>診療・治療（病院・歯科）</td>
+<td class="num">¥11,690</td>
+<td class="num">¥0</td>
+<td class="num">¥11,690</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-10-26</td>
+<td>本人</td>
+<td>◎◎眼科</td>
+<td>診療・治療（病院・歯科）</td>
+<td class="num">¥6,881</td>
+<td class="num">¥0</td>
+<td class="num">¥6,881</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+<tr>
+<td>2024-11-07</td>
+<td>子A</td>
+<td>〇〇薬局</td>
+<td>医薬品（処方薬・市販薬）</td>
+<td class="num">¥3,911</td>
+<td class="num">¥0</td>
+<td class="num">¥3,911</td>
+<td>
+<span class="meta">家計簿外</span>
+</td>
+<td>
+<a class="btn btn--ghost btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">編集</a>
+<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('この医療費明細を削除しますか？')" type="submit">削除</button>
+</form>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
 <script defer="" src="../../static/js/neutralize.js"></script></body>
 </html>

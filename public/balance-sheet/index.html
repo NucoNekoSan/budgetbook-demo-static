@@ -5,42 +5,213 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>BudgetBook | ログイン</title>
+<title>BudgetBook | 資産（B/S）</title>
 <link href="../static/css/_01_base.css" rel="stylesheet"/>
 <link href="../static/css/_02_layout_cards.css" rel="stylesheet"/>
 <link href="../static/css/_03_components.css" rel="stylesheet"/>
 <link href="../static/css/_04_pages_responsive.css" rel="stylesheet"/>
 <link href="../static/css/_05_features_v119.css" rel="stylesheet"/>
 <meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
-<script src="../static/js/theme_toggle.js"></script>
+
+<link href="../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../static/js/theme_toggle.js"></script>
+<script defer="" src="../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../static/js/htmx_config.js"></script>
+<script defer="" src="../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../static/js/budget_chart.js"></script>
+<script defer="" src="../static/js/progress_bars.js"></script>
+<script defer="" src="../static/js/keyboard_shortcuts.js"></script>
+
+<script defer="" src="../static/js/mobile_nav.js"></script>
 <link href="../static/css/static-banner.css" rel="stylesheet"/></head>
-<body>
+<body data-route="balance_sheet">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
 
-<div class="login-wrapper">
-<div class="login-card panel">
-<div class="panel__body">
-<div class="login-brand">BudgetBook</div>
-<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../index.html">BudgetBook</a>
+<button aria-controls="primary-nav" aria-expanded="false" aria-label="メニューを開く" class="nav-toggle" data-nav-toggle="" type="button">
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+</button>
+<div aria-hidden="true" class="nav-backdrop" data-nav-backdrop=""></div>
+<nav aria-label="主要ナビゲーション" class="site-nav" id="primary-nav">
+<button aria-label="メニューを閉じる" class="nav-close" data-nav-toggle="" type="button">✕ 閉じる</button>
+<a class="site-nav__link" data-route-link="dashboard" href="../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../accounting/index.html">締め・照合</a>
+<details class="site-nav__dropdown" data-route-group="reports">
+<summary aria-haspopup="menu" class="site-nav__link site-nav__dropdown-toggle">レポート <span aria-hidden="true">▾</span></summary>
+<div class="site-nav__dropdown-menu" role="menu">
+<a class="site-nav__dropdown-item" href="../reports/tax-deductions/v2/index.html" role="menuitem">📑 確定申告レポート</a>
+<div class="site-nav__dropdown-sep" role="separator"></div>
+<a class="site-nav__dropdown-item" href="../medical-expenses/index.html" role="menuitem">💊 医療費控除明細</a>
+<a class="site-nav__dropdown-item" href="../insurance-premiums/index.html" role="menuitem">🛡️ 保険料控除</a>
+<a class="site-nav__dropdown-item" href="../settings/income-snapshots/index.html" role="menuitem">📊 年次所得スナップショット</a>
+</div>
+</details>
+<a class="site-nav__link" data-route-link="settings" href="../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<input name="next" type="hidden" value="/balance-sheet/"/>
-<div class="field">
-<label for="id_username">ユーザー名</label>
-<input autocomplete="username" autofocus="" class="form-input" id="id_username" name="username" required="" type="text"/>
-</div>
-<div class="field">
-<label for="id_password">パスワード</label>
-<input autocomplete="current-password" class="form-input" id="id_password" name="password" required="" type="password"/>
-</div>
-<div class="form-grid__actions">
-<button class="btn btn--primary u-w-full" type="submit">ログイン</button>
-</div>
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
 </form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="annual-layout">
+<div class="toolbar">
+<div>
+<h1 class="page-title">資産（個人 B/S）</h1>
+<div class="meta">2026年5月31日時点。資産 − 負債 = 正味財産。</div>
+</div>
+<div class="button-row">
+<a class="btn btn--soft" href="../loan-strategy/index.html">📊 返済戦略</a>
+<a class="btn btn--ghost" href="2026-04/index.html">← 前月</a>
+</div>
+</div>
+<div class="summary-hero">
+<div class="hero-card" data-tone="negative">
+<div class="hero-card__label">正味財産</div>
+<div class="hero-card__value tabular-num">¥-18,508,306</div>
+<div class="hero-card__caption">資産 ¥8,034,856 − 負債 ¥26,543,162</div>
+</div>
+<div class="cards">
+<div class="card card--income">
+<div class="card__label">資産合計</div>
+<div class="card__value tabular-num">¥8,034,856</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">負債合計</div>
+<div class="card__value tabular-num">¥26,543,162</div>
 </div>
 </div>
 </div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">資産</h2>
+<ul class="list">
+<li class="list-item">
+<span><strong>普通預金</strong></span>
+<strong class="tabular-num">¥5,224,764</strong>
+</li>
+<li class="list-item">
+<span><strong>現金</strong></span>
+<strong class="tabular-num amount-expense">¥-315,545</strong>
+</li>
+<li class="list-item">
+<span><strong>証券口座</strong></span>
+<strong class="tabular-num">¥500,000</strong>
+</li>
+<li class="list-item">
+<span><strong>貯蓄預金</strong></span>
+<strong class="tabular-num">¥2,950,000</strong>
+</li>
+<li class="list-item">
+<span><strong>電子マネー</strong></span>
+<strong class="tabular-num amount-expense">¥-324,363</strong>
+</li>
+</ul>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">負債</h2>
+<div class="meta">
+          クレジットカード未払いやローン残などの将来支払義務。年利を設定するとリボの実コストが見えます。
+          
+            <strong>月間想定利息合計: ¥29,983（年 ¥359,800）</strong>
+</div>
+<ul class="list">
+<li class="list-item">
+<div>
+<div><strong>自動車ローン</strong></div>
+<div class="meta">
+                      元利均等
+                       / 年利 2.9%
+                       / 月次返済目安 ¥35,000
+                       / 引落 27日
+                       / 引落元 普通預金
+                    </div>
+<div class="meta amount-expense">想定利息: 月 ¥2,900 / 年 ¥34,800</div>
+<div class="meta">
+                          自動完済予測: あと 36 ヶ月
+                          (2029年5月)
+                           / 想定総利息 ¥54,145
+                        </div>
+</div>
+<strong class="tabular-num amount-expense">¥1,200,000</strong>
+</li>
+<li class="list-item">
+<div>
+<div><strong>住宅ローン</strong></div>
+<div class="meta">
+                      元利均等
+                       / 年利 1.3%
+                       / 月次返済目安 ¥85,000
+                       / 引落 27日
+                       / 引落元 普通預金
+                    </div>
+<div class="meta amount-expense">想定利息: 月 ¥27,083 / 年 ¥325,000</div>
+<div class="meta">
+                          自動完済予測: あと 355 ヶ月
+                          (2055年12月)
+                           / 想定総利息 ¥5,117,555
+                        </div>
+</div>
+<strong class="tabular-num amount-expense">¥25,000,000</strong>
+</li>
+<li class="list-item">
+<div>
+<div><strong>クレジットカード</strong></div>
+<div class="meta">利率未設定。設定→口座編集で年利を入力できます。</div>
+</div>
+<strong class="tabular-num amount-expense">¥343,162</strong>
+</li>
+</ul>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">2026年 税控除タグ別 累計</h2>
+<div class="meta">2026-01-01 〜 2026-05-31。確定申告の準備資料に。</div>
+<div class="table-wrap u-mt-16">
+<table>
+<thead>
+<tr><th>タグ</th><th>金額</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>医療費控除</strong></td>
+<td class="tabular-num">¥15,736</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
 <script defer="" src="../static/js/neutralize.js"></script></body>
 </html>

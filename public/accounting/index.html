@@ -5,42 +5,266 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>BudgetBook | ログイン</title>
+<title>BudgetBook | 締め・照合</title>
 <link href="../static/css/_01_base.css" rel="stylesheet"/>
 <link href="../static/css/_02_layout_cards.css" rel="stylesheet"/>
 <link href="../static/css/_03_components.css" rel="stylesheet"/>
 <link href="../static/css/_04_pages_responsive.css" rel="stylesheet"/>
 <link href="../static/css/_05_features_v119.css" rel="stylesheet"/>
 <meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
-<script src="../static/js/theme_toggle.js"></script>
+
+<link href="../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../static/js/theme_toggle.js"></script>
+<script defer="" src="../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../static/js/htmx_config.js"></script>
+<script defer="" src="../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../static/js/budget_chart.js"></script>
+<script defer="" src="../static/js/progress_bars.js"></script>
+<script defer="" src="../static/js/keyboard_shortcuts.js"></script>
+
+<script defer="" src="../static/js/mobile_nav.js"></script>
 <link href="../static/css/static-banner.css" rel="stylesheet"/></head>
-<body>
+<body data-route="accounting">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
 
-<div class="login-wrapper">
-<div class="login-card panel">
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../index.html">BudgetBook</a>
+<button aria-controls="primary-nav" aria-expanded="false" aria-label="メニューを開く" class="nav-toggle" data-nav-toggle="" type="button">
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+</button>
+<div aria-hidden="true" class="nav-backdrop" data-nav-backdrop=""></div>
+<nav aria-label="主要ナビゲーション" class="site-nav" id="primary-nav">
+<button aria-label="メニューを閉じる" class="nav-close" data-nav-toggle="" type="button">✕ 閉じる</button>
+<a class="site-nav__link" data-route-link="dashboard" href="../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="index.html">締め・照合</a>
+<details class="site-nav__dropdown" data-route-group="reports">
+<summary aria-haspopup="menu" class="site-nav__link site-nav__dropdown-toggle">レポート <span aria-hidden="true">▾</span></summary>
+<div class="site-nav__dropdown-menu" role="menu">
+<a class="site-nav__dropdown-item" href="../reports/tax-deductions/v2/index.html" role="menuitem">📑 確定申告レポート</a>
+<div class="site-nav__dropdown-sep" role="separator"></div>
+<a class="site-nav__dropdown-item" href="../medical-expenses/index.html" role="menuitem">💊 医療費控除明細</a>
+<a class="site-nav__dropdown-item" href="../insurance-premiums/index.html" role="menuitem">🛡️ 保険料控除</a>
+<a class="site-nav__dropdown-item" href="../settings/income-snapshots/index.html" role="menuitem">📊 年次所得スナップショット</a>
+</div>
+</details>
+<a class="site-nav__link" data-route-link="settings" href="../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
+</form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="annual-layout">
+<div class="toolbar">
+<div>
+<h1 class="page-title">締め・照合</h1>
+<div class="meta">月次締めと実口座残高の照合で、家計簿の数字を確定・検証します。</div>
+</div>
+<a class="btn btn--ghost" href="../index.html">家計簿に戻る</a>
+</div>
+<details class="panel">
+<summary class="panel__body section-title">この画面の使い方（クリックで開閉）</summary>
 <div class="panel__body">
-<div class="login-brand">BudgetBook</div>
+<h3 class="section-title">月次締め (Monthly Closing) とは</h3>
+<p>月末時点の収入・支出・残高をスナップショットとして<strong>保存</strong>する操作です。締めた月は次の意味を持ちます:</p>
+<ul>
+<li>その月の取引・振替の<strong>追加・編集・削除がロック</strong>されます（誤操作防止）</li>
+<li>「ある時点の家計の確定値」として帳簿が固定されます</li>
+<li>後から取引を変えると <strong>drift（差異）</strong> として警告が出ます（不正検知）</li>
+</ul>
+<h3 class="section-title">推奨フロー（毎月の運用）</h3>
+<ol>
+<li><strong>月初</strong>: 前月のすべての取引・振替を入力し終える（クレカ明細・銀行明細などを照合）</li>
+<li><strong>口座残高照合</strong>: 各口座の月末残高を実残高（通帳・アプリ表示）と照合し、差額を確認</li>
+<li><strong>月次締め</strong>: 「対象月」を前月に指定して『対象月を締める』</li>
+<li>翌月以降に過去取引を訂正すると drift として表示 → 必要なら<strong>再計算</strong>か<strong>取消して再締め</strong></li>
+</ol>
+<h3 class="section-title">誤って締めた / 取消したい場合</h3>
+<ul>
+<li>各締め行の<strong>「取消」</strong>ボタンで物理削除可能（監査ログには残ります）</li>
+<li>取消後は対象月の取引が再度編集可能になります</li>
+<li>取消・再計算の操作はすべて <code>/admin/ledger/auditlog/</code> に記録されます</li>
+</ul>
+<h3 class="section-title">口座残高照合 (Reconciliation) とは</h3>
+<p>各口座の<strong>帳簿上の残高</strong>と、銀行アプリ等で見た<strong>実際の残高</strong>を突き合わせる作業です。差額があれば取引の入力漏れ・重複の可能性を示します。</p>
+<ul>
+<li>毎月末の照合を推奨。締め前に行うと preflight で警告が消えます</li>
+<li>差額が出ても無理に 0 にしない（記録を残し、後日原因調査）</li>
+<li>誤登録した照合は「取消」ボタンで削除可能</li>
+</ul>
+</div>
+</details>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">月次締め</h2>
 <form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<input name="next" type="hidden" value="/accounting/"/>
 <div class="field">
-<label for="id_username">ユーザー名</label>
-<input autocomplete="username" autofocus="" class="form-input" id="id_username" name="username" required="" type="text"/>
+<label for="id_month">対象月</label>
+<input class="form-input" id="id_month" name="month" required="" type="date" value="2026-05-01"/>
 </div>
 <div class="field">
-<label for="id_password">パスワード</label>
-<input autocomplete="current-password" class="form-input" id="id_password" name="password" required="" type="password"/>
+<label for="id_notes">メモ</label>
+<textarea class="form-input" cols="40" id="id_notes" name="notes" placeholder="任意メモ" rows="3">
+</textarea>
 </div>
-<div class="form-grid__actions">
-<button class="btn btn--primary u-w-full" type="submit">ログイン</button>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary" type="submit">対象月を締める</button>
 </div>
 </form>
+<div class="preflight-box preflight-box--warning">
+<h3 class="preflight-box__title">2026年5月 締め前チェック</h3>
+<div class="meta">
+            月末日: 2026-05-31 /
+            通常取引 24件 /
+            振替 2件 /
+            有効口座 8件
+          </div>
+<ul class="preflight-list">
+<li>
+<span class="status-pill status-pill--ok">OK</span> この月は未締めです。
+              
+            </li>
+<li>
+              締め後に保存される見込み:
+              収入 ¥393,540 /
+              支出 ¥398,227 /
+              当月収支 ¥-4,687 /
+              月末残高 ¥-18,508,306
+            </li>
+<li>
+<span class="status-pill status-pill--warning">確認要</span>
+                2026-05-31 の照合が未登録の口座:
+                
+                  クレジットカード / 
+                
+                  住宅ローン / 
+                
+                  普通預金 / 
+                
+                  現金 / 
+                
+                  自動車ローン / 
+                
+                  証券口座 / 
+                
+                  貯蓄預金 / 
+                
+                  電子マネー
+                
+              
+            </li>
+<li>
+<span class="status-pill status-pill--ok">OK</span> 登録済みの月末照合に差額はありません。
+              
+            </li>
+</ul>
+<div class="meta">実運用へ反映する前は、バックアップ取得と会計整合性チェックを別途実行してください。</div>
+</div>
+<div class="table-wrap table-wrap--spaced table-wrap--responsive">
+<table class="data-table">
+<thead>
+<tr>
+<th>対象月</th>
+<th>収入</th>
+<th>支出</th>
+<th>当月収支</th>
+<th>月末残高</th>
+<th>整合性</th>
+<th>締め日時</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr><td class="empty" colspan="8">締め済み月はまだありません。</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">口座残高照合</h2>
+<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
+<div class="field">
+<label for="id_account">口座</label>
+<select class="form-input" id="id_account" name="account" required="">
+<option selected="" value="">---------</option>
+<option value="8">クレジットカード</option>
+<option value="6">住宅ローン</option>
+<option value="2">普通預金</option>
+<option value="1">現金</option>
+<option value="7">自動車ローン</option>
+<option value="4">証券口座</option>
+<option value="3">貯蓄預金</option>
+<option value="5">電子マネー</option>
+</select>
+</div>
+<div class="field">
+<label for="id_reconciled_on">照合日</label>
+<input class="form-input" id="id_reconciled_on" name="reconciled_on" required="" type="date" value="2026-05-17"/>
+</div>
+<div class="field">
+<label for="id_actual_balance">実残高</label>
+<input class="form-input" id="id_actual_balance" name="actual_balance" required="" step="1" type="number"/>
+</div>
+<div class="field">
+<label for="id_notes">メモ</label>
+<textarea class="form-input" cols="40" id="id_notes" name="notes" placeholder="残高確認元や差額理由など" rows="3">
+</textarea>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary" type="submit">照合を登録</button>
+</div>
+</form>
+<div class="table-wrap table-wrap--spaced table-wrap--responsive">
+<table class="data-table">
+<thead>
+<tr>
+<th>照合日</th>
+<th>口座</th>
+<th>帳簿残高</th>
+<th>実残高</th>
+<th>差額</th>
+<th>メモ</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr><td class="empty" colspan="7">照合履歴はまだありません。</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
 <script defer="" src="../static/js/neutralize.js"></script></body>
 </html>

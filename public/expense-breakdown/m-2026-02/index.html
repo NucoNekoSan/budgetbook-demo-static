@@ -5,42 +5,482 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>BudgetBook | ログイン</title>
+<title>BudgetBook | 支出構成</title>
 <link href="../../static/css/_01_base.css" rel="stylesheet"/>
 <link href="../../static/css/_02_layout_cards.css" rel="stylesheet"/>
 <link href="../../static/css/_03_components.css" rel="stylesheet"/>
 <link href="../../static/css/_04_pages_responsive.css" rel="stylesheet"/>
 <link href="../../static/css/_05_features_v119.css" rel="stylesheet"/>
 <meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
-<script src="../../static/js/theme_toggle.js"></script>
+
+<link href="../../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../../static/js/theme_toggle.js"></script>
+<script defer="" src="../../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../../static/js/htmx_config.js"></script>
+<script defer="" src="../../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../../static/js/budget_chart.js"></script>
+<script defer="" src="../../static/js/progress_bars.js"></script>
+<script defer="" src="../../static/js/keyboard_shortcuts.js"></script>
+
+<script defer="" src="../../static/js/mobile_nav.js"></script>
+<script defer="" src="../../static/js/expense_chart.js"></script>
 <link href="../../static/css/static-banner.css" rel="stylesheet"/></head>
-<body>
+<body data-route="expense_breakdown">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
 
-<div class="login-wrapper">
-<div class="login-card panel">
-<div class="panel__body">
-<div class="login-brand">BudgetBook</div>
-<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../../index.html">BudgetBook</a>
+<button aria-controls="primary-nav" aria-expanded="false" aria-label="メニューを開く" class="nav-toggle" data-nav-toggle="" type="button">
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+</button>
+<div aria-hidden="true" class="nav-backdrop" data-nav-backdrop=""></div>
+<nav aria-label="主要ナビゲーション" class="site-nav" id="primary-nav">
+<button aria-label="メニューを閉じる" class="nav-close" data-nav-toggle="" type="button">✕ 閉じる</button>
+<a class="site-nav__link" data-route-link="dashboard" href="../../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../../accounting/index.html">締め・照合</a>
+<details class="site-nav__dropdown" data-route-group="reports">
+<summary aria-haspopup="menu" class="site-nav__link site-nav__dropdown-toggle">レポート <span aria-hidden="true">▾</span></summary>
+<div class="site-nav__dropdown-menu" role="menu">
+<a class="site-nav__dropdown-item" href="../../reports/tax-deductions/v2/index.html" role="menuitem">📑 確定申告レポート</a>
+<div class="site-nav__dropdown-sep" role="separator"></div>
+<a class="site-nav__dropdown-item" href="../../medical-expenses/index.html" role="menuitem">💊 医療費控除明細</a>
+<a class="site-nav__dropdown-item" href="../../insurance-premiums/index.html" role="menuitem">🛡️ 保険料控除</a>
+<a class="site-nav__dropdown-item" href="../../settings/income-snapshots/index.html" role="menuitem">📊 年次所得スナップショット</a>
+</div>
+</details>
+<a class="site-nav__link" data-route-link="settings" href="../../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<input name="next" type="hidden" value="/expense-breakdown/?month=2026-02"/>
-<div class="field">
-<label for="id_username">ユーザー名</label>
-<input autocomplete="username" autofocus="" class="form-input" id="id_username" name="username" required="" type="text"/>
-</div>
-<div class="field">
-<label for="id_password">パスワード</label>
-<input autocomplete="current-password" class="form-input" id="id_password" name="password" required="" type="password"/>
-</div>
-<div class="form-grid__actions">
-<button class="btn btn--primary u-w-full" type="submit">ログイン</button>
-</div>
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
 </form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="annual-layout">
+<div class="toolbar">
+<div>
+<h1 class="page-title">支出構成</h1>
+<div class="meta">カテゴリ別の支出割合と、収入に対する支出比率を確認できます。</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<h2 class="section-title">2026年2月 収入に対する支出比率</h2>
+</div>
+<div class="meta">母数: 月間収入 ¥386,289</div>
+<div class="chart-container chart-container--pie">
+<canvas aria-label="収入に対する支出比率の円グラフ。詳細な内訳は下のテーブルで確認できます。" id="income-ratio-pie" role="img"></canvas>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>項目</th><th>金額</th><th>収入比</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>家賃・住宅ローン</strong></td>
+<td class="amount-expense">¥120,000</td>
+<td>31.1%</td>
+</tr>
+<tr>
+<td><strong>食費</strong></td>
+<td class="amount-expense">¥35,355</td>
+<td>9.2%</td>
+</tr>
+<tr>
+<td><strong>水道光熱費</strong></td>
+<td class="amount-expense">¥25,541</td>
+<td>6.6%</td>
+</tr>
+<tr>
+<td><strong>教育費</strong></td>
+<td class="amount-expense">¥22,000</td>
+<td>5.7%</td>
+</tr>
+<tr>
+<td><strong>交通費</strong></td>
+<td class="amount-expense">¥13,507</td>
+<td>3.5%</td>
+</tr>
+<tr>
+<td><strong>通信費</strong></td>
+<td class="amount-expense">¥13,500</td>
+<td>3.5%</td>
+</tr>
+<tr>
+<td><strong>保険料</strong></td>
+<td class="amount-expense">¥12,000</td>
+<td>3.1%</td>
+</tr>
+<tr>
+<td><strong>外食</strong></td>
+<td class="amount-expense">¥8,994</td>
+<td>2.3%</td>
+</tr>
+<tr>
+<td><strong>交際費</strong></td>
+<td class="amount-expense">¥5,862</td>
+<td>1.5%</td>
+</tr>
+<tr>
+<td><strong>娯楽</strong></td>
+<td class="amount-expense">¥5,147</td>
+<td>1.3%</td>
+</tr>
+<tr>
+<td><strong>日用品</strong></td>
+<td class="amount-expense">¥5,015</td>
+<td>1.3%</td>
+</tr>
+<tr>
+<td><strong>サブスク</strong></td>
+<td class="amount-expense">¥2,500</td>
+<td>0.6%</td>
+</tr>
+<tr>
+<td><strong>残額</strong></td>
+<td>¥116,868</td>
+<td>30.3%</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">2026年2月 大分類サマリー</h2>
+<div class="meta">食品・日用品 / 住居 / 交通 などの会計大分類で月間支出を俯瞰します。</div>
+<div class="table-wrap u-mt-16">
+<table>
+<thead>
+<tr><th>大分類</th><th>金額</th><th>割合</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>住居費</strong></td>
+<td class="amount-expense tabular-num">¥120,000</td>
+<td class="tabular-num">44.5%</td>
+</tr>
+<tr>
+<td><strong>光熱・通信</strong></td>
+<td class="amount-expense tabular-num">¥41,541</td>
+<td class="tabular-num">15.4%</td>
+</tr>
+<tr>
+<td><strong>食品・日用品</strong></td>
+<td class="amount-expense tabular-num">¥40,370</td>
+<td class="tabular-num">15.0%</td>
+</tr>
+<tr>
+<td><strong>教養・娯楽</strong></td>
+<td class="amount-expense tabular-num">¥27,147</td>
+<td class="tabular-num">10.1%</td>
+</tr>
+<tr>
+<td><strong>交通</strong></td>
+<td class="amount-expense tabular-num">¥13,507</td>
+<td class="tabular-num">5.0%</td>
+</tr>
+<tr>
+<td><strong>保険・税</strong></td>
+<td class="amount-expense tabular-num">¥12,000</td>
+<td class="tabular-num">4.5%</td>
+</tr>
+<tr>
+<td><strong>外食</strong></td>
+<td class="amount-expense tabular-num">¥8,994</td>
+<td class="tabular-num">3.3%</td>
+</tr>
+<tr>
+<td><strong>交際・贈答</strong></td>
+<td class="amount-expense tabular-num">¥5,862</td>
+<td class="tabular-num">2.2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<h2 class="section-title">2026年2月 月間支出構成（支出合計を母数）</h2>
+<div class="button-row">
+<a class="btn btn--ghost" href="../m-2026-01/index.html">← 前月</a>
+<a class="btn btn--ghost" href="../m-2026-03/index.html">次月 →</a>
+</div>
+</div>
+<div class="card card--expense u-mb-16">
+<div class="card__label">合計支出</div>
+<div class="card__value">¥269,421</div>
+</div>
+<div class="chart-container chart-container--pie">
+<canvas aria-label="2026年2月のカテゴリ別支出構成円グラフ。合計 ¥269,421。詳細は下のテーブルで確認できます。" id="monthly-pie" role="img"></canvas>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>カテゴリ</th><th>金額</th><th>割合</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<strong>家賃・住宅ローン</strong>
+</td>
+<td class="amount-expense">¥120,000</td>
+<td>44.5%</td>
+</tr>
+<tr>
+<td>
+<strong>食費</strong>
+</td>
+<td class="amount-expense">¥35,355</td>
+<td>13.1%</td>
+</tr>
+<tr>
+<td>
+<strong>水道光熱費</strong>
+</td>
+<td class="amount-expense">¥25,541</td>
+<td>9.5%</td>
+</tr>
+<tr>
+<td>
+<strong>教育費</strong>
+</td>
+<td class="amount-expense">¥22,000</td>
+<td>8.2%</td>
+</tr>
+<tr>
+<td>
+<strong>交通費</strong>
+</td>
+<td class="amount-expense">¥13,507</td>
+<td>5.0%</td>
+</tr>
+<tr>
+<td>
+<strong>通信費</strong>
+</td>
+<td class="amount-expense">¥13,500</td>
+<td>5.0%</td>
+</tr>
+<tr>
+<td>
+<strong>保険料</strong>
+</td>
+<td class="amount-expense">¥12,000</td>
+<td>4.5%</td>
+</tr>
+<tr>
+<td>
+<strong>外食</strong>
+</td>
+<td class="amount-expense">¥8,994</td>
+<td>3.3%</td>
+</tr>
+<tr>
+<td>
+<strong>交際費</strong>
+</td>
+<td class="amount-expense">¥5,862</td>
+<td>2.2%</td>
+</tr>
+<tr>
+<td>
+<strong>娯楽</strong>
+</td>
+<td class="amount-expense">¥5,147</td>
+<td>1.9%</td>
+</tr>
+<tr>
+<td>
+<strong>日用品</strong>
+</td>
+<td class="amount-expense">¥5,015</td>
+<td>1.9%</td>
+</tr>
+<tr>
+<td>
+<strong>サブスク</strong>
+</td>
+<td class="amount-expense">¥2,500</td>
+<td>0.9%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<h2 class="section-title">2026年 年間支出構成（支出合計を母数）</h2>
+<div class="button-row">
+<a class="btn btn--ghost" href="index.html">← 前年</a>
+</div>
+</div>
+<div class="card card--expense u-mb-16">
+<div class="card__label">合計支出</div>
+<div class="card__value">¥1,589,184</div>
+</div>
+<div class="chart-container chart-container--pie">
+<canvas aria-label="2026年の年間支出カテゴリ構成円グラフ。合計 ¥1,589,184。詳細は下のテーブルで確認できます。" id="yearly-pie" role="img"></canvas>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>カテゴリ</th><th>金額</th><th>割合</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<strong>家賃・住宅ローン</strong>
+</td>
+<td class="amount-expense">¥600,000</td>
+<td>37.8%</td>
+</tr>
+<tr>
+<td>
+<strong>教育費</strong>
+</td>
+<td class="amount-expense">¥190,000</td>
+<td>12.0%</td>
+</tr>
+<tr>
+<td>
+<strong>食費</strong>
+</td>
+<td class="amount-expense">¥182,705</td>
+<td>11.5%</td>
+</tr>
+<tr>
+<td>
+<strong>税金</strong>
+</td>
+<td class="amount-expense">¥119,500</td>
+<td>7.5%</td>
+</tr>
+<tr>
+<td>
+<strong>水道光熱費</strong>
+</td>
+<td class="amount-expense">¥105,188</td>
+<td>6.6%</td>
+</tr>
+<tr>
+<td>
+<strong>外食</strong>
+</td>
+<td class="amount-expense">¥69,851</td>
+<td>4.4%</td>
+</tr>
+<tr>
+<td>
+<strong>通信費</strong>
+</td>
+<td class="amount-expense">¥67,500</td>
+<td>4.2%</td>
+</tr>
+<tr>
+<td>
+<strong>保険料</strong>
+</td>
+<td class="amount-expense">¥60,000</td>
+<td>3.8%</td>
+</tr>
+<tr>
+<td>
+<strong>交通費</strong>
+</td>
+<td class="amount-expense">¥59,232</td>
+<td>3.7%</td>
+</tr>
+<tr>
+<td>
+<strong>日用品</strong>
+</td>
+<td class="amount-expense">¥34,178</td>
+<td>2.2%</td>
+</tr>
+<tr>
+<td>
+<strong>衣料・美容</strong>
+</td>
+<td class="amount-expense">¥26,181</td>
+<td>1.6%</td>
+</tr>
+<tr>
+<td>
+<strong>娯楽</strong>
+</td>
+<td class="amount-expense">¥26,180</td>
+<td>1.6%</td>
+</tr>
+<tr>
+<td>
+<strong>交際費</strong>
+</td>
+<td class="amount-expense">¥19,680</td>
+<td>1.2%</td>
+</tr>
+<tr>
+<td>
+<strong>医療費</strong>
+</td>
+<td class="amount-expense">¥15,736</td>
+<td>1.0%</td>
+</tr>
+<tr>
+<td>
+<strong>サブスク</strong>
+</td>
+<td class="amount-expense">¥12,500</td>
+<td>0.8%</td>
+</tr>
+<tr>
+<td>
+<strong>金利・手数料</strong>
+</td>
+<td class="amount-expense">¥753</td>
+<td>0.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<script id="monthly-pie-data" type="application/json">[{"label": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "category__name": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "category_id": 4, "total": 120000, "kind": "category", "pct": 44.5}, {"label": "\u98df\u8cbb", "category__name": "\u98df\u8cbb", "category_id": 7, "total": 35355, "kind": "category", "pct": 13.1}, {"label": "\u6c34\u9053\u5149\u71b1\u8cbb", "category__name": "\u6c34\u9053\u5149\u71b1\u8cbb", "category_id": 5, "total": 25541, "kind": "category", "pct": 9.5}, {"label": "\u6559\u80b2\u8cbb", "category__name": "\u6559\u80b2\u8cbb", "category_id": 12, "total": 22000, "kind": "category", "pct": 8.2}, {"label": "\u4ea4\u901a\u8cbb", "category__name": "\u4ea4\u901a\u8cbb", "category_id": 10, "total": 13507, "kind": "category", "pct": 5.0}, {"label": "\u901a\u4fe1\u8cbb", "category__name": "\u901a\u4fe1\u8cbb", "category_id": 6, "total": 13500, "kind": "category", "pct": 5.0}, {"label": "\u4fdd\u967a\u6599", "category__name": "\u4fdd\u967a\u6599", "category_id": 16, "total": 12000, "kind": "category", "pct": 4.5}, {"label": "\u5916\u98df", "category__name": "\u5916\u98df", "category_id": 9, "total": 8994, "kind": "category", "pct": 3.3}, {"label": "\u4ea4\u969b\u8cbb", "category__name": "\u4ea4\u969b\u8cbb", "category_id": 15, "total": 5862, "kind": "category", "pct": 2.2}, {"label": "\u5a2f\u697d", "category__name": "\u5a2f\u697d", "category_id": 13, "total": 5147, "kind": "category", "pct": 1.9}, {"label": "\u65e5\u7528\u54c1", "category__name": "\u65e5\u7528\u54c1", "category_id": 8, "total": 5015, "kind": "category", "pct": 1.9}, {"label": "\u30b5\u30d6\u30b9\u30af", "category__name": "\u30b5\u30d6\u30b9\u30af", "category_id": 19, "total": 2500, "kind": "category", "pct": 0.9}]</script>
+<script id="yearly-pie-data" type="application/json">[{"label": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "category__name": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "category_id": 4, "total": 600000, "kind": "category", "pct": 37.8}, {"label": "\u6559\u80b2\u8cbb", "category__name": "\u6559\u80b2\u8cbb", "category_id": 12, "total": 190000, "kind": "category", "pct": 12.0}, {"label": "\u98df\u8cbb", "category__name": "\u98df\u8cbb", "category_id": 7, "total": 182705, "kind": "category", "pct": 11.5}, {"label": "\u7a0e\u91d1", "category__name": "\u7a0e\u91d1", "category_id": 17, "total": 119500, "kind": "category", "pct": 7.5}, {"label": "\u6c34\u9053\u5149\u71b1\u8cbb", "category__name": "\u6c34\u9053\u5149\u71b1\u8cbb", "category_id": 5, "total": 105188, "kind": "category", "pct": 6.6}, {"label": "\u5916\u98df", "category__name": "\u5916\u98df", "category_id": 9, "total": 69851, "kind": "category", "pct": 4.4}, {"label": "\u901a\u4fe1\u8cbb", "category__name": "\u901a\u4fe1\u8cbb", "category_id": 6, "total": 67500, "kind": "category", "pct": 4.2}, {"label": "\u4fdd\u967a\u6599", "category__name": "\u4fdd\u967a\u6599", "category_id": 16, "total": 60000, "kind": "category", "pct": 3.8}, {"label": "\u4ea4\u901a\u8cbb", "category__name": "\u4ea4\u901a\u8cbb", "category_id": 10, "total": 59232, "kind": "category", "pct": 3.7}, {"label": "\u65e5\u7528\u54c1", "category__name": "\u65e5\u7528\u54c1", "category_id": 8, "total": 34178, "kind": "category", "pct": 2.2}, {"label": "\u8863\u6599\u30fb\u7f8e\u5bb9", "category__name": "\u8863\u6599\u30fb\u7f8e\u5bb9", "category_id": 14, "total": 26181, "kind": "category", "pct": 1.6}, {"label": "\u5a2f\u697d", "category__name": "\u5a2f\u697d", "category_id": 13, "total": 26180, "kind": "category", "pct": 1.6}, {"label": "\u4ea4\u969b\u8cbb", "category__name": "\u4ea4\u969b\u8cbb", "category_id": 15, "total": 19680, "kind": "category", "pct": 1.2}, {"label": "\u533b\u7642\u8cbb", "category__name": "\u533b\u7642\u8cbb", "category_id": 11, "total": 15736, "kind": "category", "pct": 1.0}, {"label": "\u30b5\u30d6\u30b9\u30af", "category__name": "\u30b5\u30d6\u30b9\u30af", "category_id": 19, "total": 12500, "kind": "category", "pct": 0.8}, {"label": "\u91d1\u5229\u30fb\u624b\u6570\u6599", "category__name": "\u91d1\u5229\u30fb\u624b\u6570\u6599", "category_id": 20, "total": 753, "kind": "category", "pct": 0.0}]</script>
+<script id="income-ratio-pie-data" type="application/json">[{"label": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "category__name": "\u5bb6\u8cc3\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3", "total": 120000}, {"label": "\u98df\u8cbb", "category__name": "\u98df\u8cbb", "total": 35355}, {"label": "\u6c34\u9053\u5149\u71b1\u8cbb", "category__name": "\u6c34\u9053\u5149\u71b1\u8cbb", "total": 25541}, {"label": "\u6559\u80b2\u8cbb", "category__name": "\u6559\u80b2\u8cbb", "total": 22000}, {"label": "\u4ea4\u901a\u8cbb", "category__name": "\u4ea4\u901a\u8cbb", "total": 13507}, {"label": "\u901a\u4fe1\u8cbb", "category__name": "\u901a\u4fe1\u8cbb", "total": 13500}, {"label": "\u4fdd\u967a\u6599", "category__name": "\u4fdd\u967a\u6599", "total": 12000}, {"label": "\u5916\u98df", "category__name": "\u5916\u98df", "total": 8994}, {"label": "\u4ea4\u969b\u8cbb", "category__name": "\u4ea4\u969b\u8cbb", "total": 5862}, {"label": "\u5a2f\u697d", "category__name": "\u5a2f\u697d", "total": 5147}, {"label": "\u65e5\u7528\u54c1", "category__name": "\u65e5\u7528\u54c1", "total": 5015}, {"label": "\u30b5\u30d6\u30b9\u30af", "category__name": "\u30b5\u30d6\u30b9\u30af", "total": 2500}, {"label": "\u6b8b\u984d", "category__name": "\u6b8b\u984d", "total": 116868}]</script>
+</main>
 <script defer="" src="../../static/js/neutralize.js"></script></body>
 </html>

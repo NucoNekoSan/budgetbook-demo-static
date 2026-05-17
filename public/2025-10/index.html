@@ -5,42 +5,990 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>BudgetBook | ログイン</title>
+<title>BudgetBook | 家計簿</title>
 <link href="../static/css/_01_base.css" rel="stylesheet"/>
 <link href="../static/css/_02_layout_cards.css" rel="stylesheet"/>
 <link href="../static/css/_03_components.css" rel="stylesheet"/>
 <link href="../static/css/_04_pages_responsive.css" rel="stylesheet"/>
 <link href="../static/css/_05_features_v119.css" rel="stylesheet"/>
 <meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
-<script src="../static/js/theme_toggle.js"></script>
+
+<link href="../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../static/js/theme_toggle.js"></script>
+<script defer="" src="../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../static/js/htmx_config.js"></script>
+<script defer="" src="../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../static/js/budget_chart.js"></script>
+<script defer="" src="../static/js/progress_bars.js"></script>
+<script defer="" src="../static/js/keyboard_shortcuts.js"></script>
+
+<script defer="" src="../static/js/mobile_nav.js"></script>
+<script defer="" src="../static/js/dashboard_chart.js"></script>
 <link href="../static/css/static-banner.css" rel="stylesheet"/></head>
-<body>
+<body data-route="dashboard">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
 
-<div class="login-wrapper">
-<div class="login-card panel">
-<div class="panel__body">
-<div class="login-brand">BudgetBook</div>
-<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../index.html">BudgetBook</a>
+<button aria-controls="primary-nav" aria-expanded="false" aria-label="メニューを開く" class="nav-toggle" data-nav-toggle="" type="button">
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+</button>
+<div aria-hidden="true" class="nav-backdrop" data-nav-backdrop=""></div>
+<nav aria-label="主要ナビゲーション" class="site-nav" id="primary-nav">
+<button aria-label="メニューを閉じる" class="nav-close" data-nav-toggle="" type="button">✕ 閉じる</button>
+<a class="site-nav__link" data-route-link="dashboard" href="../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../accounting/index.html">締め・照合</a>
+<details class="site-nav__dropdown" data-route-group="reports">
+<summary aria-haspopup="menu" class="site-nav__link site-nav__dropdown-toggle">レポート <span aria-hidden="true">▾</span></summary>
+<div class="site-nav__dropdown-menu" role="menu">
+<a class="site-nav__dropdown-item" href="../reports/tax-deductions/v2/index.html" role="menuitem">📑 確定申告レポート</a>
+<div class="site-nav__dropdown-sep" role="separator"></div>
+<a class="site-nav__dropdown-item" href="../medical-expenses/index.html" role="menuitem">💊 医療費控除明細</a>
+<a class="site-nav__dropdown-item" href="../insurance-premiums/index.html" role="menuitem">🛡️ 保険料控除</a>
+<a class="site-nav__dropdown-item" href="../settings/income-snapshots/index.html" role="menuitem">📊 年次所得スナップショット</a>
+</div>
+</details>
+<a class="site-nav__link" data-route-link="settings" href="../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<input name="next" type="hidden" value="/?month=2025-10"/>
-<div class="field">
-<label for="id_username">ユーザー名</label>
-<input autocomplete="username" autofocus="" class="form-input" id="id_username" name="username" required="" type="text"/>
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
+</form>
+</nav>
 </div>
-<div class="field">
-<label for="id_password">パスワード</label>
-<input autocomplete="current-password" class="form-input" id="id_password" name="password" required="" type="password"/>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div aria-atomic="true" aria-live="polite" class="flash" id="flash"></div>
+<div class="layout">
+<section id="dashboard-content">
+<div class="stack">
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<div>
+<h1 class="page-title">2025年10月 の家計</h1>
+<div class="meta">
+            
+              収支の登録・編集は右側フォームから行えます。
+            
+          </div>
 </div>
-<div class="form-grid__actions">
-<button class="btn btn--primary u-w-full" type="submit">ログイン</button>
+<div class="button-row">
+<a class="btn btn--ghost" href="../2025-09/index.html">← 前月</a>
+<a class="btn btn--ghost" href="../2025-11/index.html">次月 →</a>
 </div>
+</div>
+<div class="summary-hero summary-hero--stacked">
+<div aria-label="資産口座の月末残高" class="hero-card hero-card--compact" data-tone="positive">
+<div class="hero-card__label">月末の手元残高（資産口座合計）</div>
+<div class="hero-card__value tabular-num">¥6,837,138</div>
+<div class="hero-card__caption">
+            月初繰越 ¥6,707,208
+            
+              · 負債は <a class="annual-month-link" href="../balance-sheet/index.html">資産ページ</a> で確認
+            
+          </div>
+</div>
+<div class="cards cards--3">
+<div class="card card--income">
+<div class="card__label">収入</div>
+<div class="card__value tabular-num">¥385,594</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">支出</div>
+<div class="card__value tabular-num">¥303,622</div>
+</div>
+<div class="card card--net card--net-positive">
+<div class="card__label">収支</div>
+<div class="card__value tabular-num">
+              +¥81,972
+            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<h2 class="section-title">月次予算進捗</h2>
+<a class="btn btn--soft btn--sm" href="../budgets/2025-10/index.html">予算を編集</a>
+</div>
+<div class="meta">この月の予算はまだ設定されていません。「予算を編集」から作成できます。</div>
+<ul class="list u-mt-16">
+<li class="list-item budget-row">
+<div class="budget-row__head">
+<strong>食品・日用品</strong>
+<span class="meta tabular-num">
+                
+                  ¥47,407（予算未設定）
+                
+              </span>
+</div>
+</li>
+<li class="list-item budget-row">
+<div class="budget-row__head">
+<strong>外食</strong>
+<span class="meta tabular-num">
+                
+                  ¥23,605（予算未設定）
+                
+              </span>
+</div>
+</li>
+<li class="list-item budget-row">
+<div class="budget-row__head">
+<strong>住居費</strong>
+<span class="meta tabular-num">
+                
+                  ¥120,000（予算未設定）
+                
+              </span>
+</div>
+</li>
+<li class="list-item budget-row">
+<div class="budget-row__head">
+<strong>光熱・通信</strong>
+<span class="meta tabular-num">
+                
+                  ¥35,272（予算未設定）
+                
+              </span>
+</div>
+</li>
+<li class="list-item budget-row">
+<div class="budget-row__head">
+<strong>交通</strong>
+<span class="meta tabular-num">
+                
+                  ¥8,021（予算未設定）
+                
+              </span>
+</div>
+</li>
+<li class="list-item budget-row">
+<div class="budget-row__head">
+<strong>教養・娯楽</strong>
+<span class="meta tabular-num">
+                
+                  ¥27,317（予算未設定）
+                
+              </span>
+</div>
+</li>
+<li class="list-item budget-row">
+<div class="budget-row__head">
+<strong>交際・贈答</strong>
+<span class="meta tabular-num">
+                
+                  ¥30,000（予算未設定）
+                
+              </span>
+</div>
+</li>
+<li class="list-item budget-row">
+<div class="budget-row__head">
+<strong>保険・税</strong>
+<span class="meta tabular-num">
+                
+                  ¥12,000（予算未設定）
+                
+              </span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<h2 class="section-title">支出の内訳</h2>
+<a class="btn btn--soft btn--sm" href="../expense-breakdown/m-2025-10/index.html">詳細を見る</a>
+</div>
+<div class="expense-breakdown-grid">
+<div class="expense-breakdown-col">
+<h3 class="section-subtitle">大分類別</h3>
+<ul class="list">
+<li class="list-item">
+<span><strong>住居費</strong> <span class="meta">39.5%</span></span>
+<strong class="tabular-num">¥120,000</strong>
+</li>
+<li class="list-item">
+<span><strong>食品・日用品</strong> <span class="meta">15.6%</span></span>
+<strong class="tabular-num">¥47,407</strong>
+</li>
+<li class="list-item">
+<span><strong>光熱・通信</strong> <span class="meta">11.6%</span></span>
+<strong class="tabular-num">¥35,272</strong>
+</li>
+<li class="list-item">
+<span><strong>交際・贈答</strong> <span class="meta">9.9%</span></span>
+<strong class="tabular-num">¥30,000</strong>
+</li>
+<li class="list-item">
+<span><strong>教養・娯楽</strong> <span class="meta">9.0%</span></span>
+<strong class="tabular-num">¥27,317</strong>
+</li>
+<li class="list-item">
+<span><strong>外食</strong> <span class="meta">7.8%</span></span>
+<strong class="tabular-num">¥23,605</strong>
+</li>
+<li class="list-item">
+<span><strong>保険・税</strong> <span class="meta">4.0%</span></span>
+<strong class="tabular-num">¥12,000</strong>
+</li>
+<li class="list-item">
+<span><strong>交通</strong> <span class="meta">2.6%</span></span>
+<strong class="tabular-num">¥8,021</strong>
+</li>
+</ul>
+</div>
+<div class="expense-breakdown-col">
+<h3 class="section-subtitle">カテゴリ別 (Top 8)</h3>
+<ul class="list">
+<li class="list-item">
+<span>家賃・住宅ローン</span>
+<strong class="tabular-num">¥120,000</strong>
+</li>
+<li class="list-item">
+<span>食費</span>
+<strong class="tabular-num">¥40,629</strong>
+</li>
+<li class="list-item">
+<span>ふるさと納税</span>
+<strong class="tabular-num">¥30,000</strong>
+</li>
+<li class="list-item">
+<span>外食</span>
+<strong class="tabular-num">¥23,605</strong>
+</li>
+<li class="list-item">
+<span>教育費</span>
+<strong class="tabular-num">¥22,000</strong>
+</li>
+<li class="list-item">
+<span>水道光熱費</span>
+<strong class="tabular-num">¥19,272</strong>
+</li>
+<li class="list-item">
+<span>通信費</span>
+<strong class="tabular-num">¥13,500</strong>
+</li>
+<li class="list-item">
+<span>保険料</span>
+<strong class="tabular-num">¥12,000</strong>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">収支推移（当月）</h2>
+<figure class="chart-figure">
+<div class="chart-container chart-container--scroll">
+<div class="chart-scroll-inner" id="trend-chart-inner">
+<canvas aria-label="2025年10月の日次収支推移グラフ。収入 ¥385,594、支出 ¥303,622、収支 ¥81,972。" id="trend-chart" role="img"></canvas>
+</div>
+</div>
+<figcaption class="sr-only">2025年10月の日次収支推移を折れ線グラフで表示しています。詳細な日次の数値は上の取引一覧で確認できます。</figcaption>
+</figure>
+<script id="daily-trend-data" type="application/json">[{"label": "1\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "2\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "3\u65e5", "income": 0, "expense": 10524, "net": -10524}, {"label": "4\u65e5", "income": 0, "expense": 3199, "net": -3199}, {"label": "5\u65e5", "income": 0, "expense": 2500, "net": -2500}, {"label": "6\u65e5", "income": 0, "expense": 22000, "net": -22000}, {"label": "7\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "8\u65e5", "income": 0, "expense": 8021, "net": -8021}, {"label": "9\u65e5", "income": 0, "expense": 30000, "net": -30000}, {"label": "10\u65e5", "income": 0, "expense": 28504, "net": -28504}, {"label": "11\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "12\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "13\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "14\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "15\u65e5", "income": 0, "expense": 26287, "net": -26287}, {"label": "16\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "17\u65e5", "income": 0, "expense": 11306, "net": -11306}, {"label": "18\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "19\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "20\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "21\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "22\u65e5", "income": 0, "expense": 5317, "net": -5317}, {"label": "23\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "24\u65e5", "income": 0, "expense": 18322, "net": -18322}, {"label": "25\u65e5", "income": 380000, "expense": 0, "net": 380000}, {"label": "26\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "27\u65e5", "income": 0, "expense": 132000, "net": -132000}, {"label": "28\u65e5", "income": 5594, "expense": 5642, "net": -48}, {"label": "29\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "30\u65e5", "income": 0, "expense": 0, "net": 0}, {"label": "31\u65e5", "income": 0, "expense": 0, "net": 0}]</script>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">口座残高（資産のみ）</h2>
+<div class="meta">
+        2025年10月末時点の手元残高。
+        
+          負債（クレジットカード未払い・ローン等）は <a class="annual-month-link" href="../balance-sheet/index.html">資産ページ</a> へ。
+        
+      </div>
+<ul class="list">
+<li class="list-item">
+<div>
+<div><strong>普通預金</strong></div>
+<div class="meta">初期残高 ¥800,000</div>
+</div>
+<strong>¥4,209,632</strong>
+</li>
+<li class="list-item">
+<div>
+<div><strong>現金</strong></div>
+<div class="meta">初期残高 ¥30,000</div>
+</div>
+<strong>¥-229,320</strong>
+</li>
+<li class="list-item">
+<div>
+<div><strong>証券口座</strong></div>
+<div class="meta">初期残高 ¥500,000</div>
+</div>
+<strong>¥500,000</strong>
+</li>
+<li class="list-item">
+<div>
+<div><strong>貯蓄預金</strong></div>
+<div class="meta">初期残高 ¥1,500,000</div>
+</div>
+<strong>¥2,600,000</strong>
+</li>
+<li class="list-item">
+<div>
+<div><strong>電子マネー</strong></div>
+<div class="meta">初期残高 ¥8,000</div>
+</div>
+<strong>¥-243,174</strong>
+</li>
+</ul>
+</div>
+</div>
+<div class="panel" id="transaction-list-panel">
+<div class="panel__body">
+<div class="toolbar">
+<div>
+<h2 class="section-title section-title--tight">取引一覧</h2>
+<div class="meta">
+              全 23 件中
+              1〜20 件目
+            </div>
+</div>
+<div aria-label="CSV データ操作" class="button-row" role="group">
+<a aria-label="今月の取引を CSV でダウンロード" class="btn btn--ghost is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">↓ CSV ダウンロード</a>
+<a aria-label="CSV ファイルから取引を取り込む" class="btn btn--ghost is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">↑ CSV インポート</a>
+</div>
+</div>
+<div class="filter-bar">
+<div class="filter-bar__field--grow">
+<label class="meta" for="filter-q">摘要</label>
+<input class="form-input" form="filter-form" id="filter-q" name="q" placeholder="キーワード" type="text" value=""/>
+</div>
+<div class="filter-bar__field">
+<label class="meta" for="filter-account">口座</label>
+<select class="form-input" form="filter-form" id="filter-account" name="account">
+<option value="">すべて</option>
+<option value="8">クレジットカード</option>
+<option value="6">住宅ローン</option>
+<option value="2">普通預金</option>
+<option value="1">現金</option>
+<option value="7">自動車ローン</option>
+<option value="4">証券口座</option>
+<option value="3">貯蓄預金</option>
+<option value="5">電子マネー</option>
+</select>
+</div>
+<div class="filter-bar__field">
+<label class="meta" for="filter-category">カテゴリ</label>
+<select class="form-input" form="filter-form" id="filter-category" name="category">
+<option value="">すべて</option>
+<option value="21">その他</option>
+<option value="18">ふるさと納税</option>
+<option value="19">サブスク</option>
+<option value="10">交通費</option>
+<option value="15">交際費</option>
+<option value="16">保険料</option>
+<option value="11">医療費</option>
+<option value="9">外食</option>
+<option value="13">娯楽</option>
+<option value="4">家賃・住宅ローン</option>
+<option value="12">教育費</option>
+<option value="8">日用品</option>
+<option value="5">水道光熱費</option>
+<option value="17">税金</option>
+<option value="14">衣料・美容</option>
+<option value="6">通信費</option>
+<option value="20">金利・手数料</option>
+<option value="7">食費</option>
+<option value="2">ボーナス</option>
+<option value="3">副収入</option>
+<option value="1">給与</option>
+</select>
+</div>
+<div class="filter-bar__actions">
+<form action="#" class="filter-bar__form" data-neutralize="閲覧専用デモです (静的スナップショット)" id="filter-form">
+<input name="month" type="hidden" value="2025-10"/>
+<button class="btn btn--ghost" type="submit">検索</button>
 </form>
 </div>
 </div>
+<div class="table-wrap table-wrap--responsive">
+<table class="tx-table">
+<thead>
+<tr>
+<th>日付</th>
+<th>摘要</th>
+<th>口座</th>
+<th>カテゴリ</th>
+<th>金額</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="日付">2025-10-28</td>
+<td data-label="摘要">
+<div><strong>ファミレス</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        外食
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥5,642
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ファミレス の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="ファミレス の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-465"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-28</td>
+<td data-label="摘要">
+<div><strong>ポイント還元・キャッシュバック</strong></div>
+</td>
+<td data-label="口座">普通預金</td>
+<td data-label="カテゴリ">
+<span class="chip chip--income">
+                        副収入
+                      </span>
+</td>
+<td class="tabular-num amount-income" data-label="金額">
+                      +¥5,594
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ポイント還元・キャッシュバック の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="ポイント還元・キャッシュバック の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-452"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-27</td>
+<td data-label="摘要">
+<div><strong>生命保険・地震保険 月払い分</strong></div>
+</td>
+<td data-label="口座">普通預金</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        保険料
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥12,000
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="生命保険・地震保険 月払い分 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="生命保険・地震保険 月払い分 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-457"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-27</td>
+<td data-label="摘要">
+<div><strong>住宅ローン返済</strong></div>
+</td>
+<td data-label="口座">普通預金</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        家賃・住宅ローン
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥120,000
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="住宅ローン返済 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="住宅ローン返済 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-453"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-27</td>
+<td data-label="摘要">
+<div><strong>クレジットカード引落</strong></div>
+</td>
+<td data-label="口座">普通預金 → クレジットカード</td>
+<td data-label="カテゴリ"><span class="chip">振替</span></td>
+<td class="amount-neutral tabular-num" data-label="金額">¥53,942</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="クレジットカード引落 の振替を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="クレジットカード引落 の振替を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tr-43"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-25</td>
+<td data-label="摘要">
+<div><strong>給与振込</strong></div>
+</td>
+<td data-label="口座">普通預金</td>
+<td data-label="カテゴリ">
+<span class="chip chip--income">
+                        給与
+                      </span>
+</td>
+<td class="tabular-num amount-income" data-label="金額">
+                      +¥380,000
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="給与振込 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="給与振込 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-451"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-25</td>
+<td data-label="摘要">
+<div><strong>積立貯蓄</strong></div>
+</td>
+<td data-label="口座">普通預金 → 貯蓄預金</td>
+<td data-label="カテゴリ"><span class="chip">振替</span></td>
+<td class="amount-neutral tabular-num" data-label="金額">¥50,000</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="積立貯蓄 の振替を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="積立貯蓄 の振替を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tr-44"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-24</td>
+<td data-label="摘要">
+<div><strong>居酒屋</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        外食
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥6,452
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="居酒屋 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="居酒屋 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-462"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-24</td>
+<td data-label="摘要">
+<div><strong>生協</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        食費
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥11,870
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="生協 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="生協 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-461"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-22</td>
+<td data-label="摘要">
+<div><strong>ゲーム</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        娯楽
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥5,317
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ゲーム の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="ゲーム の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-469"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-17</td>
+<td data-label="摘要">
+<div><strong>食材まとめ買い</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        食費
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥11,306
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="食材まとめ買い の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="食材まとめ買い の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-460"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-15</td>
+<td data-label="摘要">
+<div><strong>ファミレス</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        外食
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥7,015
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ファミレス の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="ファミレス の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-464"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-15</td>
+<td data-label="摘要">
+<div><strong>電気・ガス・水道</strong></div>
+</td>
+<td data-label="口座">普通預金</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        水道光熱費
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥19,272
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="電気・ガス・水道 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="電気・ガス・水道 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-454"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-10</td>
+<td data-label="摘要">
+<div><strong>ホームセンター</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        日用品
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥3,579
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ホームセンター の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="ホームセンター の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-467"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-10</td>
+<td data-label="摘要">
+<div><strong>居酒屋</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        外食
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥4,496
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="居酒屋 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="居酒屋 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-463"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-10</td>
+<td data-label="摘要">
+<div><strong>農協</strong></div>
+</td>
+<td data-label="口座">現金</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        食費
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥6,929
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="農協 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="農協 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-459"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-10</td>
+<td data-label="摘要">
+<div><strong>携帯・インターネット</strong></div>
+</td>
+<td data-label="口座">普通預金</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        通信費
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥13,500
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="携帯・インターネット の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="携帯・インターネット の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-455"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-09</td>
+<td data-label="摘要">
+<div><strong>□□市 ふるさと納税 (返礼品: 魚介)</strong></div>
+</td>
+<td data-label="口座">クレジットカード</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        ふるさと納税
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥30,000
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="□□市 ふるさと納税 (返礼品: 魚介) の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="□□市 ふるさと納税 (返礼品: 魚介) の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-471"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-08</td>
+<td data-label="摘要">
+<div><strong>定期券チャージ</strong></div>
+</td>
+<td data-label="口座">電子マネー</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        交通費
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥8,021
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="定期券チャージ の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="定期券チャージ の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-468"><td colspan="6"></td></tr>
+<tr>
+<td data-label="日付">2025-10-06</td>
+<td data-label="摘要">
+<div><strong>習い事月謝</strong></div>
+</td>
+<td data-label="口座">普通預金</td>
+<td data-label="カテゴリ">
+<span class="chip chip--expense">
+                        教育費
+                      </span>
+</td>
+<td class="tabular-num amount-expense" data-label="金額">
+                      -¥22,000
+                    </td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="習い事月謝 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="習い事月謝 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="inline-edit-tx-470"><td colspan="6"></td></tr>
+</tbody>
+</table>
+</div>
+<div class="button-row pagination">
+<span class="meta pagination__current">
+              1 / 2 ページ
+            </span>
+<button class="btn btn--ghost">次ページ →</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<aside class="panel" id="form-panel">
+<div class="panel__body">
+<div class="toolbar toolbar--form">
+<div>
+<h2 class="section-title section-title--tight">取引を追加</h2>
+<div class="meta">
+        
+          登録後は一覧と集計が自動で更新されます。
+        
+      </div>
+</div>
+</div>
+<div class="form-mode-tabs button-row">
+<button class="btn btn--primary" type="button">通常取引</button>
+<button class="btn btn--ghost" type="button">振替</button>
+</div>
+<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)">
+<input name="month" type="hidden" value="2025-10"/>
+<div class="field">
+<label for="id_date">日付</label>
+<input autocomplete="off" class="form-input" enterkeyhint="next" id="id_date" name="date" required="" type="date" value="2025-10-01"/>
+</div>
+<div class="field">
+<label for="id_account">口座</label>
+<select class="form-input" id="id_account" name="account" required="">
+<option selected="" value="">---------</option>
+<option value="8">クレジットカード</option>
+<option value="6">住宅ローン</option>
+<option value="2">普通預金</option>
+<option value="1">現金</option>
+<option value="7">自動車ローン</option>
+<option value="4">証券口座</option>
+<option value="3">貯蓄預金</option>
+<option value="5">電子マネー</option>
+</select>
+</div>
+<div class="field">
+<label for="id_kind">種別</label>
+<select class="form-input" id="id_kind" name="kind">
+<option value="income">収入</option>
+<option selected="" value="expense">支出</option>
+</select>
+</div>
+<div class="field">
+<label for="id_category">カテゴリ</label>
+<select class="form-input" id="id_category" name="category" required="">
+<option selected="" value="">---------</option>
+<option value="21">支出 | その他</option>
+<option value="18">支出 | ふるさと納税</option>
+<option value="19">支出 | サブスク</option>
+<option value="10">支出 | 交通費</option>
+<option value="15">支出 | 交際費</option>
+<option value="16">支出 | 保険料</option>
+<option value="11">支出 | 医療費</option>
+<option value="9">支出 | 外食</option>
+<option value="13">支出 | 娯楽</option>
+<option value="4">支出 | 家賃・住宅ローン</option>
+<option value="12">支出 | 教育費</option>
+<option value="8">支出 | 日用品</option>
+<option value="5">支出 | 水道光熱費</option>
+<option value="17">支出 | 税金</option>
+<option value="14">支出 | 衣料・美容</option>
+<option value="6">支出 | 通信費</option>
+<option value="20">支出 | 金利・手数料</option>
+<option value="7">支出 | 食費</option>
+</select>
+</div>
+<div class="field">
+<label for="id_amount">金額</label>
+<input autocomplete="off" class="form-input" enterkeyhint="next" id="id_amount" inputmode="numeric" min="1" name="amount" required="" step="1" type="number"/>
+</div>
+<div class="field">
+<label for="id_description">摘要</label>
+<input autocomplete="off" class="form-input" enterkeyhint="next" id="id_description" maxlength="120" name="description" placeholder="例: スーパー、給与、電気代" required="" type="text"/>
+</div>
+<div class="field">
+<label for="id_memo">メモ</label>
+<textarea autocomplete="off" class="form-input" cols="40" enterkeyhint="done" id="id_memo" name="memo" placeholder="任意メモ" rows="4">
+</textarea>
+</div>
+<div id="medical-fields"></div>
+<div id="transaction-preview">
+<div class="preview-box preview-box--empty">
+<span class="meta">金額とカテゴリを入力するとプレビューが表示されます。</span>
+</div>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary" type="submit">保存する</button>
+<button class="btn btn--ghost" type="button">キャンセル</button>
+</div>
+</form>
+<div class="meta form-footer">
+    
+      カテゴリの追加や名称変更は設定画面（/settings/）から行えます。
+    
+  </div>
+</div>
+</aside>
+</div>
+</main>
 <script defer="" src="../static/js/neutralize.js"></script></body>
 </html>

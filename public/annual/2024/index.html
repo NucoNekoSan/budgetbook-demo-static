@@ -5,42 +5,339 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>BudgetBook | ログイン</title>
+<title>BudgetBook | 2024年 年間サマリー</title>
 <link href="../../static/css/_01_base.css" rel="stylesheet"/>
 <link href="../../static/css/_02_layout_cards.css" rel="stylesheet"/>
 <link href="../../static/css/_03_components.css" rel="stylesheet"/>
 <link href="../../static/css/_04_pages_responsive.css" rel="stylesheet"/>
 <link href="../../static/css/_05_features_v119.css" rel="stylesheet"/>
 <meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
-<script src="../../static/js/theme_toggle.js"></script>
+
+<link href="../../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../../static/js/theme_toggle.js"></script>
+<script defer="" src="../../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../../static/js/htmx_config.js"></script>
+<script defer="" src="../../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../../static/js/budget_chart.js"></script>
+<script defer="" src="../../static/js/progress_bars.js"></script>
+<script defer="" src="../../static/js/keyboard_shortcuts.js"></script>
+
+<script defer="" src="../../static/js/mobile_nav.js"></script>
+<script defer="" src="../../static/js/annual_chart.js"></script>
 <link href="../../static/css/static-banner.css" rel="stylesheet"/></head>
-<body>
+<body data-route="annual">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
 
-<div class="login-wrapper">
-<div class="login-card panel">
-<div class="panel__body">
-<div class="login-brand">BudgetBook</div>
-<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../../index.html">BudgetBook</a>
+<button aria-controls="primary-nav" aria-expanded="false" aria-label="メニューを開く" class="nav-toggle" data-nav-toggle="" type="button">
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+<span aria-hidden="true" class="nav-toggle__bar"></span>
+</button>
+<div aria-hidden="true" class="nav-backdrop" data-nav-backdrop=""></div>
+<nav aria-label="主要ナビゲーション" class="site-nav" id="primary-nav">
+<button aria-label="メニューを閉じる" class="nav-close" data-nav-toggle="" type="button">✕ 閉じる</button>
+<a class="site-nav__link" data-route-link="dashboard" href="../../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../../accounting/index.html">締め・照合</a>
+<details class="site-nav__dropdown" data-route-group="reports">
+<summary aria-haspopup="menu" class="site-nav__link site-nav__dropdown-toggle">レポート <span aria-hidden="true">▾</span></summary>
+<div class="site-nav__dropdown-menu" role="menu">
+<a class="site-nav__dropdown-item" href="../../reports/tax-deductions/v2/index.html" role="menuitem">📑 確定申告レポート</a>
+<div class="site-nav__dropdown-sep" role="separator"></div>
+<a class="site-nav__dropdown-item" href="../../medical-expenses/index.html" role="menuitem">💊 医療費控除明細</a>
+<a class="site-nav__dropdown-item" href="../../insurance-premiums/index.html" role="menuitem">🛡️ 保険料控除</a>
+<a class="site-nav__dropdown-item" href="../../settings/income-snapshots/index.html" role="menuitem">📊 年次所得スナップショット</a>
+</div>
+</details>
+<a class="site-nav__link" data-route-link="settings" href="../../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<input name="next" type="hidden" value="/annual/?year=2024"/>
-<div class="field">
-<label for="id_username">ユーザー名</label>
-<input autocomplete="username" autofocus="" class="form-input" id="id_username" name="username" required="" type="text"/>
-</div>
-<div class="field">
-<label for="id_password">パスワード</label>
-<input autocomplete="current-password" class="form-input" id="id_password" name="password" required="" type="password"/>
-</div>
-<div class="form-grid__actions">
-<button class="btn btn--primary u-w-full" type="submit">ログイン</button>
-</div>
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
 </form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="annual-layout">
+<div class="toolbar">
+<div>
+<h1 class="page-title">2024年 年間サマリー</h1>
+<div class="meta">各月をクリックすると月別ダッシュボードへ移動します。</div>
+</div>
+<div class="button-row">
+<a class="btn btn--ghost is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">← 前年</a>
+<a class="btn btn--ghost" href="../2025/index.html">次年 →</a>
+</div>
+</div>
+<div class="cards">
+<div class="card card--income">
+<div class="card__label">年間収入</div>
+<div class="card__value">¥5,872,885</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">年間支出</div>
+<div class="card__value">¥3,545,763</div>
+</div>
+<div class="card card--net-positive">
+<div class="card__label">年間差額</div>
+<div class="card__value">¥2,327,122</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">月別内訳</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>月</th>
+<th>収入</th>
+<th>支出</th>
+<th>差額</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">1月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥272,165</td>
+<td class="amount-income">
+                    ¥107,835
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">2月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥275,472</td>
+<td class="amount-income">
+                    ¥104,528
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">3月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥271,401</td>
+<td class="amount-income">
+                    ¥108,599
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">4月</a>
+</td>
+<td class="amount-income">¥393,501</td>
+<td class="amount-expense">¥345,571</td>
+<td class="amount-income">
+                    ¥47,930
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">5月</a>
+</td>
+<td class="amount-income">¥387,342</td>
+<td class="amount-expense">¥383,626</td>
+<td class="amount-income">
+                    ¥3,716
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">6月</a>
+</td>
+<td class="amount-income">¥1,016,274</td>
+<td class="amount-expense">¥248,713</td>
+<td class="amount-income">
+                    ¥767,561
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">7月</a>
+</td>
+<td class="amount-income">¥389,570</td>
+<td class="amount-expense">¥274,057</td>
+<td class="amount-income">
+                    ¥115,513
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">8月</a>
+</td>
+<td class="amount-income">¥388,183</td>
+<td class="amount-expense">¥288,400</td>
+<td class="amount-income">
+                    ¥99,783
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">9月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥280,888</td>
+<td class="amount-income">
+                    ¥99,112
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">10月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥279,867</td>
+<td class="amount-income">
+                    ¥100,133
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">11月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥294,006</td>
+<td class="amount-income">
+                    ¥85,994
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">12月</a>
+</td>
+<td class="amount-income">¥1,018,015</td>
+<td class="amount-expense">¥331,597</td>
+<td class="amount-income">
+                    ¥686,418
+                  </td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="annual-total-row">
+<td><strong>合計</strong></td>
+<td class="amount-income"><strong>¥5,872,885</strong></td>
+<td class="amount-expense"><strong>¥3,545,763</strong></td>
+<td class="amount-income">
+<strong>¥2,327,122</strong>
+</td>
+</tr>
+</tfoot>
+</table>
 </div>
 </div>
 </div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">2024年 大分類別 年間支出</h2>
+<div class="meta">家計大分類で 1 年間の支出を俯瞰します。固定費・変動費の傾向把握に。</div>
+<div class="table-wrap u-mt-16">
+<table>
+<thead>
+<tr><th>大分類</th><th>金額</th><th>割合</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>住居費</strong></td>
+<td class="amount-expense tabular-num">¥1,440,000</td>
+<td class="tabular-num">40.6%</td>
+</tr>
+<tr>
+<td><strong>食品・日用品</strong></td>
+<td class="amount-expense tabular-num">¥501,550</td>
+<td class="tabular-num">14.1%</td>
+</tr>
+<tr>
+<td><strong>光熱・通信</strong></td>
+<td class="amount-expense tabular-num">¥453,522</td>
+<td class="tabular-num">12.8%</td>
+</tr>
+<tr>
+<td><strong>教養・娯楽</strong></td>
+<td class="amount-expense tabular-num">¥415,930</td>
+<td class="tabular-num">11.7%</td>
+</tr>
+<tr>
+<td><strong>保険・税</strong></td>
+<td class="amount-expense tabular-num">¥263,500</td>
+<td class="tabular-num">7.4%</td>
+</tr>
+<tr>
+<td><strong>外食</strong></td>
+<td class="amount-expense tabular-num">¥170,767</td>
+<td class="tabular-num">4.8%</td>
+</tr>
+<tr>
+<td><strong>交通</strong></td>
+<td class="amount-expense tabular-num">¥135,645</td>
+<td class="tabular-num">3.8%</td>
+</tr>
+<tr>
+<td><strong>交際・贈答</strong></td>
+<td class="amount-expense tabular-num">¥117,273</td>
+<td class="tabular-num">3.3%</td>
+</tr>
+<tr>
+<td><strong>医療・健康</strong></td>
+<td class="amount-expense tabular-num">¥22,600</td>
+<td class="tabular-num">0.6%</td>
+</tr>
+<tr>
+<td><strong>衣料・美容</strong></td>
+<td class="amount-expense tabular-num">¥19,979</td>
+<td class="tabular-num">0.6%</td>
+</tr>
+<tr>
+<td><strong>その他</strong></td>
+<td class="amount-expense tabular-num">¥4,997</td>
+<td class="tabular-num">0.1%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">年間推移</h2>
+<figure class="chart-figure">
+<div class="chart-container">
+<canvas aria-label="年の月別 収入・支出・収支の推移グラフ" id="annual-chart" role="img"></canvas>
+</div>
+<figcaption class="sr-only">年の月別収入支出グラフ。詳細な数値は上のテーブルで確認できます。</figcaption>
+</figure>
+<script id="annual-trend-data" type="application/json">[{"month": 1, "month_param": "2024-01", "label": "1\u6708", "income": 380000, "expense": 272165, "net": 107835}, {"month": 2, "month_param": "2024-02", "label": "2\u6708", "income": 380000, "expense": 275472, "net": 104528}, {"month": 3, "month_param": "2024-03", "label": "3\u6708", "income": 380000, "expense": 271401, "net": 108599}, {"month": 4, "month_param": "2024-04", "label": "4\u6708", "income": 393501, "expense": 345571, "net": 47930}, {"month": 5, "month_param": "2024-05", "label": "5\u6708", "income": 387342, "expense": 383626, "net": 3716}, {"month": 6, "month_param": "2024-06", "label": "6\u6708", "income": 1016274, "expense": 248713, "net": 767561}, {"month": 7, "month_param": "2024-07", "label": "7\u6708", "income": 389570, "expense": 274057, "net": 115513}, {"month": 8, "month_param": "2024-08", "label": "8\u6708", "income": 388183, "expense": 288400, "net": 99783}, {"month": 9, "month_param": "2024-09", "label": "9\u6708", "income": 380000, "expense": 280888, "net": 99112}, {"month": 10, "month_param": "2024-10", "label": "10\u6708", "income": 380000, "expense": 279867, "net": 100133}, {"month": 11, "month_param": "2024-11", "label": "11\u6708", "income": 380000, "expense": 294006, "net": 85994}, {"month": 12, "month_param": "2024-12", "label": "12\u6708", "income": 1018015, "expense": 331597, "net": 686418}]</script>
+</div>
+</div>
+</div>
+</main>
 <script defer="" src="../../static/js/neutralize.js"></script></body>
 </html>
