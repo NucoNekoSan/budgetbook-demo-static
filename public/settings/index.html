@@ -10,6 +10,7 @@
 <meta content="light dark" name="color-scheme"/>
 <meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
+
 <link href="../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
@@ -21,11 +22,13 @@
 <script defer="" src="../static/js/budget_chart.js"></script>
 <script defer="" src="../static/js/progress_bars.js"></script>
 <script defer="" src="../static/js/keyboard_shortcuts.js"></script>
+
 <link href="../static/css/static-banner.css" rel="stylesheet"/></head>
 <body data-route="settings">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
+
 <a class="skip-link" href="#main">本文へスキップ</a>
 <div aria-live="polite" class="demo-banner" role="status">
         🧪 これはデモデータです。実在の家計ではありません。
@@ -46,6 +49,7 @@
 <a class="site-nav__link" data-route-link="settings" href="index.html">設定</a>
 <button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
 <form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
 <button class="site-nav__link site-nav__logout-btn" type="submit">
               demo : ログアウト
             </button>
@@ -77,7 +81,7 @@
 <div class="panel__body">
 <div class="toolbar">
 <h2 class="section-title">口座</h2>
-<button class="btn btn--ghost" hx-get="/settings/accounts/new/" hx-swap="innerHTML" hx-target="#account-list" type="button">+ 追加</button>
+<button class="btn btn--ghost" type="button">+ 追加</button>
 </div>
 <div class="table-wrap">
 <table>
@@ -105,8 +109,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="クレジットカード を編集" class="btn btn--soft btn--sm" hx-get="/settings/accounts/16/edit/?inline=1" hx-swap="outerHTML" hx-target="#acct-inline-edit-16" type="button">✎ 編集</button>
-<button aria-label="クレジットカード を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">停止</button>
+<button aria-label="クレジットカード を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="クレジットカード を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 <button aria-label="クレジットカード は取引/振替があるため削除できません" class="btn btn--sm" disabled="" title="取引/振替が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
 </div>
 </td>
@@ -126,9 +130,9 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="住宅ローン を編集" class="btn btn--soft btn--sm" hx-get="/settings/accounts/14/edit/?inline=1" hx-swap="outerHTML" hx-target="#acct-inline-edit-14" type="button">✎ 編集</button>
-<button aria-label="住宅ローン を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">停止</button>
-<button aria-label="住宅ローン を削除" class="btn btn--danger btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">🗑 削除</button>
+<button aria-label="住宅ローン を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="住宅ローン を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="住宅ローン を削除" class="btn btn--danger btn--sm" type="button">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -147,8 +151,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="普通預金 を編集" class="btn btn--soft btn--sm" hx-get="/settings/accounts/10/edit/?inline=1" hx-swap="outerHTML" hx-target="#acct-inline-edit-10" type="button">✎ 編集</button>
-<button aria-label="普通預金 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">停止</button>
+<button aria-label="普通預金 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="普通預金 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 <button aria-label="普通預金 は取引/振替があるため削除できません" class="btn btn--sm" disabled="" title="取引/振替が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
 </div>
 </td>
@@ -168,8 +172,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="現金 を編集" class="btn btn--soft btn--sm" hx-get="/settings/accounts/9/edit/?inline=1" hx-swap="outerHTML" hx-target="#acct-inline-edit-9" type="button">✎ 編集</button>
-<button aria-label="現金 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">停止</button>
+<button aria-label="現金 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="現金 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 <button aria-label="現金 は取引/振替があるため削除できません" class="btn btn--sm" disabled="" title="取引/振替が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
 </div>
 </td>
@@ -189,9 +193,9 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="自動車ローン を編集" class="btn btn--soft btn--sm" hx-get="/settings/accounts/15/edit/?inline=1" hx-swap="outerHTML" hx-target="#acct-inline-edit-15" type="button">✎ 編集</button>
-<button aria-label="自動車ローン を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">停止</button>
-<button aria-label="自動車ローン を削除" class="btn btn--danger btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">🗑 削除</button>
+<button aria-label="自動車ローン を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="自動車ローン を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="自動車ローン を削除" class="btn btn--danger btn--sm" type="button">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -210,9 +214,9 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="証券口座 を編集" class="btn btn--soft btn--sm" hx-get="/settings/accounts/12/edit/?inline=1" hx-swap="outerHTML" hx-target="#acct-inline-edit-12" type="button">✎ 編集</button>
-<button aria-label="証券口座 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">停止</button>
-<button aria-label="証券口座 を削除" class="btn btn--danger btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">🗑 削除</button>
+<button aria-label="証券口座 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="証券口座 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="証券口座 を削除" class="btn btn--danger btn--sm" type="button">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -231,8 +235,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="貯蓄預金 を編集" class="btn btn--soft btn--sm" hx-get="/settings/accounts/11/edit/?inline=1" hx-swap="outerHTML" hx-target="#acct-inline-edit-11" type="button">✎ 編集</button>
-<button aria-label="貯蓄預金 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">停止</button>
+<button aria-label="貯蓄預金 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="貯蓄預金 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 <button aria-label="貯蓄預金 は取引/振替があるため削除できません" class="btn btn--sm" disabled="" title="取引/振替が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
 </div>
 </td>
@@ -252,8 +256,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="電子マネー を編集" class="btn btn--soft btn--sm" hx-get="/settings/accounts/13/edit/?inline=1" hx-swap="outerHTML" hx-target="#acct-inline-edit-13" type="button">✎ 編集</button>
-<button aria-label="電子マネー を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#account-list" type="button">停止</button>
+<button aria-label="電子マネー を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="電子マネー を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 <button aria-label="電子マネー は取引/振替があるため削除できません" class="btn btn--sm" disabled="" title="取引/振替が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
 </div>
 </td>
@@ -270,7 +274,7 @@
 <div class="panel__body">
 <div class="toolbar">
 <h2 class="section-title">カテゴリ</h2>
-<button class="btn btn--ghost" hx-get="/settings/categories/new/" hx-swap="innerHTML" hx-target="#category-list" type="button">+ 追加</button>
+<button class="btn btn--ghost" type="button">+ 追加</button>
 </div>
 <div class="table-wrap">
 <table>
@@ -306,9 +310,9 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="その他 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/42/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-42" type="button">✎ 編集</button>
-<button aria-label="その他 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
-<button aria-label="その他 を削除" class="btn btn--danger btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">🗑 削除</button>
+<button aria-label="その他 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="その他 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="その他 を削除" class="btn btn--danger btn--sm" type="button">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -334,8 +338,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="ふるさと納税 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/39/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-39" type="button">✎ 編集</button>
-<button aria-label="ふるさと納税 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="ふるさと納税 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="ふるさと納税 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -361,8 +365,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="サブスク を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/40/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-40" type="button">✎ 編集</button>
-<button aria-label="サブスク を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="サブスク を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="サブスク を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -388,8 +392,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="交通費 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/31/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-31" type="button">✎ 編集</button>
-<button aria-label="交通費 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="交通費 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="交通費 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -415,8 +419,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="交際費 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/36/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-36" type="button">✎ 編集</button>
-<button aria-label="交際費 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="交際費 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="交際費 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -442,8 +446,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="保険料 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/37/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-37" type="button">✎ 編集</button>
-<button aria-label="保険料 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="保険料 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="保険料 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -469,8 +473,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="医療費 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/32/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-32" type="button">✎ 編集</button>
-<button aria-label="医療費 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="医療費 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="医療費 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -496,8 +500,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="外食 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/30/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-30" type="button">✎ 編集</button>
-<button aria-label="外食 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="外食 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="外食 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -523,8 +527,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="娯楽 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/34/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-34" type="button">✎ 編集</button>
-<button aria-label="娯楽 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="娯楽 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="娯楽 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -550,8 +554,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="家賃・住宅ローン を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/25/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-25" type="button">✎ 編集</button>
-<button aria-label="家賃・住宅ローン を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="家賃・住宅ローン を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="家賃・住宅ローン を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -577,8 +581,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="教育費 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/33/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-33" type="button">✎ 編集</button>
-<button aria-label="教育費 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="教育費 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="教育費 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -604,8 +608,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="日用品 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/29/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-29" type="button">✎ 編集</button>
-<button aria-label="日用品 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="日用品 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="日用品 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -631,8 +635,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="水道光熱費 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/26/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-26" type="button">✎ 編集</button>
-<button aria-label="水道光熱費 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="水道光熱費 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="水道光熱費 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -658,8 +662,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="税金 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/38/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-38" type="button">✎ 編集</button>
-<button aria-label="税金 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="税金 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="税金 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -685,8 +689,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="衣料・美容 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/35/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-35" type="button">✎ 編集</button>
-<button aria-label="衣料・美容 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="衣料・美容 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="衣料・美容 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -712,8 +716,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="通信費 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/27/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-27" type="button">✎ 編集</button>
-<button aria-label="通信費 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="通信費 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="通信費 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -739,8 +743,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="金利・手数料 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/41/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-41" type="button">✎ 編集</button>
-<button aria-label="金利・手数料 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="金利・手数料 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="金利・手数料 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -766,8 +770,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="食費 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/28/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-28" type="button">✎ 編集</button>
-<button aria-label="食費 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="食費 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="食費 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -793,8 +797,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="ボーナス を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/23/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-23" type="button">✎ 編集</button>
-<button aria-label="ボーナス を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="ボーナス を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="ボーナス を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -820,8 +824,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="副収入 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/24/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-24" type="button">✎ 編集</button>
-<button aria-label="副収入 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="副収入 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="副収入 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>
@@ -847,8 +851,8 @@
 </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="給与 を編集" class="btn btn--soft btn--sm" hx-get="/settings/categories/22/edit/?inline=1" hx-swap="outerHTML" hx-target="#cat-inline-edit-22" type="button">✎ 編集</button>
-<button aria-label="給与 を無効化" class="btn btn--soft btn--sm" hx-swap="innerHTML" hx-target="#category-list" type="button">停止</button>
+<button aria-label="給与 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="給与 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
 </div>
 </td>
 </tr>

@@ -10,6 +10,7 @@
 <meta content="light dark" name="color-scheme"/>
 <meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
+
 <link href="static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
@@ -21,12 +22,14 @@
 <script defer="" src="static/js/budget_chart.js"></script>
 <script defer="" src="static/js/progress_bars.js"></script>
 <script defer="" src="static/js/keyboard_shortcuts.js"></script>
+
 <script defer="" src="static/js/dashboard_chart.js"></script>
 <link href="static/css/static-banner.css" rel="stylesheet"/></head>
 <body data-route="dashboard">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
+
 <a class="skip-link" href="#main">本文へスキップ</a>
 <div aria-live="polite" class="demo-banner" role="status">
         🧪 これはデモデータです。実在の家計ではありません。
@@ -47,6 +50,7 @@
 <a class="site-nav__link" data-route-link="settings" href="settings/index.html">設定</a>
 <button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
 <form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
 <button class="site-nav__link site-nav__logout-btn" type="submit">
               demo : ログアウト
             </button>
@@ -71,7 +75,7 @@
           </div>
 </div>
 <div class="button-row">
-<a class="btn btn--ghost" href="index.html" hx-get="/?month=2026-04" hx-push-url="true" hx-swap="innerHTML" hx-target="#dashboard-content">← 前月</a>
+<a class="btn btn--ghost" href="2026-04/index.html">← 前月</a>
 </div>
 </div>
 <div class="summary-hero summary-hero--stacked">
@@ -108,7 +112,7 @@
 <div class="panel__body">
 <div class="toolbar">
 <h2 class="section-title">月次予算進捗</h2>
-<a class="btn btn--soft btn--sm" href="budgets/index.html">予算を編集</a>
+<a class="btn btn--soft btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">予算を編集</a>
 </div>
 <div class="meta">
           予算合計 ¥346,000 / 使用 ¥398,227
@@ -264,7 +268,7 @@
 <div class="panel__body">
 <div class="toolbar">
 <h2 class="section-title">支出の内訳</h2>
-<a class="btn btn--soft btn--sm" href="expense-breakdown/index.html">詳細を見る</a>
+<a class="btn btn--soft btn--sm is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">詳細を見る</a>
 </div>
 <div class="expense-breakdown-grid">
 <div class="expense-breakdown-col">
@@ -476,7 +480,7 @@
 </select>
 </div>
 <div class="filter-bar__actions">
-<form action="#" class="filter-bar__form" data-neutralize="閲覧専用デモです (静的スナップショット)" hx-get="/" hx-push-url="true" hx-swap="innerHTML" hx-target="#dashboard-content" id="filter-form">
+<form action="#" class="filter-bar__form" data-neutralize="閲覧専用デモです (静的スナップショット)" id="filter-form">
 <input name="month" type="hidden" value="2026-05"/>
 <button class="btn btn--ghost" type="submit">検索</button>
 </form>
@@ -511,8 +515,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="自動車税 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/680/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-680">✎ 編集</button>
-<button aria-label="自動車税 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="自動車税 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="自動車税 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -533,8 +537,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="ポイント還元・キャッシュバック の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/658/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-658">✎ 編集</button>
-<button aria-label="ポイント還元・キャッシュバック の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="ポイント還元・キャッシュバック の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="ポイント還元・キャッシュバック の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -555,8 +559,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="生命保険・地震保険 月払い分 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/663/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-663">✎ 編集</button>
-<button aria-label="生命保険・地震保険 月払い分 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="生命保険・地震保険 月払い分 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="生命保険・地震保険 月払い分 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -577,8 +581,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="住宅ローン返済 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/659/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-659">✎ 編集</button>
-<button aria-label="住宅ローン返済 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="住宅ローン返済 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="住宅ローン返済 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -593,8 +597,8 @@
 <td class="amount-neutral tabular-num" data-label="金額">¥47,529</td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="クレジットカード引落 の振替を編集" class="btn btn--ghost btn--sm" hx-get="/transfers/59/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tr-59">✎ 編集</button>
-<button aria-label="クレジットカード引落 の振替を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="クレジットカード引落 の振替を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="クレジットカード引落 の振替を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -615,8 +619,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="給与振込 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/657/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-657">✎ 編集</button>
-<button aria-label="給与振込 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="給与振込 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="給与振込 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -631,8 +635,8 @@
 <td class="amount-neutral tabular-num" data-label="金額">¥50,000</td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="積立貯蓄 の振替を編集" class="btn btn--ghost btn--sm" hx-get="/transfers/60/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tr-60">✎ 編集</button>
-<button aria-label="積立貯蓄 の振替を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="積立貯蓄 の振替を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="積立貯蓄 の振替を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -653,8 +657,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="食材まとめ買い の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/667/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-667">✎ 編集</button>
-<button aria-label="食材まとめ買い の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="食材まとめ買い の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="食材まとめ買い の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -675,8 +679,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="映画 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/674/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-674">✎ 編集</button>
-<button aria-label="映画 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="映画 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="映画 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -697,8 +701,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="雑貨店 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/671/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-671">✎ 編集</button>
-<button aria-label="雑貨店 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="雑貨店 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="雑貨店 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -719,8 +723,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="固定資産税 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/679/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-679">✎ 編集</button>
-<button aria-label="固定資産税 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="固定資産税 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="固定資産税 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -741,8 +745,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="雑貨店 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/670/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-670">✎ 編集</button>
-<button aria-label="雑貨店 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="雑貨店 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="雑貨店 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -763,8 +767,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="スーパー の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/666/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-666">✎ 編集</button>
-<button aria-label="スーパー の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="スーパー の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="スーパー の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -785,8 +789,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="雑貨店 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/672/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-672">✎ 編集</button>
-<button aria-label="雑貨店 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="雑貨店 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="雑貨店 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -807,8 +811,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="電気・ガス・水道 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/660/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-660">✎ 編集</button>
-<button aria-label="電気・ガス・水道 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="電気・ガス・水道 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="電気・ガス・水道 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -829,8 +833,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="ギフト の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/677/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-677">✎ 編集</button>
-<button aria-label="ギフト の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="ギフト の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="ギフト の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -851,8 +855,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="☆☆歯科 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/675/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-675">✎ 編集</button>
-<button aria-label="☆☆歯科 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="☆☆歯科 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="☆☆歯科 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -873,8 +877,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="美容院 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/676/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-676">✎ 編集</button>
-<button aria-label="美容院 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="美容院 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="美容院 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -895,8 +899,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="カフェ の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/669/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-669">✎ 編集</button>
-<button aria-label="カフェ の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="カフェ の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="カフェ の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -917,8 +921,8 @@
                     </td>
 <td data-label="操作">
 <div class="inline-actions">
-<button aria-label="農協 の取引を編集" class="btn btn--ghost btn--sm" hx-get="/transactions/665/inline-edit/?month=2026-05&amp;page=1" hx-swap="outerHTML" hx-target="#inline-edit-tx-665">✎ 編集</button>
-<button aria-label="農協 の取引を削除" class="btn btn--danger btn--sm" hx-swap="none">🗑 削除</button>
+<button aria-label="農協 の取引を編集" class="btn btn--ghost btn--sm">✎ 編集</button>
+<button aria-label="農協 の取引を削除" class="btn btn--danger btn--sm">🗑 削除</button>
 </div>
 </td>
 </tr>
@@ -930,7 +934,7 @@
 <span class="meta pagination__current">
               1 / 2 ページ
             </span>
-<button class="btn btn--ghost" hx-get="/?month=2026-05&amp;page=2" hx-push-url="true" hx-swap="innerHTML" hx-target="#dashboard-content">次ページ →</button>
+<button class="btn btn--ghost">次ページ →</button>
 </div>
 </div>
 </div>
@@ -949,14 +953,14 @@
 </div>
 </div>
 <div class="form-mode-tabs button-row">
-<button class="btn btn--primary" hx-get="/transactions/new/?month=2026-05" hx-swap="innerHTML" hx-target="#form-panel" type="button">通常取引</button>
-<button class="btn btn--ghost" hx-get="/transfers/new/?month=2026-05" hx-swap="innerHTML" hx-target="#form-panel" type="button">振替</button>
+<button class="btn btn--primary" type="button">通常取引</button>
+<button class="btn btn--ghost" type="button">振替</button>
 </div>
-<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" hx-swap="innerHTML" hx-target="#form-panel">
+<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)">
 <input name="month" type="hidden" value="2026-05"/>
 <div class="field">
 <label for="id_date">日付</label>
-<input autocomplete="off" class="form-input" enterkeyhint="next" id="id_date" name="date" required="" type="date" value="2026-05-15"/>
+<input autocomplete="off" class="form-input" enterkeyhint="next" id="id_date" name="date" required="" type="date" value="2026-05-17"/>
 </div>
 <div class="field">
 <label for="id_account">口座</label>
@@ -974,7 +978,7 @@
 </div>
 <div class="field">
 <label for="id_kind">種別</label>
-<select class="form-input" hx-get="/categories/options/" hx-swap="innerHTML" hx-target="#id_category" hx-trigger="change" id="id_kind" name="kind">
+<select class="form-input" id="id_kind" name="kind">
 <option value="income">収入</option>
 <option selected="" value="expense">支出</option>
 </select>
@@ -1016,15 +1020,15 @@
 <textarea autocomplete="off" class="form-input" cols="40" enterkeyhint="done" id="id_memo" name="memo" placeholder="任意メモ" rows="4">
 </textarea>
 </div>
-<div hx-get="/transactions/medical-fields/" hx-include="#id_category" hx-swap="outerHTML" hx-target="#medical-fields" hx-trigger="change from:#id_category" id="medical-fields"></div>
-<div hx-include="closest form" hx-swap="innerHTML" hx-target="#transaction-preview" hx-trigger="change from:closest form, keyup changed delay:400ms from:closest form" id="transaction-preview">
+<div id="medical-fields"></div>
+<div id="transaction-preview">
 <div class="preview-box preview-box--empty">
 <span class="meta">金額とカテゴリを入力するとプレビューが表示されます。</span>
 </div>
 </div>
 <div class="button-row form-grid__actions">
 <button class="btn btn--primary" type="submit">保存する</button>
-<button class="btn btn--ghost" hx-get="/transactions/new/?month=2026-05" hx-swap="innerHTML" hx-target="#form-panel" type="button">キャンセル</button>
+<button class="btn btn--ghost" type="button">キャンセル</button>
 </div>
 </form>
 <div class="meta form-footer">

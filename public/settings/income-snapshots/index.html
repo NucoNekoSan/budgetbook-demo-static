@@ -10,6 +10,7 @@
 <meta content="light dark" name="color-scheme"/>
 <meta content="#2563eb" name="theme-color"/>
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
+
 <link href="../../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
@@ -21,11 +22,13 @@
 <script defer="" src="../../static/js/budget_chart.js"></script>
 <script defer="" src="../../static/js/progress_bars.js"></script>
 <script defer="" src="../../static/js/keyboard_shortcuts.js"></script>
+
 <link href="../../static/css/static-banner.css" rel="stylesheet"/></head>
 <body data-route="income_snapshot_list">
 <div class="static-banner" id="static-portfolio-banner">
   📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
 </div>
+
 <a class="skip-link" href="#main">本文へスキップ</a>
 <div aria-live="polite" class="demo-banner" role="status">
         🧪 これはデモデータです。実在の家計ではありません。
@@ -46,6 +49,7 @@
 <a class="site-nav__link" data-route-link="settings" href="../index.html">設定</a>
 <button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
 <form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
 <button class="site-nav__link site-nav__logout-btn" type="submit">
               demo : ログアウト
             </button>
@@ -69,6 +73,7 @@
 </div>
 </div>
 <form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="margin-top: 16px;">
+
 <div class="field">
 <label for="id_year">対象年</label>
 <input autocomplete="off" class="form-input" id="id_year" inputmode="numeric" max="2999" min="0" name="year" required="" step="1" type="number" value="2026"/>
@@ -106,7 +111,8 @@
 <td>デモ用サンプル（源泉徴収票の「給与所得控除後の金額」想定）</td>
 <td>
 <form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
-<button class="btn btn--danger btn--sm" data-neutralize="閲覧専用デモです (静的スナップショット)" type="submit">削除</button>
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('2026 年のスナップショットを削除しますか？')" type="submit">削除</button>
 </form>
 </td>
 </tr>
@@ -117,7 +123,8 @@
 <td>デモ用サンプル（源泉徴収票の「給与所得控除後の金額」想定）</td>
 <td>
 <form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
-<button class="btn btn--danger btn--sm" data-neutralize="閲覧専用デモです (静的スナップショット)" type="submit">削除</button>
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('2025 年のスナップショットを削除しますか？')" type="submit">削除</button>
 </form>
 </td>
 </tr>
@@ -128,7 +135,8 @@
 <td>デモ用サンプル（源泉徴収票の「給与所得控除後の金額」想定）</td>
 <td>
 <form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
-<button class="btn btn--danger btn--sm" data-neutralize="閲覧専用デモです (静的スナップショット)" type="submit">削除</button>
+
+<button class="btn btn--danger btn--sm" onclick="return confirm('2024 年のスナップショットを削除しますか？')" type="submit">削除</button>
 </form>
 </td>
 </tr>

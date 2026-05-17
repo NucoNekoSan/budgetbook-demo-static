@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>BudgetBook | 2025年 年間サマリー</title>
+<link href="../../static/css/style.css" rel="stylesheet"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
+
+<link href="../../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../../static/js/theme_toggle.js"></script>
+<script defer="" src="../../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../../static/js/htmx_config.js"></script>
+<script defer="" src="../../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../../static/js/budget_chart.js"></script>
+<script defer="" src="../../static/js/progress_bars.js"></script>
+<script defer="" src="../../static/js/keyboard_shortcuts.js"></script>
+
+<script defer="" src="../../static/js/annual_chart.js"></script>
+<link href="../../static/css/static-banner.css" rel="stylesheet"/></head>
+<body data-route="annual">
+<div class="static-banner" id="static-portfolio-banner">
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
+</div>
+
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../../index.html">BudgetBook</a>
+<nav aria-label="主要ナビゲーション" class="site-nav">
+<a class="site-nav__link" data-route-link="dashboard" href="../../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../../accounting/index.html">締め・照合</a>
+<a class="site-nav__link" data-route-link="settings" href="../../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
+</form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="annual-layout">
+<div class="toolbar">
+<div>
+<h1 class="page-title">2025年 年間サマリー</h1>
+<div class="meta">各月をクリックすると月別ダッシュボードへ移動します。</div>
+</div>
+<div class="button-row">
+<a class="btn btn--ghost" href="../2024/index.html">← 前年</a>
+<a class="btn btn--ghost is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">次年 →</a>
+</div>
+</div>
+<div class="cards">
+<div class="card card--income">
+<div class="card__label">年間収入</div>
+<div class="card__value">¥5,786,344</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">年間支出</div>
+<div class="card__value">¥3,603,367</div>
+</div>
+<div class="card card--net-positive">
+<div class="card__label">年間差額</div>
+<div class="card__value">¥2,182,977</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">月別内訳</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>月</th>
+<th>収入</th>
+<th>支出</th>
+<th>差額</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">1月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥274,747</td>
+<td class="amount-income">
+                    ¥105,253
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">2月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥279,761</td>
+<td class="amount-income">
+                    ¥100,239
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">3月</a>
+</td>
+<td class="amount-income">¥393,651</td>
+<td class="amount-expense">¥290,073</td>
+<td class="amount-income">
+                    ¥103,578
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">4月</a>
+</td>
+<td class="amount-income">¥391,289</td>
+<td class="amount-expense">¥363,641</td>
+<td class="amount-income">
+                    ¥27,648
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">5月</a>
+</td>
+<td class="amount-income">¥386,130</td>
+<td class="amount-expense">¥381,643</td>
+<td class="amount-income">
+                    ¥4,487
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link" href="../../2025-06/index.html">6月</a>
+</td>
+<td class="amount-income">¥966,038</td>
+<td class="amount-expense">¥273,555</td>
+<td class="amount-income">
+                    ¥692,483
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link" href="../../2025-07/index.html">7月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥271,451</td>
+<td class="amount-income">
+                    ¥108,549
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link" href="../../2025-08/index.html">8月</a>
+</td>
+<td class="amount-income">¥391,922</td>
+<td class="amount-expense">¥298,837</td>
+<td class="amount-income">
+                    ¥93,085
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link" href="../../2025-09/index.html">9月</a>
+</td>
+<td class="amount-income">¥380,000</td>
+<td class="amount-expense">¥277,888</td>
+<td class="amount-income">
+                    ¥102,112
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link" href="../../2025-10/index.html">10月</a>
+</td>
+<td class="amount-income">¥385,594</td>
+<td class="amount-expense">¥303,622</td>
+<td class="amount-income">
+                    ¥81,972
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link" href="../../2025-11/index.html">11月</a>
+</td>
+<td class="amount-income">¥391,903</td>
+<td class="amount-expense">¥283,789</td>
+<td class="amount-income">
+                    ¥108,114
+                  </td>
+</tr>
+<tr>
+<td>
+<a class="annual-month-link" href="../../2025-12/index.html">12月</a>
+</td>
+<td class="amount-income">¥959,817</td>
+<td class="amount-expense">¥304,360</td>
+<td class="amount-income">
+                    ¥655,457
+                  </td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="annual-total-row">
+<td><strong>合計</strong></td>
+<td class="amount-income"><strong>¥5,786,344</strong></td>
+<td class="amount-expense"><strong>¥3,603,367</strong></td>
+<td class="amount-income">
+<strong>¥2,182,977</strong>
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">2025年 大分類別 年間支出</h2>
+<div class="meta">家計大分類で 1 年間の支出を俯瞰します。固定費・変動費の傾向把握に。</div>
+<div class="table-wrap u-mt-16">
+<table>
+<thead>
+<tr><th>大分類</th><th>金額</th><th>割合</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>住居費</strong></td>
+<td class="amount-expense tabular-num">¥1,440,000</td>
+<td class="tabular-num">40.0%</td>
+</tr>
+<tr>
+<td><strong>食品・日用品</strong></td>
+<td class="amount-expense tabular-num">¥538,467</td>
+<td class="tabular-num">14.9%</td>
+</tr>
+<tr>
+<td><strong>光熱・通信</strong></td>
+<td class="amount-expense tabular-num">¥450,129</td>
+<td class="tabular-num">12.5%</td>
+</tr>
+<tr>
+<td><strong>教養・娯楽</strong></td>
+<td class="amount-expense tabular-num">¥413,472</td>
+<td class="tabular-num">11.5%</td>
+</tr>
+<tr>
+<td><strong>保険・税</strong></td>
+<td class="amount-expense tabular-num">¥263,500</td>
+<td class="tabular-num">7.3%</td>
+</tr>
+<tr>
+<td><strong>外食</strong></td>
+<td class="amount-expense tabular-num">¥204,271</td>
+<td class="tabular-num">5.7%</td>
+</tr>
+<tr>
+<td><strong>交通</strong></td>
+<td class="amount-expense tabular-num">¥137,486</td>
+<td class="tabular-num">3.8%</td>
+</tr>
+<tr>
+<td><strong>交際・贈答</strong></td>
+<td class="amount-expense tabular-num">¥91,713</td>
+<td class="tabular-num">2.5%</td>
+</tr>
+<tr>
+<td><strong>医療・健康</strong></td>
+<td class="amount-expense tabular-num">¥32,185</td>
+<td class="tabular-num">0.9%</td>
+</tr>
+<tr>
+<td><strong>衣料・美容</strong></td>
+<td class="amount-expense tabular-num">¥31,400</td>
+<td class="tabular-num">0.9%</td>
+</tr>
+<tr>
+<td><strong>その他</strong></td>
+<td class="amount-expense tabular-num">¥744</td>
+<td class="tabular-num">0.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel__body">
+<h2 class="section-title">年間推移</h2>
+<figure class="chart-figure">
+<div class="chart-container">
+<canvas aria-label="年の月別 収入・支出・収支の推移グラフ" id="annual-chart" role="img"></canvas>
+</div>
+<figcaption class="sr-only">年の月別収入支出グラフ。詳細な数値は上のテーブルで確認できます。</figcaption>
+</figure>
+<script id="annual-trend-data" type="application/json">[{"month": 1, "month_param": "2025-01", "label": "1\u6708", "income": 380000, "expense": 274747, "net": 105253}, {"month": 2, "month_param": "2025-02", "label": "2\u6708", "income": 380000, "expense": 279761, "net": 100239}, {"month": 3, "month_param": "2025-03", "label": "3\u6708", "income": 393651, "expense": 290073, "net": 103578}, {"month": 4, "month_param": "2025-04", "label": "4\u6708", "income": 391289, "expense": 363641, "net": 27648}, {"month": 5, "month_param": "2025-05", "label": "5\u6708", "income": 386130, "expense": 381643, "net": 4487}, {"month": 6, "month_param": "2025-06", "label": "6\u6708", "income": 966038, "expense": 273555, "net": 692483}, {"month": 7, "month_param": "2025-07", "label": "7\u6708", "income": 380000, "expense": 271451, "net": 108549}, {"month": 8, "month_param": "2025-08", "label": "8\u6708", "income": 391922, "expense": 298837, "net": 93085}, {"month": 9, "month_param": "2025-09", "label": "9\u6708", "income": 380000, "expense": 277888, "net": 102112}, {"month": 10, "month_param": "2025-10", "label": "10\u6708", "income": 385594, "expense": 303622, "net": 81972}, {"month": 11, "month_param": "2025-11", "label": "11\u6708", "income": 391903, "expense": 283789, "net": 108114}, {"month": 12, "month_param": "2025-12", "label": "12\u6708", "income": 959817, "expense": 304360, "net": 655457}]</script>
+</div>
+</div>
+</div>
+</main>
+<script defer="" src="../../static/js/neutralize.js"></script></body>
+</html>

@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>BudgetBook | 2025年7月 予算</title>
+<link href="../../static/css/style.css" rel="stylesheet"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
+
+<link href="../../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../../static/js/theme_toggle.js"></script>
+<script defer="" src="../../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../../static/js/htmx_config.js"></script>
+<script defer="" src="../../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../../static/js/budget_chart.js"></script>
+<script defer="" src="../../static/js/progress_bars.js"></script>
+<script defer="" src="../../static/js/keyboard_shortcuts.js"></script>
+
+<link href="../../static/css/static-banner.css" rel="stylesheet"/></head>
+<body data-route="dashboard">
+<div class="static-banner" id="static-portfolio-banner">
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
+</div>
+
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../../index.html">BudgetBook</a>
+<nav aria-label="主要ナビゲーション" class="site-nav">
+<a class="site-nav__link" data-route-link="dashboard" href="../../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../../accounting/index.html">締め・照合</a>
+<a class="site-nav__link" data-route-link="settings" href="../../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
+</form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="annual-layout">
+<div class="toolbar">
+<div>
+<h1 class="page-title">2025年7月 の月次予算</h1>
+<div class="meta">大分類 (section) ごとの月次予算を設定します。空欄で保存すれば未設定（予算なし）。</div>
+</div>
+<div class="button-row">
+<a class="btn btn--ghost" href="../2025-06/index.html">← 前月</a>
+<a class="btn btn--ghost" href="../2025-08/index.html">次月 →</a>
+<a class="btn btn--ghost" href="../../2025-07/index.html">家計簿に戻る</a>
+</div>
+</div>
+<details class="panel">
+<summary class="panel__body section-title">使い方</summary>
+<div class="panel__body">
+<ul>
+<li>各 <strong>大分類</strong> に月次予算を設定すると、家計簿ダッシュボードに進捗バーが表示されます</li>
+<li>空欄のままにした大分類は<strong>予算なし</strong>として扱われます（実績だけ集計）</li>
+<li>「前月から複製」で先月の予算をそのまま今月にコピーできます（金額は後から編集可能）</li>
+<li>使われていない大分類（実績 0 で予算未設定）はダッシュボードに表示されません</li>
+</ul>
+</div>
+</details>
+<form action="#" class="panel" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
+<input name="month" type="hidden" value="2025-07"/>
+<div class="panel__body">
+<h2 class="section-title">予算を編集</h2>
+<div class="meta">大分類ごとに月次の予算額（円）を入力してください。</div>
+<div class="table-wrap u-mt-16">
+<table class="data-table">
+<thead>
+<tr>
+<th>大分類</th>
+<th>予算額</th>
+<th>前月の予算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="大分類"><strong>食品・日用品</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_food_daily" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>外食</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_dining_out" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>住居費</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_housing" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>住居関連</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_housing_misc" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>光熱・通信</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_utility" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>交通</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_transport" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>医療・健康</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_medical" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>教養・娯楽</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_edu_leisure" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>衣料・美容</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_apparel_beauty" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>交際・贈答</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_social" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>保険・税</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_insurance_tax" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>貯蓄・投資</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_saving_invest" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+<tr>
+<td data-label="大分類"><strong>その他</strong></td>
+<td data-label="予算額">
+<input class="form-input tabular-num" min="0" name="amount_other" placeholder="未設定" step="100" type="number" value=""/>
+</td>
+<td class="meta tabular-num" data-label="前月の予算">
+                    -
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="button-row form-grid__actions u-mt-16">
+<button class="btn btn--primary" name="action" type="submit" value="save">保存する</button>
+</div>
+</div>
+</form>
+</div>
+</main>
+<script defer="" src="../../static/js/neutralize.js"></script></body>
+</html>

@@ -8,6 +8,12 @@ http://127.0.0.1:8765/ で起動していること。
 - 「閲覧専用ポートフォリオ」バナーを全ページ上部に挿入
 - 内部リンクは相対化、外部ドメインへの絶対 URL は保持
 - service worker / manifest は静的化に不要なため除外
+
+期間切替:
+- 月単位ページ (dashboard, balance-sheet, budgets) は直近 12 ヶ月分を生成
+- 年単位ページ (annual, medical, insurance, tax-deductions) は直近 3 年分を生成
+- 両軸ページ (expense-breakdown) は 12 ヶ月 + 3 年の十字を生成
+- prev/next ?month=YYYY-MM / ?year=YYYY 形式のリンクを生成済み変種への相対パスへ書き換え
 """
 from __future__ import annotations
 
@@ -15,8 +21,9 @@ import os
 import re
 import sys
 import time
+from datetime import date
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, urlunparse
+from urllib.parse import parse_qs, urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -24,23 +31,25 @@ from bs4 import BeautifulSoup
 BASE = "http://127.0.0.1:8765"
 OUT = Path(__file__).resolve().parent.parent / "public"
 
-# 静的化する GET ページ (curated)
-PAGES = [
-    ("/", "index.html"),
-    ("/annual/", "annual/index.html"),
-    ("/balance-sheet/", "balance-sheet/index.html"),
-    ("/loan-strategy/", "loan-strategy/index.html"),
-    ("/budgets/", "budgets/index.html"),
-    ("/sections/", "sections/index.html"),
-    ("/expense-breakdown/", "expense-breakdown/index.html"),
-    ("/reports/tax-deductions/", "reports/tax-deductions/index.html"),
-    ("/reports/tax-deductions/v2/", "reports/tax-deductions/v2/index.html"),
-    ("/medical-expenses/", "medical-expenses/index.html"),
-    ("/insurance-premiums/", "insurance-premiums/index.html"),
-    ("/accounting/", "accounting/index.html"),
-    ("/settings/", "settings/index.html"),
-    ("/settings/login-history/", "settings/login-history/index.html"),
-    ("/settings/income-snapshots/", "settings/income-snapshots/index.html"),
+MONTHS_BACK = 12  # 含む現在月
+YEARS_BACK = 3    # 含む現在年
+
+PAGE_DEFS = [
+    {"url": "/", "out": "index.html", "period": "month"},
+    {"url": "/annual/", "out": "annual/index.html", "period": "year"},
+    {"url": "/balance-sheet/", "out": "balance-sheet/index.html", "period": "month"},
+    {"url": "/loan-strategy/", "out": "loan-strategy/index.html", "period": None},
+    {"url": "/budgets/", "out": "budgets/index.html", "period": "month"},
+    {"url": "/sections/", "out": "sections/index.html", "period": None},
+    {"url": "/expense-breakdown/", "out": "expense-breakdown/index.html", "period": "both"},
+    {"url": "/reports/tax-deductions/", "out": "reports/tax-deductions/index.html", "period": "year"},
+    {"url": "/reports/tax-deductions/v2/", "out": "reports/tax-deductions/v2/index.html", "period": "year"},
+    {"url": "/medical-expenses/", "out": "medical-expenses/index.html", "period": "year"},
+    {"url": "/insurance-premiums/", "out": "insurance-premiums/index.html", "period": "year"},
+    {"url": "/accounting/", "out": "accounting/index.html", "period": None},
+    {"url": "/settings/", "out": "settings/index.html", "period": None},
+    {"url": "/settings/login-history/", "out": "settings/login-history/index.html", "period": None},
+    {"url": "/settings/income-snapshots/", "out": "settings/income-snapshots/index.html", "period": None},
 ]
 
 STATIC_BANNER_HTML = """
@@ -59,11 +68,110 @@ session.headers.update({"User-Agent": "budgetbook-mirror/1.0"})
 fetched_assets: dict[str, Path] = {}
 
 
+def months_back_list(n: int) -> list[tuple[date, str]]:
+    today = date.today()
+    cur = today.replace(day=1)
+    out = []
+    y, m = cur.year, cur.month
+    for _ in range(n):
+        out.append((date(y, m, 1), f"{y:04d}-{m:02d}"))
+        m -= 1
+        if m == 0:
+            m = 12
+            y -= 1
+    return out
+
+
+def years_back_list(n: int) -> list[tuple[int, str]]:
+    today = date.today()
+    return [(y, str(y)) for y in range(today.year, today.year - n, -1)]
+
+
+def _suffix_into_out(base_out: str, suffix_dir: str) -> str:
+    """Insert suffix_dir before /index.html or .html to form a per-variant path."""
+    if base_out.endswith("/index.html"):
+        return base_out[: -len("/index.html")] + "/" + suffix_dir + "/index.html"
+    if base_out == "index.html":
+        return suffix_dir + "/index.html"
+    if base_out.endswith(".html"):
+        return base_out[: -len(".html")] + "/" + suffix_dir + "/index.html"
+    return base_out.rstrip("/") + "/" + suffix_dir + "/index.html"
+
+
+def build_variants() -> list[dict]:
+    variants: list[dict] = []
+    for page in PAGE_DEFS:
+        period = page["period"]
+        if period is None:
+            variants.append({"url": page["url"], "qs": "", "out": page["out"]})
+            continue
+        if period == "month":
+            for i, (_, ym) in enumerate(months_back_list(MONTHS_BACK)):
+                if i == 0:
+                    variants.append({"url": page["url"], "qs": "", "out": page["out"]})
+                else:
+                    variants.append({"url": page["url"], "qs": f"month={ym}", "out": _suffix_into_out(page["out"], ym)})
+            continue
+        if period == "year":
+            for i, (_, ys) in enumerate(years_back_list(YEARS_BACK)):
+                if i == 0:
+                    variants.append({"url": page["url"], "qs": "", "out": page["out"]})
+                else:
+                    variants.append({"url": page["url"], "qs": f"year={ys}", "out": _suffix_into_out(page["out"], ys)})
+            continue
+        if period == "both":
+            variants.append({"url": page["url"], "qs": "", "out": page["out"]})
+            for i, (_, ym) in enumerate(months_back_list(MONTHS_BACK)):
+                if i == 0:
+                    continue
+                variants.append({"url": page["url"], "qs": f"month={ym}", "out": _suffix_into_out(page["out"], "m-" + ym)})
+            for i, (_, ys) in enumerate(years_back_list(YEARS_BACK)):
+                if i == 0:
+                    continue
+                variants.append({"url": page["url"], "qs": f"year={ys}", "out": _suffix_into_out(page["out"], "y-" + ys)})
+    return variants
+
+
+VARIANTS = build_variants()
+
+# variant_index: (url_path_without_trailing_slash, key_tuple) -> out_path
+#   key_tuple is None for the default variant, ("month", "YYYY-MM") or ("year", "YYYY")
+variant_index: dict[tuple, str] = {}
+for v in VARIANTS:
+    path_key = v["url"].rstrip("/")
+    if not v["qs"]:
+        variant_index[(path_key, None)] = v["out"]
+    else:
+        k, val = v["qs"].split("=", 1)
+        variant_index[(path_key, (k, val))] = v["out"]
+
+
+def resolve_local_target(parsed_url) -> str | None:
+    path_key = parsed_url.path.rstrip("/")
+    qs = parse_qs(parsed_url.query)
+    has_period = "month" in qs or "year" in qs
+    if "month" in qs:
+        key = (path_key, ("month", qs["month"][0]))
+        if key in variant_index:
+            return variant_index[key]
+    if "year" in qs:
+        key = (path_key, ("year", qs["year"][0]))
+        if key in variant_index:
+            return variant_index[key]
+    # 期間パラメータが付いているのに variant が無い場合は範囲外。
+    # default にフォールバックさせず、neutralize する。
+    if has_period:
+        return None
+    key = (path_key, None)
+    if key in variant_index:
+        return variant_index[key]
+    return None
+
+
 def fetch_asset(asset_url: str, html_dir: Path) -> str | None:
-    """静的アセットをダウンロードし、HTML から相対参照できる pathを返す。"""
     parsed = urlparse(asset_url)
     if parsed.netloc and parsed.netloc not in ("127.0.0.1:8765", "localhost:8765", ""):
-        return None  # 外部ドメインはそのまま
+        return None
     path = parsed.path
     if not path or path == "/":
         return None
@@ -84,7 +192,6 @@ def fetch_asset(asset_url: str, html_dir: Path) -> str | None:
         target.write_bytes(r.content)
         fetched_assets[asset_url] = target
         print(f"  asset saved: {path}")
-    # html_dir からの相対パスを計算
     try:
         return os.path.relpath(target, html_dir).replace("\\", "/")
     except ValueError:
@@ -107,7 +214,9 @@ def neutralize_html(html: str, html_dir: Path) -> str:
     # 2. mutation 系 hx-* 属性を全削除 + hx-headers (CSRF token 漏洩) を除去
     for tag in soup.find_all(True):
         for attr in list(tag.attrs.keys()):
-            if attr in ("hx-post", "hx-put", "hx-patch", "hx-delete", "hx-confirm", "hx-headers"):
+            if attr in ("hx-post", "hx-put", "hx-patch", "hx-delete", "hx-confirm", "hx-headers",
+                        "hx-get", "hx-push-url", "hx-swap", "hx-target", "hx-trigger", "hx-vals",
+                        "hx-include", "hx-select", "hx-boost"):
                 del tag.attrs[attr]
 
     # 2b. CSRF トークン input を削除（静的サイトでは無効・サーバ側 SECRET_KEY 由来のノイズを除去）
@@ -158,23 +267,18 @@ def neutralize_html(html: str, html_dir: Path) -> str:
                     el[attr] = new
 
     # 6. 内部 <a href="/..."> を相対 path に書き換え (静的サイトでクリック可能に)
-    page_map = {p[0].rstrip("/"): p[1] for p in PAGES}
+    #    querystring の month / year を見て、対応する variant が生成済みなら相対パスへ。
     for a in soup.find_all("a"):
         href = a.get("href")
         if not href or not href.startswith("/"):
             continue
-        # クエリやフラグメント分離
         parsed = urlparse(href)
-        key = parsed.path.rstrip("/")
-        if key == "":
-            key = ""  # root
-        if key in page_map or parsed.path == "/":
-            target_file = page_map.get(key, "index.html")
-            target_path = OUT / target_file
+        target_rel = resolve_local_target(parsed)
+        if target_rel is not None:
+            target_path = OUT / target_rel
             rel = os.path.relpath(target_path, html_dir).replace("\\", "/")
             a["href"] = rel
         else:
-            # 該当ページがミラー外 (例: /transactions/123/edit/) → クリック無効化
             a["href"] = "#"
             a.attrs.pop("onclick", None)
             a["data-neutralize"] = MSG_NOT_MIRRORED
@@ -208,11 +312,18 @@ def neutralize_html(html: str, html_dir: Path) -> str:
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    print(f"=== mirror to {OUT} ===")
-    for url_path, out_rel in PAGES:
-        full = BASE + url_path
-        print(f"\n[{url_path}] -> {out_rel}")
-        r = session.get(full, timeout=15)
+    print(f"=== mirror to {OUT} ({len(VARIANTS)} variants) ===")
+    for v in VARIANTS:
+        url_path = v["url"]
+        qs = v["qs"]
+        out_rel = v["out"]
+        full = BASE + url_path + (("?" + qs) if qs else "")
+        print(f"\n[{url_path}{('?' + qs) if qs else ''}] -> {out_rel}")
+        try:
+            r = session.get(full, timeout=15)
+        except Exception as e:
+            print(f"  ERROR {e}")
+            continue
         if r.status_code != 200:
             print(f"  SKIP status={r.status_code}")
             continue
@@ -221,9 +332,9 @@ def main():
         neutralized = neutralize_html(r.text, out_path.parent)
         out_path.write_text(neutralized, encoding="utf-8")
         print(f"  saved ({len(neutralized):,} bytes)")
-        time.sleep(0.2)
+        time.sleep(0.1)
 
-    print(f"\n=== done. {len(fetched_assets)} assets fetched ===")
+    print(f"\n=== done. {len(fetched_assets)} assets, {len(VARIANTS)} variants ===")
 
 
 if __name__ == "__main__":

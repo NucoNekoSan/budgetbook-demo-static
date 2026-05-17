@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>BudgetBook | 2025年 医療費控除レポート</title>
+<link href="../../../static/css/style.css" rel="stylesheet"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#2563eb" name="theme-color"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='50%25' y='62%25' font-size='44' text-anchor='middle' fill='white' font-family='-apple-system,Segoe UI,sans-serif' font-weight='800'%3EB%3C/text%3E%3C/svg%3E" rel="icon"/>
+
+<link href="../../../static/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/><meta content="yes" name="mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="BudgetBook" name="apple-mobile-web-app-title"/>
+<script defer="" src="../../../static/js/theme_toggle.js"></script>
+<script defer="" src="../../../static/django_htmx/htmx.min.js"></script>
+<script defer="" src="../../../static/js/htmx_config.js"></script>
+<script defer="" src="../../../static/vendor/chart.umd.min.js"></script>
+<script defer="" src="../../../static/js/budget_chart.js"></script>
+<script defer="" src="../../../static/js/progress_bars.js"></script>
+<script defer="" src="../../../static/js/keyboard_shortcuts.js"></script>
+
+<link href="../../../static/css/static-banner.css" rel="stylesheet"/></head>
+<body data-route="tax_deductions">
+<div class="static-banner" id="static-portfolio-banner">
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a class="static-banner__link" href="https://github.com/NucoNekoSan/budgetbook-demo">ソースコード (GitHub)</a>
+</div>
+
+<a class="skip-link" href="#main">本文へスキップ</a>
+<div aria-live="polite" class="demo-banner" role="status">
+        🧪 これはデモデータです。実在の家計ではありません。
+        
+          書き込み操作は無効化されています（読み取り専用）。
+        
+        <a href="https://github.com/NucoNekoSan/budgetbook-demo" rel="noopener noreferrer" target="_blank">→ GitHub でセルフホストする</a>
+</div>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="brand" href="../../../index.html">BudgetBook</a>
+<nav aria-label="主要ナビゲーション" class="site-nav">
+<a class="site-nav__link" data-route-link="dashboard" href="../../../index.html">家計簿</a>
+<a class="site-nav__link" data-route-link="annual" href="../../../annual/index.html">年間</a>
+<a class="site-nav__link" data-route-link="expense_breakdown" href="../../../expense-breakdown/index.html">支出構成</a>
+<a class="site-nav__link" data-route-link="balance_sheet" href="../../../balance-sheet/index.html">資産</a>
+<a class="site-nav__link" data-route-link="accounting" href="../../../accounting/index.html">締め・照合</a>
+<a class="site-nav__link" data-route-link="settings" href="../../../settings/index.html">設定</a>
+<button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+<form action="#" class="site-nav__logout" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
+
+<button class="site-nav__link site-nav__logout-btn" type="submit">
+              demo : ログアウト
+            </button>
+</form>
+</nav>
+</div>
+</header>
+<main class="container" id="main" tabindex="-1">
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<div>
+<h1 class="page-title">2025年 医療費控除レポート</h1>
+<div class="meta">
+            カテゴリの「税控除タグ」で集計しています。タグ未設定のカテゴリは含まれません。
+          </div>
+</div>
+<div class="button-row">
+<a class="btn btn--ghost" href="../2024/index.html">← 2024年</a>
+<a class="btn btn--ghost is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">2026年 →</a>
+<a class="btn btn--ghost" href="../../../settings/index.html">設定に戻る</a>
+</div>
+</div>
+<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="get">
+<div class="field">
+<label for="year-input">年</label>
+<input class="form-input" id="year-input" max="2099" min="2000" name="year" type="number" value="2025"/>
+</div>
+<div class="field">
+<label for="tax-tag-select">税控除タグ</label>
+<select class="form-input" id="tax-tag-select" name="tax_tag">
+<option selected="" value="medical">医療費控除</option>
+<option value="donation">寄附金（ふるさと納税等）</option>
+<option value="business">事業経費</option>
+<option value="other">その他控除</option>
+</select>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary" type="submit">表示</button>
+<a class="btn btn--soft is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">↓ CSV ダウンロード</a>
+</div>
+</form>
+<div class="cards" style="margin-top: 16px;">
+<div class="card">
+<div class="card__label">該当件数</div>
+<div class="card__value">7 件</div>
+</div>
+<div class="card card--expense">
+<div class="card__label">合計金額</div>
+<div class="card__value">¥32,185</div>
+</div>
+<div class="card">
+<div class="card__label">医療費控除ライン (¥100000)</div>
+<div class="card__value">あと ¥67,815</div>
+<div class="meta">控除ラインに到達していません</div>
+</div>
+</div>
+<table class="table" style="margin-top: 16px;">
+<thead>
+<tr>
+<th>日付</th>
+<th>支払先</th>
+<th>カテゴリ</th>
+<th class="num">金額</th>
+<th>メモ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025-02-17</td>
+<td>□□小児科</td>
+<td>医療費</td>
+<td class="num">¥4,953</td>
+<td></td>
+</tr>
+<tr>
+<td>2025-03-14</td>
+<td>〇〇クリニック</td>
+<td>医療費</td>
+<td class="num">¥6,418</td>
+<td></td>
+</tr>
+<tr>
+<td>2025-04-16</td>
+<td>□□小児科</td>
+<td>医療費</td>
+<td class="num">¥4,288</td>
+<td></td>
+</tr>
+<tr>
+<td>2025-05-08</td>
+<td>〇〇クリニック</td>
+<td>医療費</td>
+<td class="num">¥4,084</td>
+<td></td>
+</tr>
+<tr>
+<td>2025-06-06</td>
+<td>□□小児科</td>
+<td>医療費</td>
+<td class="num">¥6,110</td>
+<td></td>
+</tr>
+<tr>
+<td>2025-11-13</td>
+<td>◇◇薬局</td>
+<td>医療費</td>
+<td class="num">¥4,756</td>
+<td></td>
+</tr>
+<tr>
+<td>2025-12-13</td>
+<td>☆☆歯科</td>
+<td>医療費</td>
+<td class="num">¥1,576</td>
+<td></td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td colspan="3"><strong>合計</strong></td>
+<td class="num"><strong>¥32,185</strong></td>
+<td></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+</main>
+<script defer="" src="../../../static/js/neutralize.js"></script></body>
+</html>
