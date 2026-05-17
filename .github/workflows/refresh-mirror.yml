@@ -55,7 +55,9 @@ jobs:
           ALLOWED_HOSTS: '127.0.0.1,localhost'
         run: |
           python manage.py migrate --noinput
-          python manage.py seed_demo_data --reset
+          # --create-demo-users: 公開デモの自動ログインに使う demo ユーザー (password='demo')
+          # を作成する。DEMO_MODE=1 のときのみ admin も作成される。
+          python manage.py seed_demo_data --reset --create-demo-users
 
       - name: Start runserver in background
         working-directory: source-demo/budgetbook

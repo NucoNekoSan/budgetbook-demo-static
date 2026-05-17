@@ -101,21 +101,14 @@ def login_as_demo() -> None:
         headers={"Referer": login_url},
         allow_redirects=False,
     )
-    print(f"[mirror][login] POST status={r2.status_code} location={r2.headers.get('Location', '-')}")
-    print(f"[mirror][login] session cookies after POST: {list(session.cookies.keys())}")
-    # 成功時は 302 (next=/) にリダイレクト
     if r2.status_code == 200:
-        # フォームが再表示された = エラー (CSRF / 認証 / axes ロックアウト)
-        # body から errorlist 系を広めに抽出
+        # フォーム再表示 = エラー (CSRF / 認証 / axes ロックアウト / demo ユーザー未作成等)
         errs = re.findall(r'<(?:ul|li|div|p)[^>]*(?:error|alert|warning)[^>]*>(.*?)</(?:ul|li|div|p)>', r2.text, re.IGNORECASE | re.DOTALL)
-        err_text = ' | '.join(re.sub(r'\s+', ' ', e.strip())[:200] for e in errs[:5]) if errs else '(no error markup)'
-        print(f"[mirror][login] BODY (first 800 chars):\n{r2.text[:800]}\n--- END BODY ---")
+        err_text = ' | '.join(re.sub(r'\s+', ' ', e.strip())[:200] for e in errs[:5]) if errs else '(no error markup; check seed_demo_data --create-demo-users)'
         raise RuntimeError(f"login POST returned 200 (form re-displayed). Errors: {err_text}")
     if r2.status_code != 302:
         raise RuntimeError(f"login POST failed: HTTP {r2.status_code}")
-    # セッションが本当に確立できたか確認
     r3 = session.get(BASE + "/", allow_redirects=False)
-    print(f"[mirror][login] GET / after login: status={r3.status_code} location={r3.headers.get('Location', '-')}")
     if r3.status_code == 302 and "/accounts/login" in r3.headers.get("Location", ""):
         raise RuntimeError("login did not establish session (still redirecting to /accounts/login)")
     print("[mirror] demo user logged in successfully")
