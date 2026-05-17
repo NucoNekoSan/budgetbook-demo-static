@@ -106,10 +106,11 @@ def login_as_demo() -> None:
     # 成功時は 302 (next=/) にリダイレクト
     if r2.status_code == 200:
         # フォームが再表示された = エラー (CSRF / 認証 / axes ロックアウト)
-        # body から非フィールドエラーを抽出
-        err_match = re.search(r'errorlist[^>]*>\s*<li[^>]*>([^<]+)</li>', r2.text)
-        err = err_match.group(1) if err_match else '(no errorlist visible)'
-        raise RuntimeError(f"login POST returned 200 (form re-displayed). Likely error: {err}")
+        # body から errorlist 系を広めに抽出
+        errs = re.findall(r'<(?:ul|li|div|p)[^>]*(?:error|alert|warning)[^>]*>(.*?)</(?:ul|li|div|p)>', r2.text, re.IGNORECASE | re.DOTALL)
+        err_text = ' | '.join(re.sub(r'\s+', ' ', e.strip())[:200] for e in errs[:5]) if errs else '(no error markup)'
+        print(f"[mirror][login] BODY (first 800 chars):\n{r2.text[:800]}\n--- END BODY ---")
+        raise RuntimeError(f"login POST returned 200 (form re-displayed). Errors: {err_text}")
     if r2.status_code != 302:
         raise RuntimeError(f"login POST failed: HTTP {r2.status_code}")
     # セッションが本当に確立できたか確認
