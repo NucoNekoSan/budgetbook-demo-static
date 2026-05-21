@@ -61,6 +61,15 @@ STATIC_BANNER_HTML = """
 MSG_DEMO = "閲覧専用デモです (静的スナップショット)"
 MSG_NOT_MIRRORED = "このページは静的スナップショットには含まれていません"
 MSG_CSV = "CSV ダウンロードは静的版では無効です"
+MSG_MUTATE = "閲覧専用デモのため、編集・追加・削除はできません"
+MSG_DETAIL = "閲覧専用デモのため、詳細の動的取得はできません"
+
+HX_MUTATION_ATTRS = ("hx-post", "hx-put", "hx-patch", "hx-delete")
+HX_READ_ATTRS = ("hx-get",)
+HX_STRIP_ATTRS = HX_MUTATION_ATTRS + HX_READ_ATTRS + (
+    "hx-confirm", "hx-headers", "hx-push-url", "hx-swap", "hx-target",
+    "hx-trigger", "hx-vals", "hx-include", "hx-select", "hx-boost",
+)
 
 session = requests.Session()
 session.headers.update({"User-Agent": "budgetbook-mirror/1.0"})
@@ -262,13 +271,21 @@ def neutralize_html(html: str, html_dir: Path) -> str:
         form.attrs.pop("hx-patch", None)
         form.attrs.pop("hx-delete", None)
 
-    # 2. mutation 系 hx-* 属性を全削除 + hx-headers (CSRF token 漏洩) を除去
+    # 2. hx-* 属性を全削除。ただし削除前に「元々何らかの htmx アクションを
+    #    持っていた button/a」を data-neutralize でマークし、押下時にモーダル
+    #    で「閲覧専用」と説明する。マークしないと完全 inert で「押しても何も
+    #    起きない」となり UX が悪い。
     for tag in soup.find_all(True):
+        had_mut = any(a in tag.attrs for a in HX_MUTATION_ATTRS)
+        had_read = any(a in tag.attrs for a in HX_READ_ATTRS)
         for attr in list(tag.attrs.keys()):
-            if attr in ("hx-post", "hx-put", "hx-patch", "hx-delete", "hx-confirm", "hx-headers",
-                        "hx-get", "hx-push-url", "hx-swap", "hx-target", "hx-trigger", "hx-vals",
-                        "hx-include", "hx-select", "hx-boost"):
+            if attr in HX_STRIP_ATTRS:
                 del tag.attrs[attr]
+        if (had_mut or had_read) and tag.name in ("button", "a"):
+            if not tag.has_attr("data-neutralize"):
+                tag["data-neutralize"] = MSG_MUTATE if had_mut else MSG_DETAIL
+                if tag.name == "a" and not tag.get("href"):
+                    tag["href"] = "#"
 
     # 2b. CSRF トークン input を削除（静的サイトでは無効・サーバ側 SECRET_KEY 由来のノイズを除去）
     for inp in soup.find_all("input", attrs={"name": "csrfmiddlewaretoken"}):
