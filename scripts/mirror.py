@@ -30,6 +30,7 @@ import requests
 from bs4 import BeautifulSoup
 
 BASE = "http://127.0.0.1:8765"
+ALLOWED_HOSTS = {"127.0.0.1:8765", "localhost:8765"}
 OUT = Path(__file__).resolve().parent.parent / "public"
 
 MONTHS_BACK = 12  # 含む現在月
@@ -307,6 +308,20 @@ def _scrub_security(soup) -> None:
             else:
                 script.decompose()
 
+    # フラグメントがモーダル内に inject されたとき、絶対パス link は親ページ
+    # を navigate して context が崩れる。さらに /transactions/export/ 等の
+    # 静的版に存在しない endpoint は 404 を撒く。中立化してメッセージ化。
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if href.startswith(("http://", "https://", "//")):
+            # 外部リンク (現状は出現しないが念のため) — そのままクリック不能化
+            a["href"] = "#"
+            a["data-neutralize"] = MSG_DEMO
+        elif href.startswith("/") and not href.startswith("#"):
+            # 親ページの context を壊さないため neutralize
+            a["href"] = "#"
+            a["data-neutralize"] = MSG_NOT_MIRRORED
+
 
 def fetch_fragment(hx_url: str) -> str | None:
     """hx-get URL を fetch → 中立化 → public/_fragments/{hash}.html に保存。
@@ -325,9 +340,18 @@ def fetch_fragment(hx_url: str) -> str | None:
         return None
 
     full = urljoin(BASE, hx_url)
+    # SSRF 防御: hx_url が "//evil.com/x" 形式や絶対 URL でも、最終 resolve 先が
+    # ALLOWED_HOSTS に含まれなければ拒否する。Django テンプレートに reflected
+    # user input が紛れ込む経路は現状無いが defense-in-depth。
+    parsed_full = urlparse(full)
+    if parsed_full.netloc not in ALLOWED_HOSTS or parsed_full.scheme != "http":
+        print(f"  fragment REJECT (out of allowed host): {hx_url} -> {parsed_full.netloc}")
+        fragment_failed.add(hx_url)
+        return None
     try:
-        # HX-Request: true で Django 側に partial template を返してもらう
-        r = session.get(full, timeout=10, headers={
+        # HX-Request: true で Django 側に partial template を返してもらう。
+        # allow_redirects=False: 30x で外部ホストに飛ぶリスクを断つ (200 想定)。
+        r = session.get(full, timeout=10, allow_redirects=False, headers={
             "HX-Request": "true",
             "HX-Current-URL": BASE + "/",
         })
