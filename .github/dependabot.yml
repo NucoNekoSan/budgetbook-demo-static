@@ -1,5 +1,8 @@
 # GitHub Actions の依存 (actions/checkout, setup-python, github/codeql-action 等)
-# を週次でチェックし、新しいタグが出たら PR を作成する。
+# を週次でチェックし、新しいリリースが出たら PR を作成する。
+# Dependabot は SHA pin された action も追跡可能で、PR 時に SHA とコメント
+# 内の version 表記 (例: "# v6.0.2") を新しい release SHA / version に
+# 同期更新する。
 # pip / npm 依存は無い (mirror 時のみ install するため Dependabot 対象外)。
 version: 2
 updates:
