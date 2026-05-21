@@ -127,26 +127,58 @@
 body.neutralize-modal-open {
   overflow: hidden;
 }
+/* dark theme: data-theme="dark" を明示、または auto (data-theme 無し) で
+   システムが dark のとき。data-theme="light" は常に light を維持。 */
 @media (prefers-color-scheme: dark) {
-  .neutralize-modal__panel {
+  :root:not([data-theme="light"]) .neutralize-modal__panel,
+  :root[data-theme="dark"] .neutralize-modal__panel {
     background: #1f2937;
     color: #f3f4f6;
   }
-  .neutralize-modal__body {
+  :root:not([data-theme="light"]) .neutralize-modal__body,
+  :root[data-theme="dark"] .neutralize-modal__body {
     color: #d1d5db;
   }
-  .neutralize-modal__body input,
-  .neutralize-modal__body select,
-  .neutralize-modal__body textarea {
+  :root:not([data-theme="light"]) .neutralize-modal__body input,
+  :root:not([data-theme="light"]) .neutralize-modal__body select,
+  :root:not([data-theme="light"]) .neutralize-modal__body textarea,
+  :root[data-theme="dark"] .neutralize-modal__body input,
+  :root[data-theme="dark"] .neutralize-modal__body select,
+  :root[data-theme="dark"] .neutralize-modal__body textarea {
     background: #111827;
     color: #f3f4f6;
     border-color: #374151;
   }
-  .neutralize-modal__note {
+  :root:not([data-theme="light"]) .neutralize-modal__note,
+  :root[data-theme="dark"] .neutralize-modal__note {
     background: #78350f;
     color: #fef3c7;
   }
-  .neutralize-modal__error {
+  :root:not([data-theme="light"]) .neutralize-modal__error,
+  :root[data-theme="dark"] .neutralize-modal__error {
     color: #fca5a5;
   }
+}
+
+/* システムが light でもユーザーが dark を明示した場合 */
+:root[data-theme="dark"] .neutralize-modal__panel {
+  background: #1f2937;
+  color: #f3f4f6;
+}
+:root[data-theme="dark"] .neutralize-modal__body {
+  color: #d1d5db;
+}
+:root[data-theme="dark"] .neutralize-modal__body input,
+:root[data-theme="dark"] .neutralize-modal__body select,
+:root[data-theme="dark"] .neutralize-modal__body textarea {
+  background: #111827;
+  color: #f3f4f6;
+  border-color: #374151;
+}
+:root[data-theme="dark"] .neutralize-modal__note {
+  background: #78350f;
+  color: #fef3c7;
+}
+:root[data-theme="dark"] .neutralize-modal__error {
+  color: #fca5a5;
 }
