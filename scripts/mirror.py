@@ -17,6 +17,7 @@ http://127.0.0.1:8765/ で起動していること。
 """
 from __future__ import annotations
 
+import hashlib
 import os
 import re
 import sys
@@ -75,6 +76,12 @@ session = requests.Session()
 session.headers.update({"User-Agent": "budgetbook-mirror/1.0"})
 
 fetched_assets: dict[str, Path] = {}
+# hx-get URL -> public/_fragments/{hash}.html (repo-relative)
+fragment_cache: dict[str, str] = {}
+# fetch 失敗 / 非 200 を覚えておく (1 mirror run 内では再 fetch しない)
+fragment_failed: set[str] = set()
+FRAGMENTS_DIR = "_fragments"
+MAX_FRAGMENTS = 2000  # CI 暴走防止のセーフガード
 
 
 def login_as_demo() -> None:
@@ -258,6 +265,96 @@ def fetch_asset(asset_url: str, html_dir: Path) -> str | None:
         return path
 
 
+def _scrub_security(soup) -> None:
+    """ページ / フラグメント共通の中立化: hx-*, CSRF, nonce, inline script, form 無効化。
+
+    入力 (input/select/textarea) は残す — 「編集画面を見せる」要件のため。
+    保存は form の submit で alert される (data-neutralize on form)。
+    """
+    # form: action 無効化 + data-neutralize でマーク
+    for form in soup.find_all("form"):
+        form["action"] = "#"
+        form["data-neutralize"] = MSG_DEMO
+        form.attrs.pop("onsubmit", None)
+        for a in HX_MUTATION_ATTRS:
+            form.attrs.pop(a, None)
+
+    # hx-* 一括削除 (フラグメント側は既に親で fragment 化済みのため再帰 fetch しない)
+    for tag in soup.find_all(True):
+        for attr in list(tag.attrs.keys()):
+            if attr in HX_STRIP_ATTRS:
+                del tag.attrs[attr]
+        if tag.has_attr("nonce"):
+            del tag.attrs["nonce"]
+        # inline event handler は CSP script-src 'self' で死ぬが、警告ノイズ抑制のため除去
+        for ev in ("onclick", "onsubmit", "onchange", "onload", "onerror"):
+            tag.attrs.pop(ev, None)
+
+    # CSRF input
+    for inp in soup.find_all("input", attrs={"name": "csrfmiddlewaretoken"}):
+        inp.decompose()
+
+    # PWA / SW
+    for s in soup.find_all("script", src=re.compile(r"pwa_register\.js|service.?worker", re.I)):
+        s.decompose()
+
+    # inline <script> 本文を持つもの: CSP 違反 + SECRET_KEY 由来値の漏洩リスク
+    # SW disable は残す (mirror.py 内で書き換える静的文字列)
+    for script in soup.find_all("script"):
+        if script.string and script.string.strip():
+            if "serviceWorker" in script.string or "registerServiceWorker" in script.string:
+                script.string = "/* SW disabled for static snapshot */"
+            else:
+                script.decompose()
+
+
+def fetch_fragment(hx_url: str) -> str | None:
+    """hx-get URL を fetch → 中立化 → public/_fragments/{hash}.html に保存。
+
+    戻り値: public/ からの相対パス (例: "_fragments/abc123.html")。
+    同一 URL は dedup。失敗は記録して再 fetch しない。
+    """
+    if hx_url in fragment_cache:
+        return fragment_cache[hx_url]
+    if hx_url in fragment_failed:
+        return None
+    if len(fragment_cache) >= MAX_FRAGMENTS:
+        if not fragment_failed:
+            print(f"[mirror] MAX_FRAGMENTS={MAX_FRAGMENTS} reached, further fragments skipped")
+        fragment_failed.add(hx_url)
+        return None
+
+    full = urljoin(BASE, hx_url)
+    try:
+        # HX-Request: true で Django 側に partial template を返してもらう
+        r = session.get(full, timeout=10, headers={
+            "HX-Request": "true",
+            "HX-Current-URL": BASE + "/",
+        })
+    except Exception as e:
+        print(f"  fragment fail {hx_url}: {e}")
+        fragment_failed.add(hx_url)
+        return None
+    if r.status_code != 200:
+        print(f"  fragment {r.status_code}: {hx_url}")
+        fragment_failed.add(hx_url)
+        return None
+
+    frag_soup = BeautifulSoup(r.text, "html.parser")
+    _scrub_security(frag_soup)
+    frag_html = str(frag_soup)
+
+    h = hashlib.sha1(hx_url.encode("utf-8")).hexdigest()[:16]
+    rel = f"{FRAGMENTS_DIR}/{h}.html"
+    target = OUT / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(frag_html, encoding="utf-8")
+    fragment_cache[hx_url] = rel
+    if len(fragment_cache) % 25 == 0:
+        print(f"  [{len(fragment_cache)} fragments cached]")
+    return rel
+
+
 def neutralize_html(html: str, html_dir: Path) -> str:
     soup = BeautifulSoup(html, "html.parser")
 
@@ -271,18 +368,32 @@ def neutralize_html(html: str, html_dir: Path) -> str:
         form.attrs.pop("hx-patch", None)
         form.attrs.pop("hx-delete", None)
 
-    # 2. hx-* 属性を全削除。ただし削除前に「元々何らかの htmx アクションを
-    #    持っていた button/a」を data-neutralize でマークし、押下時にモーダル
-    #    で「閲覧専用」と説明する。マークしないと完全 inert で「押しても何も
-    #    起きない」となり UX が悪い。
+    # 2. hx-* 属性処理。削除前に分類して以下を行う:
+    #    - hx-get を持つ button/a → fragment 化 (data-fragment-url を付与し
+    #      押下時にモーダルへ inject。「編集画面を見せる」要件)
+    #    - hx-{post,put,patch,delete} を持つ button/a → data-neutralize マーク
+    #      (押下でモーダル表示「閲覧専用」)
+    #    - fragment fetch 失敗時は data-neutralize にフォールバック
     for tag in soup.find_all(True):
         had_mut = any(a in tag.attrs for a in HX_MUTATION_ATTRS)
-        had_read = any(a in tag.attrs for a in HX_READ_ATTRS)
+        hx_get = tag.get("hx-get") if tag.name in ("button", "a") else None
+        # fragment 化を試す (mutation 系は対象外)
+        if hx_get and not had_mut:
+            frag_rel = fetch_fragment(hx_get)
+            if frag_rel:
+                # 親ページからの相対パス
+                target_path = OUT / frag_rel
+                rel = os.path.relpath(target_path, html_dir).replace("\\", "/")
+                tag["data-fragment-url"] = rel
+                title = tag.get("aria-label") or tag.get("title") or "詳細"
+                tag["data-fragment-title"] = title
         for attr in list(tag.attrs.keys()):
             if attr in HX_STRIP_ATTRS:
                 del tag.attrs[attr]
-        if (had_mut or had_read) and tag.name in ("button", "a"):
-            if not tag.has_attr("data-neutralize"):
+        # mutation 系 or fragment 化に失敗した hx-get は data-neutralize マーク
+        if tag.name in ("button", "a") and not tag.has_attr("data-fragment-url"):
+            had_read = hx_get is not None
+            if (had_mut or had_read) and not tag.has_attr("data-neutralize"):
                 tag["data-neutralize"] = MSG_MUTATE if had_mut else MSG_DETAIL
                 if tag.name == "a" and not tag.get("href"):
                     tag["href"] = "#"
@@ -404,7 +515,9 @@ def main():
         print(f"  saved ({len(neutralized):,} bytes)")
         time.sleep(0.1)
 
-    print(f"\n=== done. {len(fetched_assets)} assets, {len(VARIANTS)} variants ===")
+    print(f"\n=== done. {len(fetched_assets)} assets, {len(fragment_cache)} fragments, {len(VARIANTS)} variants ===")
+    if fragment_failed:
+        print(f"  ({len(fragment_failed)} fragment URLs skipped)")
 
 
 if __name__ == "__main__":
