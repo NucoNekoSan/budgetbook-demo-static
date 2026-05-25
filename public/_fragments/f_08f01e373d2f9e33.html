@@ -1,0 +1,1061 @@
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<div>
+<h2 class="section-title">支払先</h2>
+<div class="meta">摘要とは別に、店舗・医療機関・勤務先などの分析軸を任意で管理します。</div>
+</div>
+<button class="btn btn--ghost" type="button">+ 追加</button>
+</div>
+<div class="settings-form-card">
+<h3 class="section-title section-title--tight">支払先を追加</h3>
+<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)">
+
+<div class="field">
+<label for="id_name">支払先名</label>
+<input class="form-input" id="id_name" maxlength="120" name="name" placeholder="例: 店舗A、病院A、勤務先A" required="" type="text"/>
+</div>
+<div class="field">
+<label for="id_notes">メモ</label>
+<textarea class="form-input" cols="40" id="id_notes" name="notes" placeholder="任意メモ" rows="2">
+</textarea>
+</div>
+<div class="field">
+<label for="id_aliases_text">別名</label>
+<textarea class="form-input" cols="40" id="id_aliases_text" name="aliases_text" placeholder="CSVや明細の表記揺れを1行に1つずつ入力" rows="3">
+</textarea>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary" type="submit">追加する</button>
+<button class="btn btn--ghost" type="button">キャンセル</button>
+</div>
+</form>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>支払先名</th>
+<th>別名</th>
+<th>使用状況</th>
+<th>状態</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="">
+<td data-label="支払先名">
+<strong>□□小児科</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 3</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="□□小児科 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="□□小児科 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="□□小児科 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-24"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>△△内科</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 2</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="△△内科 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="△△内科 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="△△内科 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-23"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>◇◇薬局</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 2</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="◇◇薬局 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="◇◇薬局 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="◇◇薬局 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-27"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>☆☆歯科</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 7</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="☆☆歯科 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="☆☆歯科 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="☆☆歯科 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-25"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>〇〇クリニック</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 3</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="〇〇クリニック を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="〇〇クリニック を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="〇〇クリニック は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-22"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>〇〇薬局</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">未使用</span>
+<span class="meta">削除可</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="〇〇薬局 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="〇〇薬局 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="〇〇薬局 を削除" class="btn btn--danger btn--sm" type="button">🗑 削除</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-26"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>カフェ</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 22</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="カフェ を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="カフェ を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="カフェ は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-12"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>ギフトショップ</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">お祝い</span>
+<span class="chip chip--neutral">ギフト</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 10</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ギフトショップ を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="ギフトショップ を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="ギフトショップ は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-31"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>ゲームストア</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">ゲーム</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 12</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ゲームストア を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="ゲームストア を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="ゲームストア は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-20"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>コスメショップ</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">コスメ</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 3</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="コスメショップ を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="コスメショップ を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="コスメショップ は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-30"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>スーパー</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">食材まとめ買い</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 52</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="スーパー を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="スーパー を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="スーパー は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-8"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>ドラッグストア</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 19</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ドラッグストア を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="ドラッグストア を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="ドラッグストア は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-14"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>ファミレス</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">ランチ</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 44</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ファミレス を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="ファミレス を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="ファミレス は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-11"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>ホームセンター</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 25</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ホームセンター を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="ホームセンター を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="ホームセンター は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-15"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>ポイントサービス</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">ポイント還元・キャッシュバック</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 17</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="ポイントサービス を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="ポイントサービス を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="ポイントサービス は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-2"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>交通系電子マネー</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">定期券チャージ</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 29</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="交通系電子マネー を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="交通系電子マネー を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="交通系電子マネー は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-17"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>住宅ローン会社</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">住宅ローン返済</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 29</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="住宅ローン会社 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="住宅ローン会社 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="住宅ローン会社 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-3"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>保険会社</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">生命保険・地震保険 月払い分</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 29</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="保険会社 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="保険会社 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="保険会社 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-7"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>動画ストア</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">動画購入</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 7</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="動画ストア を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="動画ストア を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="動画ストア は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-19"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>動画配信サービス</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 29</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="動画配信サービス を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="動画配信サービス を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="動画配信サービス は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-6"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>勤務先</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">給与振込</span>
+<span class="chip chip--neutral">賞与</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 33</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="勤務先 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="勤務先 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="勤務先 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-1"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>居酒屋</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 21</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="居酒屋 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="居酒屋 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="居酒屋 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-13"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>市区町村</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">固定資産税</span>
+<span class="chip chip--neutral">自動車税</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 14</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="市区町村 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="市区町村 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="市区町村 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-35"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>教材販売</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">教材・学用品</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 3</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="教材販売 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="教材販売 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="教材販売 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-33"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>映画館</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">映画</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 4</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="映画館 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="映画館 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="映画館 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-21"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>書店</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">書籍</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 6</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="書店 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="書店 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="書店 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-18"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>生協</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 34</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="生協 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="生協 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="生協 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-9"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>美容院</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 5</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="美容院 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="美容院 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="美容院 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-29"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>習い事</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">習い事月謝</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 29</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="習い事 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="習い事 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="習い事 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-34"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>衣料品店</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 2</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="衣料品店 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="衣料品店 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="衣料品店 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-28"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>農協</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 30</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="農協 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="農協 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="農協 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-10"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>通信会社</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">携帯・インターネット</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 29</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="通信会社 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="通信会社 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="通信会社 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-5"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>金融機関</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">ATM 手数料</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 10</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="金融機関 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="金融機関 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="金融機関 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-36"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>雑貨店</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="meta">なし</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 27</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="雑貨店 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="雑貨店 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="雑貨店 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-16"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>電力・ガス・水道</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">電気・ガス・水道</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 29</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="電力・ガス・水道 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="電力・ガス・水道 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="電力・ガス・水道 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-4"><td colspan="5"></td></tr>
+<tr class="">
+<td data-label="支払先名">
+<strong>飲食店</strong>
+<div class="meta">デモデータ用の支払先マスタ</div>
+</td>
+<td data-label="別名">
+<div class="settings-token-list">
+<span class="chip chip--neutral">飲み会</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 5</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="飲食店 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="飲食店 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="飲食店 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payee-inline-edit-32"><td colspan="5"></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>

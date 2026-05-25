@@ -1,0 +1,82 @@
+
+<tr class="inline-edit-row" id="acct-inline-edit-8">
+<td colspan="5">
+<form action="#" class="form-grid inline-edit-form" data-neutralize="閲覧専用デモです (静的スナップショット)">
+
+<div class="inline-edit-form__title">「クレジットカード」を編集</div>
+<div class="field">
+<label for="id_name">口座名</label>
+<input class="form-input" id="id_name" maxlength="100" name="name" placeholder="例: 三菱UFJ、現金、楽天カード" required="" type="text" value="クレジットカード"/>
+</div>
+<div class="field">
+<label for="id_kind">会計区分</label>
+<select class="form-input" id="id_kind" name="kind">
+<option value="asset">資産</option>
+<option selected="" value="liability">負債</option>
+</select>
+</div>
+<div class="field">
+<label for="id_opening_balance">初期残高</label>
+<input aria-describedby="id_opening_balance_helptext" class="form-input" id="id_opening_balance" name="opening_balance" required="" step="1" type="number" value="0"/>
+<div class="meta">負債口座は借入残高を「マイナス値」で入力してください。例: 残債 100 万円 → -1000000 取引/振替が登録済みのため、変更すると過去残高が再計算されます。</div>
+</div>
+<div class="field">
+<label for="id_notes">メモ</label>
+<textarea class="form-input" cols="40" id="id_notes" name="notes" placeholder="任意メモ" rows="2">
+</textarea>
+</div>
+<div class="inline-edit-form__title loan-section-title">負債プロファイル（任意）</div>
+<div class="field">
+<label for="id_annual_rate_pct_input">年利 (%)</label>
+<input aria-describedby="id_annual_rate_pct_input_helptext" class="form-input" id="id_annual_rate_pct_input" max="100" min="0" name="annual_rate_pct_input" placeholder="例: 15.00" step="0.01" type="number"/>
+<div class="meta">%表記で入力（内部では bp 換算で保持）。</div>
+</div>
+<div class="field">
+<label for="id_method">返済方式</label>
+<select class="form-input" id="id_method" name="method">
+<option value="revolving">リボ払い</option>
+<option value="eq_pi">元利均等</option>
+<option value="eq_p">元金均等</option>
+<option value="fixed">定額分割</option>
+<option selected="" value="other">その他</option>
+</select>
+</div>
+<div class="field">
+<label for="id_monthly_payment">月次返済額（目安）</label>
+<input aria-describedby="id_monthly_payment_helptext" class="form-input" id="id_monthly_payment" min="0" name="monthly_payment" placeholder="例: 10000" required="" step="1" type="number" value="0"/>
+<div class="meta">実額が変動する場合は目安値で OK。0 なら未設定として扱う。</div>
+</div>
+<div class="field">
+<label for="id_payment_day">引落日</label>
+<input aria-describedby="id_payment_day_helptext" class="form-input" id="id_payment_day" max="31" min="0" name="payment_day" placeholder="例: 27" required="" step="1" type="number" value="0"/>
+<div class="meta">1〜31 の範囲。0 は未設定。</div>
+</div>
+<div class="field">
+<label for="id_payoff_date">完済予定日</label>
+<input class="form-input" id="id_payoff_date" name="payoff_date" type="date"/>
+</div>
+<div class="field">
+<label for="id_source_account">引落元口座</label>
+<select aria-describedby="id_source_account_helptext" class="form-input" id="id_source_account" name="source_account">
+<option selected="" value="">（自動返済を使わない）</option>
+<option value="2">普通預金</option>
+<option value="1">現金</option>
+<option value="4">証券口座</option>
+<option value="3">貯蓄預金</option>
+<option value="5">電子マネー</option>
+</select>
+<div class="meta">毎月の返済を自動生成する場合に指定。資産口座のみ。</div>
+</div>
+<div class="field">
+<label for="id_notes">備考</label>
+<textarea aria-describedby="id_notes_helptext" class="form-input" cols="40" id="id_notes" name="notes" placeholder="契約番号 / 引落口座 / 補足など" rows="2">
+</textarea>
+<div class="meta">契約日・引落口座・契約番号など。</div>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary btn--sm" type="submit">更新する</button>
+<button class="btn btn--soft btn--sm" type="button">キャンセル</button>
+</div>
+</form>
+</td>
+</tr>

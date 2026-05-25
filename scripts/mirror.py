@@ -369,7 +369,7 @@ def fetch_fragment(hx_url: str) -> str | None:
     frag_html = str(frag_soup)
 
     h = hashlib.sha1(hx_url.encode("utf-8")).hexdigest()[:16]
-    rel = f"{FRAGMENTS_DIR}/{h}.html"
+    rel = f"{FRAGMENTS_DIR}/f_{h}.html"
     target = OUT / rel
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(frag_html, encoding="utf-8")

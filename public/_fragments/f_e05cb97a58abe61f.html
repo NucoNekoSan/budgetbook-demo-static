@@ -1,0 +1,256 @@
+<div class="panel">
+<div class="panel__body">
+<div class="toolbar">
+<div>
+<h2 class="section-title">支払手段</h2>
+<div class="meta">現金、銀行口座、カード、電子マネーなど、どう支払ったかを任意で管理します。</div>
+</div>
+<button class="btn btn--ghost" type="button">+ 追加</button>
+</div>
+<div class="settings-form-card">
+<h3 class="section-title section-title--tight">支払手段を追加</h3>
+<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)">
+
+<div class="field">
+<label for="id_name">支払手段名</label>
+<input class="form-input" id="id_name" maxlength="100" name="name" placeholder="例: 現金、カードA、電子マネーA" required="" type="text"/>
+</div>
+<div class="field">
+<label for="id_kind">種別</label>
+<select class="form-input" id="id_kind" name="kind" required="">
+<option selected="" value="">---------</option>
+<option value="cash">現金</option>
+<option value="bank">銀行口座</option>
+<option value="credit_card">クレジットカード</option>
+<option value="debit_card">デビットカード</option>
+<option value="electronic_money">電子マネー</option>
+<option value="qr">QR決済</option>
+<option value="other">その他</option>
+</select>
+</div>
+<div class="field">
+<label for="id_account">通常利用口座</label>
+<select class="form-input" id="id_account" name="account">
+<option selected="" value="">未指定</option>
+<option value="2">普通預金</option>
+<option value="1">現金</option>
+<option value="4">証券口座</option>
+<option value="3">貯蓄預金</option>
+<option value="5">電子マネー</option>
+<option value="8">クレジットカード</option>
+<option value="6">住宅ローン</option>
+<option value="7">自動車ローン</option>
+</select>
+</div>
+<div class="field">
+<label for="id_settlement_account">引落元口座</label>
+<select class="form-input" id="id_settlement_account" name="settlement_account">
+<option selected="" value="">未指定</option>
+<option value="2">普通預金</option>
+<option value="1">現金</option>
+<option value="4">証券口座</option>
+<option value="3">貯蓄預金</option>
+<option value="5">電子マネー</option>
+<option value="8">クレジットカード</option>
+<option value="6">住宅ローン</option>
+<option value="7">自動車ローン</option>
+</select>
+</div>
+<div class="field">
+<label for="id_closing_day">締日</label>
+<input class="form-input" id="id_closing_day" inputmode="numeric" max="31" min="0" name="closing_day" required="" step="1" type="number" value="0"/>
+</div>
+<div class="field">
+<label for="id_settlement_day">引落日</label>
+<input class="form-input" id="id_settlement_day" inputmode="numeric" max="31" min="0" name="settlement_day" required="" step="1" type="number" value="0"/>
+</div>
+<div class="field">
+<label for="id_notes">メモ</label>
+<textarea class="form-input" cols="40" id="id_notes" name="notes" placeholder="任意メモ" rows="2">
+</textarea>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary" type="submit">追加する</button>
+<button class="btn btn--ghost" type="button">キャンセル</button>
+</div>
+</form>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>支払手段名</th>
+<th>種別</th>
+<th>口座</th>
+<th>締日/引落日</th>
+<th>使用状況</th>
+<th>状態</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="">
+<td data-label="支払手段名">
+<strong>普通預金</strong>
+<div class="meta">デモデータ用の支払手段マスタ</div>
+</td>
+<td data-label="種別">
+<div class="settings-token-list">
+<span class="chip chip--neutral">銀行口座</span>
+</div>
+</td>
+<td data-label="口座">
+<div class="settings-account-summary">
+<div class="meta">通常: 普通預金</div>
+<div class="meta">引落元: 未指定</div>
+</div>
+</td>
+<td data-label="締日/引落日">
+<div class="settings-date-pair">
+<span class="meta">締日 未設定</span>
+<span class="meta">引落 未設定</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 214</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="普通預金 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="普通預金 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="普通預金 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payment-method-inline-edit-2"><td colspan="7"></td></tr>
+<tr class="">
+<td data-label="支払手段名">
+<strong>現金</strong>
+<div class="meta">デモデータ用の支払手段マスタ</div>
+</td>
+<td data-label="種別">
+<div class="settings-token-list">
+<span class="chip chip--neutral">現金</span>
+</div>
+</td>
+<td data-label="口座">
+<div class="settings-account-summary">
+<div class="meta">通常: 現金</div>
+<div class="meta">引落元: 未指定</div>
+</div>
+</td>
+<td data-label="締日/引落日">
+<div class="settings-date-pair">
+<span class="meta">締日 未設定</span>
+<span class="meta">引落 未設定</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 43</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="現金 を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="現金 を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="現金 は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payment-method-inline-edit-1"><td colspan="7"></td></tr>
+<tr class="">
+<td data-label="支払手段名">
+<strong>クレジットカード</strong>
+<div class="meta">デモデータ用の支払手段マスタ</div>
+</td>
+<td data-label="種別">
+<div class="settings-token-list">
+<span class="chip chip--neutral">クレジットカード</span>
+</div>
+</td>
+<td data-label="口座">
+<div class="settings-account-summary">
+<div class="meta">通常: クレジットカード</div>
+<div class="meta">引落元: 普通預金</div>
+</div>
+</td>
+<td data-label="締日/引落日">
+<div class="settings-date-pair">
+<span class="meta">締日 未設定</span>
+<span class="meta">引落 27日</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 339</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="クレジットカード を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="クレジットカード を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="クレジットカード は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payment-method-inline-edit-4"><td colspan="7"></td></tr>
+<tr class="">
+<td data-label="支払手段名">
+<strong>電子マネー</strong>
+<div class="meta">デモデータ用の支払手段マスタ</div>
+</td>
+<td data-label="種別">
+<div class="settings-token-list">
+<span class="chip chip--neutral">電子マネー</span>
+</div>
+</td>
+<td data-label="口座">
+<div class="settings-account-summary">
+<div class="meta">通常: 電子マネー</div>
+<div class="meta">引落元: 未指定</div>
+</div>
+</td>
+<td data-label="締日/引落日">
+<div class="settings-date-pair">
+<span class="meta">締日 未設定</span>
+<span class="meta">引落 未設定</span>
+</div>
+</td>
+<td data-label="使用状況">
+<div class="settings-status-pair">
+<span class="chip chip--neutral">使用中</span>
+<span class="meta">取引 29</span>
+</div>
+</td>
+<td data-label="状態">
+<span class="chip chip--income">有効</span>
+</td>
+<td data-label="操作">
+<div class="inline-actions">
+<button aria-label="電子マネー を編集" class="btn btn--soft btn--sm" type="button">✎ 編集</button>
+<button aria-label="電子マネー を無効化" class="btn btn--soft btn--sm" type="button">停止</button>
+<button aria-label="電子マネー は取引があるため削除できません" class="btn btn--sm" disabled="" title="取引が紐づいているため削除できません。先に「停止」で無効化してください。" type="button">🚫 削除不可</button>
+</div>
+</td>
+</tr>
+<tr class="inline-edit-placeholder" id="payment-method-inline-edit-3"><td colspan="7"></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>

@@ -1,0 +1,66 @@
+
+<tr class="inline-edit-row" id="cat-inline-edit-9">
+<td colspan="6">
+<form action="#" class="form-grid inline-edit-form" data-neutralize="閲覧専用デモです (静的スナップショット)">
+
+<div class="inline-edit-form__title">「外食」を編集</div>
+<div class="helper">
+        変更は過去取引の表示やレポートにも反映され、履歴に記録されます。使用済みカテゴリの区分変更はできません。
+      </div>
+<div class="field">
+<label for="id_name">カテゴリ名</label>
+<input class="form-input" id="id_name" maxlength="100" name="name" placeholder="例: 食費、交通費、給与" required="" type="text" value="外食"/>
+</div>
+<div class="field">
+<label for="id_kind">区分</label>
+<select class="form-input" id="id_kind" name="kind" required="">
+<option value="">---------</option>
+<option value="income">収入</option>
+<option selected="" value="expense">支出</option>
+</select>
+</div>
+<div class="field">
+<label for="id_section">大分類</label>
+<select class="form-input" id="id_section" name="section">
+<option value="food_daily">食品・日用品</option>
+<option selected="" value="dining_out">外食</option>
+<option value="housing">住居費</option>
+<option value="housing_misc">住居関連</option>
+<option value="utility">光熱・通信</option>
+<option value="transport">交通</option>
+<option value="medical">医療・健康</option>
+<option value="edu_leisure">教養・娯楽</option>
+<option value="apparel_beauty">衣料・美容</option>
+<option value="social">交際・贈答</option>
+<option value="insurance_tax">保険・税</option>
+<option value="saving_invest">貯蓄・投資</option>
+<option value="other">その他</option>
+</select>
+</div>
+<div class="field">
+<label for="id_tax_tag">税控除タグ</label>
+<select class="form-input" id="id_tax_tag" name="tax_tag">
+<option selected="" value="none">対象外</option>
+<option value="medical">医療費控除</option>
+<option value="donation">寄附金（ふるさと納税等）</option>
+<option value="business">事業経費</option>
+<option value="other">その他控除</option>
+</select>
+</div>
+<div class="field">
+<label for="id_notes">メモ</label>
+<textarea class="form-input" cols="40" id="id_notes" name="notes" placeholder="任意メモ" rows="2">
+</textarea>
+</div>
+<div class="field">
+<label for="id_change_reason">変更理由</label>
+<textarea class="form-input" cols="40" id="id_change_reason" name="change_reason" placeholder="例: 分類方針の見直し、名称整理" rows="2">
+</textarea>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary btn--sm" type="submit">更新する</button>
+<button class="btn btn--soft btn--sm" type="button">キャンセル</button>
+</div>
+</form>
+</td>
+</tr>

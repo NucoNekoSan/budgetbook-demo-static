@@ -94,7 +94,12 @@
 <a class="btn btn--ghost" href="../index.html">設定に戻る</a>
 </div>
 </div>
-<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="margin-top: 16px;">
+<div class="helper helper--soft u-mt-12">
+<strong>税控除計算について</strong>
+  この画面の控除額・申告書欄番号・CSVは申告準備用の参考計算です。
+  最終的な申告額、対象可否、様式欄番号は、申告年の国税庁資料・確定申告書作成コーナー・税理士等で確認してください。
+</div>
+<form action="#" class="form-grid u-mt-16" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
 <div class="field">
 <label for="id_year">対象年</label>
@@ -114,7 +119,7 @@
 <button class="btn btn--primary" type="submit">登録 / 更新</button>
 </div>
 </form>
-<h2 class="section-title" style="margin-top: 24px;">登録済みスナップショット</h2>
+<h2 class="section-title u-mt-24">登録済みスナップショット</h2>
 <table class="table">
 <thead>
 <tr>
@@ -132,9 +137,9 @@
 <td class="num">225000</td>
 <td>デモ用サンプル（源泉徴収票の「給与所得控除後の金額」想定）</td>
 <td>
-<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+<form action="#" class="u-inline" data-confirm="2026 年のスナップショットを削除しますか？" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<button class="btn btn--danger btn--sm" onclick="return confirm('2026 年のスナップショットを削除しますか？')" type="submit">削除</button>
+<button class="btn btn--danger btn--sm" data-confirm-submit="" type="button">削除</button>
 </form>
 </td>
 </tr>
@@ -144,9 +149,9 @@
 <td class="num">220000</td>
 <td>デモ用サンプル（源泉徴収票の「給与所得控除後の金額」想定）</td>
 <td>
-<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+<form action="#" class="u-inline" data-confirm="2025 年のスナップショットを削除しますか？" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<button class="btn btn--danger btn--sm" onclick="return confirm('2025 年のスナップショットを削除しますか？')" type="submit">削除</button>
+<button class="btn btn--danger btn--sm" data-confirm-submit="" type="button">削除</button>
 </form>
 </td>
 </tr>
@@ -156,9 +161,9 @@
 <td class="num">215000</td>
 <td>デモ用サンプル（源泉徴収票の「給与所得控除後の金額」想定）</td>
 <td>
-<form action="#" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post" style="display:inline">
+<form action="#" class="u-inline" data-confirm="2024 年のスナップショットを削除しますか？" data-neutralize="閲覧専用デモです (静的スナップショット)" method="post">
 
-<button class="btn btn--danger btn--sm" onclick="return confirm('2024 年のスナップショットを削除しますか？')" type="submit">削除</button>
+<button class="btn btn--danger btn--sm" data-confirm-submit="" type="button">削除</button>
 </form>
 </td>
 </tr>
