@@ -127,7 +127,7 @@
 
 <div class="field">
 <label for="id_month">対象月</label>
-<input class="form-input" id="id_month" name="month" required="" type="date" value="2026-05-01"/>
+<input class="form-input" id="id_month" name="month" required="" type="date" value="2026-06-01"/>
 </div>
 <div class="field">
 <label for="id_notes">メモ</label>
@@ -139,10 +139,10 @@
 </div>
 </form>
 <div class="preflight-box preflight-box--warning">
-<h3 class="preflight-box__title">2026年5月 締め前チェック</h3>
+<h3 class="preflight-box__title">2026年6月 締め前チェック</h3>
 <div class="meta">
-            月末日: 2026-05-31 /
-            通常取引 24件 /
+            月末日: 2026-06-30 /
+            通常取引 22件 /
             振替 2件 /
             有効口座 8件
           </div>
@@ -153,14 +153,14 @@
             </li>
 <li>
               締め後に保存される見込み:
-              収入 ¥393,540 /
-              支出 ¥398,227 /
-              当月収支 ¥-4,687 /
-              月末残高 ¥-18,508,306
+              収入 ¥996,561 /
+              支出 ¥270,675 /
+              当月収支 ¥725,886 /
+              月末残高 ¥-17,782,420
             </li>
 <li>
 <span class="status-pill status-pill--warning">確認要</span>
-                2026-05-31 の照合が未登録の口座:
+                2026-06-30 の照合が未登録の口座:
                 
                   クレジットカード / 
                 
@@ -189,16 +189,17 @@
 </div>
 <div class="table-wrap table-wrap--spaced table-wrap--responsive">
 <table class="data-table">
+<caption class="sr-only">月次締め履歴</caption>
 <thead>
 <tr>
-<th>対象月</th>
-<th>収入</th>
-<th>支出</th>
-<th>当月収支</th>
-<th>月末残高</th>
-<th>整合性</th>
-<th>締め日時</th>
-<th>操作</th>
+<th scope="col">対象月</th>
+<th scope="col">収入</th>
+<th scope="col">支出</th>
+<th scope="col">当月収支</th>
+<th scope="col">月末残高</th>
+<th scope="col">整合性</th>
+<th scope="col">締め日時</th>
+<th scope="col">操作</th>
 </tr>
 </thead>
 <tbody>
@@ -229,7 +230,7 @@
 </div>
 <div class="field">
 <label for="id_reconciled_on">照合日</label>
-<input class="form-input" id="id_reconciled_on" name="reconciled_on" required="" type="date" value="2026-05-25"/>
+<input class="form-input" id="id_reconciled_on" name="reconciled_on" required="" type="date" value="2026-06-01"/>
 </div>
 <div class="field">
 <label for="id_actual_balance">実残高</label>
@@ -246,15 +247,16 @@
 </form>
 <div class="table-wrap table-wrap--spaced table-wrap--responsive">
 <table class="data-table">
+<caption class="sr-only">口座残高照合履歴</caption>
 <thead>
 <tr>
-<th>照合日</th>
-<th>口座</th>
-<th>帳簿残高</th>
-<th>実残高</th>
-<th>差額</th>
-<th>メモ</th>
-<th>操作</th>
+<th scope="col">照合日</th>
+<th scope="col">口座</th>
+<th scope="col">帳簿残高</th>
+<th scope="col">実残高</th>
+<th scope="col">差額</th>
+<th scope="col">メモ</th>
+<th scope="col">操作</th>
 </tr>
 </thead>
 <tbody>

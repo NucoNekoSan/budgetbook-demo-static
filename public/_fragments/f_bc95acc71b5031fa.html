@@ -1,0 +1,62 @@
+<tr class="inline-edit-row" id="inline-edit-tr-60">
+<td colspan="6">
+<div class="inline-edit-form">
+<div class="inline-edit-form__title">
+        振替を編集
+      </div>
+<form action="#" class="form-grid" data-neutralize="閲覧専用デモです (静的スナップショット)">
+<input name="month" type="hidden" value="2026-06"/>
+<input name="page" type="hidden" value="1"/>
+<div class="field">
+<label for="id_date">日付</label>
+<input autocomplete="off" class="form-input" enterkeyhint="next" id="id_date" name="date" required="" type="date" value="2026-06-25"/>
+</div>
+<div class="field">
+<label for="id_from_account">出金元口座</label>
+<select class="form-input" id="id_from_account" name="from_account" required="">
+<option value="">---------</option>
+<option value="8">クレジットカード</option>
+<option value="6">住宅ローン</option>
+<option selected="" value="2">普通預金</option>
+<option value="1">現金</option>
+<option value="7">自動車ローン</option>
+<option value="4">証券口座</option>
+<option value="3">貯蓄預金</option>
+<option value="5">電子マネー</option>
+</select>
+</div>
+<div class="field">
+<label for="id_to_account">入金先口座</label>
+<select class="form-input" id="id_to_account" name="to_account" required="">
+<option value="">---------</option>
+<option value="8">クレジットカード</option>
+<option value="6">住宅ローン</option>
+<option value="2">普通預金</option>
+<option value="1">現金</option>
+<option value="7">自動車ローン</option>
+<option value="4">証券口座</option>
+<option selected="" value="3">貯蓄預金</option>
+<option value="5">電子マネー</option>
+</select>
+</div>
+<div class="field">
+<label for="id_amount">金額</label>
+<input autocomplete="off" class="form-input" enterkeyhint="next" id="id_amount" inputmode="numeric" min="1" name="amount" required="" step="1" type="number" value="50000"/>
+</div>
+<div class="field">
+<label for="id_description">摘要</label>
+<input autocomplete="off" class="form-input" enterkeyhint="next" id="id_description" maxlength="120" name="description" placeholder="例: 普通預金A → 普通預金B" required="" type="text" value="積立貯蓄"/>
+</div>
+<div class="field">
+<label for="id_memo">メモ</label>
+<textarea autocomplete="off" class="form-input" cols="40" enterkeyhint="done" id="id_memo" name="memo" placeholder="任意メモ" rows="4">
+</textarea>
+</div>
+<div class="button-row form-grid__actions">
+<button class="btn btn--primary" type="submit">更新する</button>
+<button class="btn btn--ghost" type="button">キャンセル</button>
+</div>
+</form>
+</div>
+</td>
+</tr>
