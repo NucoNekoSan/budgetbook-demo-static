@@ -1,5 +1,5 @@
 {
-  "name": "budgetbook-demo-static",
+  "name": "budgetbook-demo",
   "compatibility_date": "2026-09-26",
   "assets": { "directory": "./public" }
 }

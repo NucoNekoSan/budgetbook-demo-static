@@ -19,7 +19,7 @@
 
 `scripts/mirror.py` はDjangoの画面と閲覧用フラグメントを静的化し、`scripts/enhance_demo.py` を通して各画面にデモのJS/CSSを付けます。再生成しても編集機能は残ります。フロントエンドは `demo-core.js`（計算・検証）と `demo-app.js`（画面・タブ内保存）に分離しています。
 
-週次と手動の [refresh workflow](.github/workflows/refresh-mirror.yml) は、合成データの生成、mirror、計算テスト、機微パターン検査を実行し、生成物をcommitします。CloudflareのGit連携がmasterの変更を自動デプロイします。`wrangler.jsonc` は既存Workerと `public/` を指定しています。カスタムドメインはCloudflare管理画面で設定済みです。以前のworkers.dev URLも利用できます。
+週次と手動の [refresh workflow](.github/workflows/refresh-mirror.yml) は、合成データの生成、mirror、計算テスト、機微パターン検査を実行し、生成物をcommitします。CloudflareのGit連携がmasterの変更を自動デプロイします。`wrangler.jsonc` はWorker `budgetbook-demo` と `public/` を指定しています。カスタムドメインはCloudflare管理画面で設定済みです。補助URLは https://budgetbook-demo.nuconekosan.workers.dev/ です。旧Worker名のworkers.dev URLは使用しません。
 
 ローカルで生成する場合（Python環境にDjango本体のrequirementsとrequests・beautifulsoup4が必要）：
 
