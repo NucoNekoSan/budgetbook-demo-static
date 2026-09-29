@@ -60,13 +60,13 @@
     if (type === 'budgets') {
       fields = field('対象月', `<input name="month" type="month" value="${escape(month)}" required min="1900-01" max="2100-12">`) +
         field('区分', `<select name="section">${Object.entries(state.sections).map(([s,n]) => `<option value="${escape(s)}" ${s === row.section ? 'selected' : ''}>${escape(n)}</option>`).join('')}</select>`) +
-        field('予算（円・0は未設定）', `<input name="amount" type="number" min="0" max="9007199254740991" step="1" value="${escape(row.amount)}" required>`) +
+        field('予算（円・0は未設定）', `<input name="amount" type="number" min="0" max="1000000000000" step="1" value="${escape(row.amount)}" required>`) +
         field('メモ', `<textarea name="notes" maxlength="500">${escape(row.notes)}</textarea>`);
     } else {
       fields = field('日付', `<input name="date" type="date" min="1900-01-01" max="2100-12-31" value="${escape(row.date)}" required>`);
       if (type === 'transactions') fields += field('口座', `<select name="account_id">${opts(accounts,row.account_id)}</select>`) + field('カテゴリ（収入 / 支出）', `<select name="category_id">${opts(categories.map(c=>({...c,name:`${c.kind === 'income' ? '収入' : '支出'} / ${c.name}`})),row.category_id)}</select>`);
       else fields += field('振替元', `<select name="from_account_id">${opts(accounts,row.from_account_id)}</select>`) + field('振替先', `<select name="to_account_id">${opts(accounts,row.to_account_id || accounts[1]?.id)}</select>`);
-      fields += field('金額（円）', `<input name="amount" type="number" min="1" max="9007199254740991" step="1" value="${escape(row.amount)}" required>`) + field('摘要', `<input name="description" maxlength="120" value="${escape(row.description)}" required>`) + field('メモ', `<textarea name="memo" maxlength="500">${escape(row.memo)}</textarea>`);
+      fields += field('金額（円）', `<input name="amount" type="number" min="1" max="1000000000000" step="1" value="${escape(row.amount)}" required>`) + field('摘要', `<input name="description" maxlength="120" value="${escape(row.description)}" required>`) + field('メモ', `<textarea name="memo" maxlength="500">${escape(row.memo)}</textarea>`);
     }
     open(`<h2>${type === 'budgets' ? '月別予算' : type === 'transfers' ? '口座間振替' : '取引'}${existing ? 'を編集' : 'を追加'}</h2><form id="demo-edit" data-type="${type}" ${existing ? `data-id="${existing.id}"` : ''}><div class="demo-form-grid">${fields}</div><p id="demo-error" role="alert"></p><div class="demo-actions"><button type="submit">保存して集計に反映</button><button type="button" data-demo="close">キャンセル</button></div></form>`);
   }

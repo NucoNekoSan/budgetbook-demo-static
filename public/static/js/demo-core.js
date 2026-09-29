@@ -41,7 +41,7 @@
     if ([date, original?.date].filter(Boolean).some(d => state.closedMonths.includes(d.slice(0, 7)))) throw Error('締め済みの月は変更できません。日付を移す場合は変更前の月も確認します。');
   }
   function validate(state, type, row, original) {
-    if (!Number.isSafeInteger(row.amount) || row.amount < (type === 'budgets' ? 0 : 1)) throw Error('金額は整数の円で入力してください。');
+    if (!Number.isSafeInteger(row.amount) || row.amount > 1e12 || row.amount < (type === 'budgets' ? 0 : 1)) throw Error('金額は1兆円以下の整数の円で入力してください。');
     if (type === 'budgets') {
       if (!/^\d{4}-\d{2}-01$/.test(row.month) || !validDate(row.month) || !Object.hasOwn(state.sections, row.section)) throw Error('対象月・区分が正しくありません。');
       if ((row.notes || '').length > 500) throw Error('メモは500文字以内で入力してください。');
