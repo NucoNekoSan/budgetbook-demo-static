@@ -5,3 +5,7 @@ __pycache__/
 Thumbs.db
 .idea/
 .vscode/
+node_modules/
+test-results/
+playwright-report/
+artifacts/

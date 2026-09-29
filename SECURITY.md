@@ -1,6 +1,6 @@
 # Security Policy
 
-`budgetbook-demo-static` は **動的バックエンドを持たない静的スナップショット** です。攻撃面を構造的にゼロへ寄せる設計のため、脅威モデルと対象範囲を以下に明示します。
+`budgetbook-demo-static` は **動的バックエンドを持たない体験デモ** です。変更はタブ内のsessionStorageに保存します。静的配信でもXSS・生成工程・公開データ・依存コードのリスクがあるため、脅威モデルを以下に示します。
 
 ## 脅威モデル (Threat Model)
 
@@ -8,6 +8,8 @@
 
 | 領域 | 想定リスク |
 |---|---|
+| `demo-app.js` / `demo-core.js` / `demo-data.json` | 入力テキストのXSS、タブ内状態の不整合、公開fixtureへの個人情報混入 |
+| `scripts/export_demo_data.py` | 合成データ以外のDBを参照する誤設定（専用一時DBを検証して出力） |
 | `public/_headers` の CSP / HSTS / COOP / CORP / X-Frame-Options 設定不備 | header bypass / clickjacking / MITM |
 | `public/static/js/neutralize.js` のクリック・送信ハンドラ | event handler 逃れ、`innerHTML` inject 経由の XSS |
 | `scripts/mirror.py` のサーバ間 fetch | SSRF, open redirect, 機微情報の出力 leak |
@@ -31,7 +33,7 @@
 | `.github/workflows/refresh-mirror.yml` の verify step | hook bypass されても CI で再検査 |
 | `.github/workflows/codeql.yml` | Python + JavaScript を `security-extended` で週次走査 |
 | `public/_headers` (CF Pages) | CSP `default-src 'self'`, `script-src 'self'`, `connect-src 'self'`, `form-action 'none'`, `frame-ancestors 'none'` + HSTS + COOP + CORP + Permissions-Policy 全絞り |
-| Cloudflare edge | runtime ゼロ。RCE / SQLi / CSRF が構造的に成立しない |
+| Cloudflare edge | アプリのバックエンド・DBを配信せず、ブラウザーからの変更を受信しない |
 
 ## 報告方法
 

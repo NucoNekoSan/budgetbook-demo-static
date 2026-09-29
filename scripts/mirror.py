@@ -28,6 +28,7 @@ from urllib.parse import parse_qs, urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
+from enhance_demo import enhance
 
 BASE = "http://127.0.0.1:8765"
 ALLOWED_HOSTS = {"127.0.0.1:8765", "localhost:8765"}
@@ -510,7 +511,7 @@ def neutralize_html(html: str, html_dir: Path) -> str:
         script_tag = soup.new_tag("script", src=rel_js, defer="")
         body.append(script_tag)
 
-    return str(soup)
+    return enhance(str(soup), html_dir)
 
 
 def main():

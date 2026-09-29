@@ -87,7 +87,10 @@ jobs:
 
       - name: Run mirror script
         run: |
+          python scripts/export_demo_data.py --source source-demo/budgetbook
           python scripts/mirror.py
+          node --test tests/demo-core.test.cjs
+          python -m unittest discover -s tests -p 'test_*.py'
 
       - name: Stop runserver
         if: always()

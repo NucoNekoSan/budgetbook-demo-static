@@ -1,0 +1,11 @@
+{
+  "name": "budgetbook-portfolio-demo",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/demo-core.test.cjs",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

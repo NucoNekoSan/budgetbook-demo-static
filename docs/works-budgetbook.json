@@ -1,0 +1,9 @@
+{
+  "name": "BudgetBook — 家計簿",
+  "description": "収支・月次予算・支出内訳・資産と負債をつなぐ家計簿アプリです。架空の4人家族のデータで、取引の追加・編集・削除、口座間振替、予算変更と集計の変化を試せます。変更はこのタブ内の一時保存で、サーバーには保存されません。",
+  "application_url": "https://budgetbook-demo.nuconeko-garden.com/",
+  "image_alt": "BudgetBookの体験デモ。取引の追加・編集操作、月次の収入・支出・収支と区分別予算を表示している。",
+  "kind": "demo",
+  "related_article_slug": "budgetbook-read-only-demo",
+  "meta_description": "DjangoとHTMXで家計の収支・予算・資産をつなぐBudgetBook。振替と集計の設計、架空データを使ったCloudflareの体験デモ、計算の検証方法を紹介します。"
+}
