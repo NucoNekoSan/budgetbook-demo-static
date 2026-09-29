@@ -34,6 +34,9 @@ DjangoとHTMXで、入力と確認を近づける
 
 公開デモでは、データの初期化、変更後の再集計、画面移動、スマートフォン表示までを一つの体験として確認します。今後も、初めて見る人が収支と残高の違いを理解できる案内や、必要な情報へ迷わず移動できる導線を改善していきます。BudgetBookで取り組んでいるのは、記録する機能を増やすことだけでなく、数字の意味を保ったまま、日々の判断に使える画面へつなげることです。
 
-体験デモ：https://budgetbook-demo.nuconeko-garden.com/
-ソースコード：https://github.com/NucoNekoSan/budgetbook-demo
-作品一覧：https://nuconeko-garden.com/works/
+体験デモ
+https://budgetbook-demo.nuconeko-garden.com/
+ソースコード
+https://github.com/NucoNekoSan/budgetbook-demo
+作品一覧
+https://nuconeko-garden.com/works/
