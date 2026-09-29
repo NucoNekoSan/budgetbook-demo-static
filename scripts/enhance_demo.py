@@ -1,6 +1,7 @@
 """Idempotently attach sandbox runtime to mirrored full pages."""
 import os
 from pathlib import Path
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parent.parent / 'public'
@@ -21,6 +22,9 @@ def enhance(html, directory):
             if Path(script['src']).name in ('dashboard_chart.js', 'budget_chart.js', 'progress_bars.js', 'keyboard_shortcuts.js'):
                 script.decompose()
     for a in soup.find_all('a', href=True):
+        if (urlparse(a['href']).hostname or '').lower() in ('github.com', 'www.github.com'):
+            a.decompose()
+            continue
         if a['href'] != '#' and a.get('data-fragment-url'):
             a.attrs.pop('data-fragment-url', None)
             a.attrs.pop('data-fragment-title', None)

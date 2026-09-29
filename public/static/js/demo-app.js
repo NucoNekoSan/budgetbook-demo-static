@@ -13,7 +13,7 @@
   const banner = document.createElement('aside');
   banner.className = 'portfolio-banner';
   banner.setAttribute('aria-label', '公開デモについて');
-  banner.innerHTML = `<div><strong>BudgetBook / 体験デモ</strong><span>架空の4人家族のデータです。取引・振替・予算を変更して、集計の変化を試せます。</span></div><div class="demo-actions"><button type="button" data-demo="guide">使い方</button><button type="button" data-demo="reset">データをリセット</button><a href="https://nuconeko-garden.com/blog/budgetbook-read-only-demo/">開発記事</a><a href="https://github.com/NucoNekoSan/budgetbook-demo" target="_blank" rel="noopener">GitHub ↗</a></div><small>変更はこのタブ内だけに保存されます。同じタブでの再読み込み・画面移動に対応し、タブを閉じると終了します。サーバーへの保存はありません。</small>`;
+  banner.innerHTML = `<div><strong>BudgetBook / 体験デモ</strong><span>架空の4人家族のデータです。取引・振替・予算を変更して、集計の変化を試せます。</span></div><div class="demo-actions"><button type="button" data-demo="guide">使い方</button><button type="button" data-demo="reset">データをリセット</button><a href="https://nuconeko-garden.com/blog/budgetbook-read-only-demo/">開発記事</a></div><small>変更はこのタブ内だけに保存されます。同じタブでの再読み込み・画面移動に対応し、タブを閉じると終了します。サーバーへの保存はありません。</small>`;
   document.body.prepend(banner);
   const notice = document.createElement('p'); notice.className = 'demo-notice'; notice.setAttribute('role', 'status'); notice.setAttribute('aria-live', 'polite');
   banner.after(notice);

@@ -57,7 +57,7 @@ PAGE_DEFS = [
 
 STATIC_BANNER_HTML = """
 <div id="static-portfolio-banner" class="static-banner">
-  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。<a href="https://github.com/NucoNekoSan/budgetbook-demo" class="static-banner__link">ソースコード (GitHub)</a>
+  📸 これは <strong>静的スナップショット (Cloudflare Pages 配信)</strong> です。閲覧専用 — 入力・編集・削除は無効化されています。
 </div>
 """
 

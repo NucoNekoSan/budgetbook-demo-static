@@ -16,6 +16,7 @@ class GenerationTests(unittest.TestCase):
             once = enhance(html, path.parent)
             self.assertEqual(once, enhance(once, path.parent), path)
             soup = BeautifulSoup(once, 'html.parser')
+            self.assertFalse(soup.select('a[href*="github.com"]'), path)
             scripts = soup.select('script[data-portfolio-runtime]')
             self.assertEqual(len(scripts), 2, path)
             self.assertFalse(soup.select('.demo-banner, #static-portfolio-banner, .site-nav__logout'), path)
