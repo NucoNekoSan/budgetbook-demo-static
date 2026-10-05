@@ -1,6 +1,7 @@
 # BudgetBook 体験デモ
 
-公開URL: **https://budgetbook-demo.nuconeko-garden.com/**
+公開URL: **https://budgetbook-demo.nuconeko-garden.com/**  
+[Worksで作品を見る](https://nuconeko-garden.com/works/)
 
 [Django本体](https://github.com/NucoNekoSan/budgetbook-demo) の画面を静的化し、ブラウザー内で家計管理を試せるポートフォリオです。Cloudflare Workersの静的アセットから `public/` を配信し、公開環境にDjango・DB・ログイン機能はありません。
 
