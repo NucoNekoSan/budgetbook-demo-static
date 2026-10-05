@@ -28,7 +28,9 @@
 <script defer="" src="../../../static/js/mobile_nav.js"></script>
 <link href="../../../static/css/static-banner.css" rel="stylesheet"/><link data-portfolio-runtime="" href="../../../static/css/demo-app.css" rel="stylesheet"/><link href="https://budgetbook-demo.nuconeko-garden.com/reports/tax-deductions/v2/" rel="canonical"/></head>
 <body data-route="tax_deductions_v2">
+
 <a class="skip-link" href="#main">本文へスキップ</a>
+
 <header class="site-header">
 <div class="site-header__inner">
 <a class="brand" href="../../../index.html">BudgetBook</a>
@@ -57,6 +59,7 @@
 </details>
 <a class="site-nav__link" data-route-link="settings" href="../../../settings/index.html">設定</a>
 <button aria-label="テーマ切替" class="site-nav__theme" data-theme-toggle="" type="button">🖥 自動</button>
+
 </nav>
 </div>
 </header>
@@ -215,10 +218,31 @@
         ・ <a class="is-neutralized" data-neutralize="このページは静的スナップショットには含まれていません" href="#">→ 詳細管理</a>
 </div>
 <h2 class="section-title u-mt-32">🎁 寄附金（参考）</h2>
-<div class="helper">
-          2026 年に「寄附金」タグの取引はありません。
-          カテゴリの税控除タグを「寄附金（ふるさと納税等）」に設定すると、ここに集計されます。
-        </div>
+<table class="table">
+<caption class="sr-only">2026年の寄附金タグ対象取引一覧</caption>
+<thead>
+<tr>
+<th scope="col">日付</th>
+<th scope="col">支払先</th>
+<th scope="col">カテゴリ</th>
+<th class="num" scope="col">金額</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-10-25</td>
+<td>◇◇市 ふるさと納税 (返礼品: 米)</td>
+<td>ふるさと納税</td>
+<td class="num">¥20,000</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td colspan="3"><strong>年間支払合計</strong></td>
+<td class="num"><strong>¥20,000</strong></td>
+</tr>
+</tfoot>
+</table>
 <div class="helper u-mt-12">
 <strong>申告書 第二表 ⑲寄附金控除 = 別途計算が必要</strong>
         （ふるさと納税ワンストップ特例利用時は申告不要。所得税控除/住民税控除の計算は申告書 B 様式の計算欄を参照）
@@ -230,7 +254,7 @@
 <li>第二表 ⑩医療費控除欄 ← ¥0</li>
 <li>第二表 ⑮生命保険料控除欄 ← ¥117,000</li>
 <li>第二表 ⑯地震保険料控除欄 ← ¥32,000</li>
-<li>第二表 ⑲寄附金控除欄 ← 別途計算（このページの寄附金参考値: ¥0）</li>
+<li>第二表 ⑲寄附金控除欄 ← 別途計算（このページの寄附金参考値: ¥20,000）</li>
 </ul>
 <div class="meta u-mt-8">
           ※ 欄番号は 2026 年現在の申告書様式に基づきます。様式改訂時は申告書原本で欄番号を確認してください。
